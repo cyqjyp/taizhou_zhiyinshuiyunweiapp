@@ -2171,6 +2171,7 @@
 
     const 巡检状态样式 = {
       待执行: { bg:'bg-blue-50',    text:'text-blue-600',    border:'border-blue-200',    dot:'bg-blue-500'    },
+      进行中: { bg:'bg-amber-50',   text:'text-amber-600',   border:'border-amber-200',   dot:'bg-amber-500'   },
       已完成: { bg:'bg-emerald-50', text:'text-emerald-600', border:'border-emerald-200', dot:'bg-emerald-500' },
     };
 
@@ -2271,20 +2272,22 @@
       );
     };
 
-    /* ── 计划详情弹窗 ── */
-    const PlanDetailModal = ({ plan, onClose }) => {
+    /* ── 已完成巡检全屏详情（替代原底部弹窗）── */
+    const InspectPlanSummaryPage = ({ plan, onBack }) => {
       const ss = 巡检状态样式[plan.status];
       return (
-        <div className="fixed inset-0 bg-black/50 flex items-end justify-center z-50">
-          <div className="bg-white w-full max-w-sm rounded-t-3xl" style={{ maxHeight:'88vh', overflowY:'auto' }}>
-            <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-gray-100">
-              <span className="text-sm font-semibold text-gray-800 flex-1 pr-3 leading-snug">{plan.title}</span>
-              <button onClick={onClose} className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0">
-                <XCircle size={16} color="#6b7280" />
+        <div className="flex flex-col min-h-screen bg-gray-100">
+          <div className="bg-blue-600 px-4 pt-10 pb-4 sticky top-0 z-20">
+            <div className="flex items-center gap-3 mb-3">
+              <button type="button" onClick={onBack} className="w-8 h-8 flex items-center justify-center rounded-full active:bg-blue-500">
+                <ArrowLeft size={22} color="white" />
               </button>
+              <span className="flex-1 text-white text-base font-semibold truncate pr-2">巡检详情</span>
             </div>
-            <div className="px-5 py-4 flex flex-col gap-4">
-              {/* 状态 + 基本信息 */}
+          </div>
+          <div className="flex-1 px-4 py-4 pb-8 flex flex-col gap-4">
+            <div className="bg-white rounded-2xl p-5 flex flex-col gap-4 shadow-sm">
+              <span className="text-sm font-semibold text-gray-800 leading-snug">{plan.title}</span>
               <div className="flex gap-2 flex-wrap">
                 <span className={`text-xs font-medium px-2.5 py-1 rounded-full border ${ss.bg} ${ss.text} ${ss.border}`}>{plan.status}</span>
                 <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-purple-50 text-purple-600 border border-purple-200">{plan.type}</span>
@@ -2298,13 +2301,12 @@
                   plan.startTime && { label:'开始时间', value: plan.startTime },
                   plan.endTime   && { label:'完成时间', value: plan.endTime   },
                 ].filter(Boolean).map(row => (
-                  <div key={row.label} className="flex items-center justify-between">
+                  <div key={row.label} className="flex items-center justify-between gap-3">
                     <span className="text-xs text-gray-400">{row.label}</span>
-                    <span className="text-xs font-medium text-gray-700">{row.value}</span>
+                    <span className="text-xs font-medium text-gray-700 text-right">{row.value}</span>
                   </div>
                 ))}
               </div>
-              {/* 检查项目 */}
               {plan.items.length > 0 && (
                 <div>
                   <p className="text-xs font-semibold text-gray-500 mb-2">检查项目</p>
@@ -2315,7 +2317,6 @@
                   </div>
                 </div>
               )}
-              {/* 涉及设备 */}
               {plan.devices && plan.devices.length > 0 && (
                 <div>
                   <p className="text-xs font-semibold text-gray-500 mb-2">涉及设备</p>
@@ -2326,7 +2327,6 @@
                   </div>
                 </div>
               )}
-              {/* 水质检测结果 */}
               {plan.result && Object.keys(plan.result).length > 0 && (
                 <div>
                   <p className="text-xs font-semibold text-gray-500 mb-2">检测结果</p>
@@ -2340,7 +2340,6 @@
                   </div>
                 </div>
               )}
-              {/* 备注 */}
               {plan.remark && (
                 <div className="bg-amber-50 border border-amber-100 rounded-xl p-3">
                   <p className="text-xs text-gray-400 mb-1">备注说明</p>
@@ -2353,13 +2352,193 @@
       );
     };
 
+    const 产水模式状态行 = [
+      ['浓水排放', '多介质过滤', '活性炭过滤', '软化过滤'],
+      ['市政压力/水箱液位'],
+      ['浓水快速排放', '预处理紫外灯', '产水合格阀'],
+      ['产水不合格阀', '预处理排放阀'],
+    ];
+
+    const 产水模式状态项 = 产水模式状态行.flat();
+
+    /* ── 巡检执行页（待执行／进行中，“开始巡检”进入）── */
+    const InspectExecutionPage = ({ plan, onBack }) => {
+      const [inspectTab, setInspectTab] = useState('产水模式');
+      const [produce, setProduce] = useState({
+        pumpOutlet: '', conductivity: '', memInlet: '', memOutlet: '', productFlow: '', concRapidPressure: '',
+        status: {},
+        rep1SecurityYesNo: '',
+        rep1SecurityDate: '',
+        rep1ReturnYesNo: '',
+        rep1ReturnDate: '',
+        rep2YesNo: '',
+        rep2OzoneDate: '',
+        rep2UvDate: '',
+        rep3YesNo: '',
+        rep3NfDate: '',
+      });
+
+      const setFld = (k, v) => setProduce(prev => ({ ...prev, [k]: v }));
+      const setSts = (label, value) =>
+        setProduce(prev => ({ ...prev, status: { ...prev.status, [label]: value } }));
+
+      const numInputCls = 'w-full min-w-0 border border-blue-200 rounded-xl px-3 py-2 text-sm text-gray-800 bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-200';
+      const dateInputCls = 'w-full border border-blue-200 rounded-xl px-3 py-2 text-sm bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-200';
+      const tabBar = ['产水模式', '纯水模式', '待机模式'];
+
+      const SectionCard = ({ title, hint, children }) => (
+        <div className="bg-white rounded-2xl shadow-sm border border-blue-100 overflow-hidden">
+          <div className="px-4 py-3 border-b border-blue-50 bg-gradient-to-r from-blue-50 to-white">
+            <h3 className="text-sm font-semibold text-blue-900">{title}</h3>
+            {hint && <p className="text-[11px] text-gray-500 mt-0.5">{hint}</p>}
+          </div>
+          <div className="p-4">{children}</div>
+        </div>
+      );
+
+      const NumericField = ({ label, k, unit }) => (
+        <div className="flex flex-col gap-1">
+          <span className="text-xs text-gray-600">{label}</span>
+          <div className="flex items-center gap-2">
+            <input type="number" step="any" inputMode="decimal" placeholder="填写数值" className={numInputCls} value={produce[k]} onChange={e => setFld(k, e.target.value)} />
+            <span className="text-xs text-blue-600 font-medium w-14 text-right shrink-0">{unit}</span>
+          </div>
+        </div>
+      );
+
+      const StatusRow = ({ label }) => (
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 py-3 border-b border-gray-100 last:border-b-0 last:pb-0 first:pt-0">
+          <span className="text-xs text-gray-800 leading-snug">{label}</span>
+          <div className="flex gap-5 text-xs text-gray-700 shrink-0">
+            <label className="inline-flex items-center gap-1.5 cursor-pointer">
+              <input type="radio" name={`sts-${label}`} checked={produce.status[label] === '正常'} onChange={() => setSts(label, '正常')} className="accent-blue-600 w-3.5 h-3.5" />正常
+            </label>
+            <label className="inline-flex items-center gap-1.5 cursor-pointer">
+              <input type="radio" name={`sts-${label}`} checked={produce.status[label] === '异常'} onChange={() => setSts(label, '异常')} className="accent-blue-600 w-3.5 h-3.5" />异常
+            </label>
+          </div>
+        </div>
+      );
+
+      const ConsumableCard = ({ title, ynKey, yn, onYn, dates }) => (
+        <SectionCard title={title} hint="耗材更换">
+          <div className="flex items-center gap-6 mb-4 pb-4 border-b border-gray-100">
+            <span className="text-xs text-gray-600 shrink-0">是否更换</span>
+            <div className="flex gap-5 text-xs">
+              <label className="inline-flex items-center gap-1.5 cursor-pointer">
+                <input type="radio" name={ynKey} checked={yn === '是'} onChange={() => onYn('是')} className="accent-blue-600 w-3.5 h-3.5" />是
+              </label>
+              <label className="inline-flex items-center gap-1.5 cursor-pointer">
+                <input type="radio" name={ynKey} checked={yn === '否'} onChange={() => onYn('否')} className="accent-blue-600 w-3.5 h-3.5" />否
+              </label>
+            </div>
+          </div>
+          <div className="flex flex-col gap-4">
+            {dates.map(({ text, dk }) => (
+              <label key={dk} className="flex flex-col gap-1.5">
+                <span className="text-xs text-gray-700 leading-snug">{text}</span>
+                <input type="date" className={dateInputCls} value={produce[dk]} onChange={e => setFld(dk, e.target.value)} />
+              </label>
+            ))}
+          </div>
+        </SectionCard>
+      );
+
+      const 产水面板 = plan.type !== '设备巡检' ? (
+        <div className="p-6 text-center text-sm text-gray-500 leading-relaxed">当前为水质检测类计划，专项检查表与「产水模式」台账不同，表单可按业务另行配置。</div>
+      ) : (
+        <div className="flex flex-col gap-3 mx-px">
+          <SectionCard title="运行参数" hint="压力、流量与电导率">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <NumericField label="原水泵出口压力" k="pumpOutlet" unit="MPa" />
+              <NumericField label="产水电导率" k="conductivity" unit="PPM" />
+              <NumericField label="膜前进口压力" k="memInlet" unit="MPa" />
+              <NumericField label="膜后出口压力" k="memOutlet" unit="MPa" />
+              <NumericField label="产水流量" k="productFlow" unit="M³-L/H" />
+              <NumericField label="浓水快排压力" k="concRapidPressure" unit="MPa" />
+            </div>
+          </SectionCard>
+
+          <SectionCard title="环节状态" hint="现场确认以下项目是否正常">
+            <div>{产水模式状态项.map(label => (<StatusRow key={label} label={label} />))}</div>
+          </SectionCard>
+
+          <ConsumableCard
+            title="保安过滤 PP 棉滤芯"
+            ynKey="rep1secyn"
+            yn={produce.rep1SecurityYesNo}
+            onYn={v => setFld('rep1SecurityYesNo', v)}
+            dates={[
+              { text: '更换日期（建议3—6个月一次）', dk: 'rep1SecurityDate' },
+            ]}
+          />
+          <ConsumableCard
+            title="回水 PP 棉滤芯"
+            ynKey="rep1retyn"
+            yn={produce.rep1ReturnYesNo}
+            onYn={v => setFld('rep1ReturnYesNo', v)}
+            dates={[
+              { text: '更换日期（建议3—6个月一次）', dk: 'rep1ReturnDate' },
+            ]}
+          />
+          <ConsumableCard
+            title="臭氧消解 / 紫外杀菌"
+            ynKey="rep2yn"
+            yn={produce.rep2YesNo}
+            onYn={v => setFld('rep2YesNo', v)}
+            dates={[
+              { text: '臭氧消解呼吸滤芯更换日期（建议12个月一次）', dk: 'rep2OzoneDate' },
+              { text: '紫外杀菌灯管更换日期（建议12个月一次）', dk: 'rep2UvDate' },
+            ]}
+          />
+          <ConsumableCard
+            title="纳滤膜"
+            ynKey="rep3yn"
+            yn={produce.rep3YesNo}
+            onYn={v => setFld('rep3YesNo', v)}
+            dates={[
+              { text: '纳滤膜更换日期（建议24个月一次）', dk: 'rep3NfDate' },
+            ]}
+          />
+        </div>
+      );
+
+      return (
+        <div className="flex flex-col min-h-screen bg-gray-100">
+          <div className="bg-blue-600 px-4 pt-10 pb-3 sticky top-0 z-20">
+            <div className="flex items-center gap-3 mb-2">
+              <button type="button" onClick={onBack} className="w-8 h-8 flex items-center justify-center rounded-full active:bg-blue-500">
+                <ArrowLeft size={22} color="white" />
+              </button>
+              <span className="flex-1 text-white text-base font-semibold truncate pr-1">巡检执行</span>
+            </div>
+            <p className="text-white/85 text-[11px] leading-snug pl-11">{plan.title}</p>
+          </div>
+          <div className="sticky top-[7.25rem] z-10 bg-blue-50/90 border-b border-blue-100 px-3 pt-2 pb-2">
+            <div className="flex gap-2 overflow-x-auto pb-1">
+              {tabBar.map(t => (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => t === '产水模式' && setInspectTab(t)}
+                  disabled={t !== '产水模式'}
+                  className={`shrink-0 px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${inspectTab === t ? 'bg-white text-blue-700 shadow-sm border border-blue-200' : 'text-gray-400 border border-transparent'}`}>{t}</button>
+              ))}
+            </div>
+            {inspectTab !== '产水模式' && (
+              <p className="text-[11px] text-gray-400 px-1 pt-1">暂未开放更多模式页签。</p>
+            )}
+          </div>
+          <div className="flex-1 px-3 py-4 pb-10 overflow-y-auto">{inspectTab === '产水模式' && 产水面板}</div>
+        </div>
+      );
+    };
+
     /* ── 巡检管理主页面 ── */
-    const InspectManagePage = ({ onBack }) => {
+    const InspectManagePage = ({ plans, setPlans, onBack, onNavigateExec, onNavigateSummary }) => {
       const [tab, setTab]           = useState('设备巡检');
-      const [plans, setPlans]       = useState(初始巡检计划);
       const [filterStatus, setFilter] = useState('全部');
       const [showCreate, setShowCreate] = useState(false);
-      const [detailPlan, setDetailPlan] = useState(null);
 
       const tabPlans = useMemo(() =>
         plans.filter(p => p.type === tab && (filterStatus === '全部' || p.status === filterStatus)),
@@ -2388,6 +2567,18 @@
         setShowCreate(false);
         setTab(form.type);
         setFilter('全部');
+      };
+
+      const handleEnterInspect = (plan) => {
+        const pad = n => String(n).padStart(2, '0');
+        const t = new Date();
+        const ts = `${t.getFullYear()}-${pad(t.getMonth() + 1)}-${pad(t.getDate())} ${pad(t.getHours())}:${pad(t.getMinutes())}`;
+        if (plan.status === '待执行') {
+          setPlans(prev => prev.map(p => (p.id === plan.id && p.status === '待执行')
+            ? { ...p, status: '进行中', startTime: ts }
+            : p));
+        }
+        onNavigateExec(plan.id);
       };
 
       return (
@@ -2442,18 +2633,17 @@
               </div>
             ) : tabPlans.map(plan => {
               const ss = 巡检状态样式[plan.status];
-              return (
-                <button key={plan.id} onClick={() => setDetailPlan(plan)}
-                  className="bg-white rounded-2xl p-4 text-left active:scale-98 transition-transform w-full">
-                  {/* 标题行 */}
+              const runnable = plan.status === '待执行' || plan.status === '进行中';
+
+              const headBlock = (
+                <>
                   <div className="flex items-start justify-between gap-2 mb-2">
                     <span className="text-sm font-semibold text-gray-800 leading-snug flex-1">{plan.title}</span>
                     <span className={`flex-shrink-0 text-xs font-medium px-2 py-0.5 rounded-full border flex items-center gap-1 ${ss.bg} ${ss.text} ${ss.border}`}>
                       <span className={`w-1.5 h-1.5 rounded-full ${ss.dot}`}></span>{plan.status}
                     </span>
                   </div>
-                  {/* 信息行 */}
-                  <div className="flex items-center gap-3 mb-1.5">
+                  <div className="flex items-center gap-3 mb-1.5 flex-wrap">
                     <span className="flex items-center gap-1 text-xs text-gray-400">
                       <Building2 size={11} color="#9ca3af" />{plan.community}
                     </span>
@@ -2464,7 +2654,6 @@
                       <CalendarDays size={11} color="#9ca3af" />{plan.planDate}
                     </span>
                   </div>
-                  {/* 检查项标签 */}
                   <div className="flex flex-wrap gap-1.5 mt-2">
                     {plan.items.slice(0, 4).map((item, i) => (
                       <span key={i} className="text-xs px-2 py-0.5 bg-blue-50 text-blue-500 rounded-full">{item}</span>
@@ -2473,21 +2662,41 @@
                       <span className="text-xs px-2 py-0.5 bg-gray-50 text-gray-400 rounded-full">+{plan.items.length - 4}</span>
                     )}
                   </div>
-                  {/* 进度条（已完成） */}
-                  {plan.status === '已完成' && (
-                    <div className="mt-3 flex items-center gap-2">
-                      <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                        <div className="h-full rounded-full bg-emerald-500" style={{ width: '100%' }}></div>
+                </>
+              );
+
+              if (!runnable) {
+                return (
+                  <button key={plan.id} type="button" onClick={() => onNavigateSummary(plan.id)}
+                    className="bg-white rounded-2xl p-4 text-left active:scale-98 transition-transform w-full shadow-sm">
+                    {headBlock}
+                    {plan.status === '已完成' && (
+                      <div className="mt-3 flex items-center gap-2">
+                        <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                          <div className="h-full rounded-full bg-emerald-500" style={{ width: '100%' }}></div>
+                        </div>
+                        <span className="text-xs font-medium text-emerald-600">100%</span>
                       </div>
-                      <span className="text-xs font-medium text-emerald-600">100%</span>
+                    )}
+                    <div className="flex justify-between items-center mt-2">
+                      <span className="text-xs text-gray-300">{plan.period}计划</span>
+                      <ChevronRight size={14} color="#d1d5db" />
                     </div>
-                  )}
-                  {/* 期间标识 */}
+                  </button>
+                );
+              }
+
+              return (
+                <div key={plan.id} className="bg-white rounded-2xl p-4 w-full shadow-sm">
+                  {headBlock}
                   <div className="flex justify-between items-center mt-2">
                     <span className="text-xs text-gray-300">{plan.period}计划</span>
-                    <ChevronRight size={14} color="#d1d5db" />
                   </div>
-                </button>
+                  <button type="button" onClick={() => handleEnterInspect(plan)}
+                    className="mt-3 w-full py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold active:bg-blue-700">
+                    {plan.status === '待执行' ? '开始巡检' : '继续巡检'}
+                  </button>
+                </div>
               );
             })}
           </div>
@@ -2495,10 +2704,6 @@
           {/* 新建计划弹窗 */}
           {showCreate && (
             <CreatePlanModal defaultType={tab} onClose={() => setShowCreate(false)} onSubmit={handleCreate} />
-          )}
-          {/* 计划详情弹窗 */}
-          {detailPlan && (
-            <PlanDetailModal plan={detailPlan} onClose={() => setDetailPlan(null)} />
           )}
         </div>
       );
@@ -2919,6 +3124,7 @@
     const App = () => {
       const [route, setRoute] = useState({ page: 'home' });
       const [alarmEvents, setAlarmEvents] = useState(初始报警数据);
+      const [plans, setPlans] = useState(初始巡检计划);
 
       const nav = (page) => setRoute({ page });
       const showNav = 主页面集合.has(route.page);
@@ -2972,7 +3178,29 @@
           return <MyPage />;
         }
         if (route.page === '巡检管理') {
-          return <InspectManagePage onBack={() => nav('home')} />;
+          return (
+            <InspectManagePage
+              plans={plans}
+              setPlans={setPlans}
+              onBack={() => nav('home')}
+              onNavigateExec={(planId) => setRoute({ page: 'inspectExec', planId })}
+              onNavigateSummary={(planId) => setRoute({ page: 'inspectSummary', planId })}
+            />
+          );
+        }
+        if (route.page === 'inspectExec') {
+          const execPlan = plans.find(p => p.id === route.planId);
+          if (!execPlan) {
+            return <PlaceholderPage title="未找到巡检计划" onBack={() => nav('巡检管理')} />;
+          }
+          return <InspectExecutionPage plan={execPlan} onBack={() => nav('巡检管理')} />;
+        }
+        if (route.page === 'inspectSummary') {
+          const summaryPlan = plans.find(p => p.id === route.planId);
+          if (!summaryPlan) {
+            return <PlaceholderPage title="未找到巡检计划" onBack={() => nav('巡检管理')} />;
+          }
+          return <InspectPlanSummaryPage plan={summaryPlan} onBack={() => nav('巡检管理')} />;
         }
         if (route.page === '维保管理') {
           return <MaintManagePage onBack={() => nav('home')} />;

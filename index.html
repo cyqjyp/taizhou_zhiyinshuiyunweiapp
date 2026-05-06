@@ -465,8 +465,8 @@
 
       const tagStats = useMemo(() => ({
         '全部':     用户数据.length,
-        '欠费用户': 用户数据.filter(isArrears).length,
-        '关阀用户': 用户数据.filter(isValveClosed).length,
+        '欠费': 用户数据.filter(isArrears).length,
+        '关阀': 用户数据.filter(isValveClosed).length,
         '长期未用水': 用户数据.filter(isNoWater).length,
       }), []);
 
@@ -476,8 +476,8 @@
           const matchKw  = !kw || u.name.includes(kw) || u.id.includes(kw) || u.community.includes(kw) || u.address.includes(kw);
           const matchC   = filterCommunity === '全部' || u.community === filterCommunity;
           const matchTag = activeTag === '全部'       ? true
-                         : activeTag === '欠费用户'   ? isArrears(u)
-                         : activeTag === '关阀用户'   ? isValveClosed(u)
+                         : activeTag === '欠费'   ? isArrears(u)
+                         : activeTag === '关阀'   ? isValveClosed(u)
                          : activeTag === '长期未用水' ? isNoWater(u)
                          : true;
           return matchKw && matchC && matchTag;
@@ -510,9 +510,9 @@
             {/* 用户标签 */}
             <div className="flex gap-2 mt-3 overflow-x-auto pb-1" style={{scrollbarWidth:'none'}}>
               {[
-                { key: '全部',     label: '用户总数',   color: activeTag==='全部'     ? 'bg-white text-blue-600' : 'bg-blue-500/50 text-white', dot: '' },
-                { key: '欠费用户', label: '欠费用户',   color: activeTag==='欠费用户' ? 'bg-white text-orange-500' : 'bg-blue-500/50 text-white', dot: 'bg-orange-400' },
-                { key: '关阀用户', label: '关阀用户',   color: activeTag==='关阀用户' ? 'bg-white text-red-500'    : 'bg-blue-500/50 text-white', dot: 'bg-red-400' },
+                { key: '全部',     label: '总数',   color: activeTag==='全部'     ? 'bg-white text-blue-600' : 'bg-blue-500/50 text-white', dot: '' },
+                { key: '欠费', label: '欠费',   color: activeTag==='欠费' ? 'bg-white text-orange-500' : 'bg-blue-500/50 text-white', dot: 'bg-orange-400' },
+                { key: '关阀', label: '关阀',   color: activeTag==='关阀' ? 'bg-white text-red-500'    : 'bg-blue-500/50 text-white', dot: 'bg-red-400' },
                 { key: '长期未用水', label: '长期未用水', color: activeTag==='长期未用水' ? 'bg-white text-gray-600' : 'bg-blue-500/50 text-white', dot: 'bg-gray-400' },
               ].map(tag => (
                 <button
@@ -2160,7 +2160,7 @@
       { id:'J001', type:'设备巡检', title:'锦绣花园净水设备月度巡检',   status:'待执行', community:'锦绣花园',   assignee:'张运维', planDate:'2026-04-18', period:'月度', devices:['净水设备 A01','直饮设备 B01'], items:['外观检查','滤芯状态确认','水压测试','出水水质抽检','通信状态核查'], startTime:null, endTime:null, remark:'本次为例行月度巡检，请携带滤芯检测仪。' },
       { id:'J003', type:'设备巡检', title:'阳光丽景设备故障专项检查',   status:'已完成', community:'阳光丽景', assignee:'张运维', planDate:'2026-04-10', period:'临时', devices:['净水设备 C02','管线设备 D02'], items:['故障原因排查','管路压力测试','备件更换确认','功能恢复验证'], startTime:'2026-04-10 10:00', endTime:'2026-04-10 14:30', remark:'已排查出水压力偏低原因，更换进水过滤网，设备恢复正常。' },
       { id:'J004', type:'设备巡检', title:'华悦府净水设备例行巡检',     status:'待执行', community:'华悦府',   assignee:'王运维', planDate:'2026-04-20', period:'月度', devices:['净水设备 D05','直饮设备 E01'], items:['外观检查','水质抽检','滤芯状态','供电状态确认'], startTime:null, endTime:null, remark:'' },
-      { id:'J005', type:'设备巡检', title:'紫荆花园设备季度全面巡检',   status:'已完成', community:'紫荆花园', assignee:'赵运维', planDate:'2026-03-28', period:'季度', devices:['管线设备 F01','软水设备 G02'], items:['外观及清洁','软化盐补充','管路检漏','运行数据核查'], startTime:'2026-03-28 09:30', endTime:'2026-03-28 12:00', remark:'软化盐已补充，管线设备滤芯完成更换。' },
+      { id:'J005', type:'设备巡检', title:'紫荆花园设备月度巡检',   status:'已完成', community:'紫荆花园', assignee:'赵运维', planDate:'2026-03-28', period:'季度', devices:['管线设备 F01','软水设备 G02'], items:['外观及清洁','软化盐补充','管路检漏','运行数据核查'], startTime:'2026-03-28 09:30', endTime:'2026-03-28 12:00', remark:'软化盐已补充，管线设备滤芯完成更换。' },
       /* ── 水质检测 ── */
       { id:'W001', type:'水质检测', title:'锦绣花园供水水质月度抽检',   status:'待执行', community:'锦绣花园',   assignee:'张运维', planDate:'2026-04-20', period:'月度', devices:[], items:['浊度','pH值','TDS','余氯','菌落总数','色度'], startTime:null, endTime:null, remark:'按月度水质监测计划执行。', result:{} },
       { id:'W002', type:'水质检测', title:'翡翠湾供水水质季度全检',     status:'已完成', community:'翡翠湾小区', assignee:'李运维', planDate:'2026-04-10', period:'季度', devices:[], items:['浊度','pH值','TDS','余氯','菌落总数','大肠杆菌','硝酸盐','亚硝酸盐'], startTime:'2026-04-10 09:00', endTime:'2026-04-10 11:30', remark:'各项指标均达标，水质优良。', result:{'浊度':'0.3 NTU','pH值':'7.2','TDS':'45 ppm','余氯':'0.12 mg/L','菌落总数':'<1 CFU/mL','大肠杆菌':'未检出','硝酸盐':'2.1 mg/L','亚硝酸盐':'0.003 mg/L'} },
@@ -2186,7 +2186,7 @@
 
       const communities = ['锦绣花园','翡翠湾小区','阳光丽景','华悦府','紫荆花园'];
       const assignees   = ['张运维','李运维','王运维','赵运维'];
-      const periods     = ['月度','季度','临时'];
+      const periods     = ['月度'];
 
       const fieldCls = "w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-blue-400";
       const labelCls = "text-xs text-gray-500 font-medium mb-1.5 block";
@@ -2236,7 +2236,7 @@
                 <div className="flex gap-2">
                   {periods.map(p => (
                     <button key={p} onClick={() => set('period', p)}
-                      className={`flex-1 py-2 rounded-xl text-xs font-medium border transition-colors ${
+                      className={`px-6 py-2 rounded-xl text-xs font-medium border transition-colors ${
                         form.period === p ? 'bg-blue-50 text-blue-600 border-blue-300' : 'bg-white text-gray-500 border-gray-200'
                       }`}>{p}</button>
                   ))}
@@ -2274,6 +2274,53 @@
     /* ── 已完成巡检全屏详情（替代原底部弹窗）── */
     const InspectPlanSummaryPage = ({ plan, onBack }) => {
       const ss = 巡检状态样式[plan.status];
+      const id = plan.inspectData;
+      const pr = id?.produce;
+      const sp = id?.supply;
+
+      /* 通用行：label + value，始终渲染，空值显示横线 */
+      const DR = ({ label, value, unit = '' }) => (
+        <div className="flex items-center justify-between gap-3 py-2 border-b border-gray-50 last:border-b-0">
+          <span className="text-xs text-gray-400 shrink-0">{label}</span>
+          {value
+            ? <span className="text-xs font-medium text-gray-700 text-right">{value}{unit && <span className="text-gray-400 ml-1">{unit}</span>}</span>
+            : <span className="text-xs text-gray-300">—</span>
+          }
+        </div>
+      );
+
+      /* 状态列表渲染：按给定 keys 列表遍历，未填写显示 "—" */
+      const StatusDict = ({ dict, keys }) => (
+        <div className="flex flex-col">
+          {keys.map(k => {
+            const v = (dict || {})[k];
+            return (
+              <div key={k} className="flex items-center justify-between gap-3 py-2 border-b border-gray-50 last:border-b-0">
+                <span className="text-xs text-gray-400 leading-snug flex-1">{k}</span>
+                {v
+                  ? <span className={`text-xs font-semibold px-2 py-0.5 rounded-full shrink-0 ${v === '正常' || v === '是' || v === '不漏水' || v === '整洁' || v === '干燥' ? 'bg-emerald-50 text-emerald-600' : v === '异常' || v === '不正常' || v === '老化' || v === '松动' || v === '漏水' ? 'bg-red-50 text-red-500' : 'bg-blue-50 text-blue-600'}`}>{v}</span>
+                  : <span className="text-xs text-gray-300 shrink-0">—</span>
+                }
+              </div>
+            );
+          })}
+        </div>
+      );
+
+      const 产水状态键 = ['浓水排放','多介质过滤','活性炭过滤','软化过滤','市政压力/水箱液位','浓水快速排放','预处理紫外灯','产水合格阀','产水不合格阀','预处理排放阀'];
+      const 供水状态键 = ['接线','空气开关','电子元气件','指示灯','防水','防尘','内接线路','电气元件','每季对控制柜进行除尘','变频器运行','变频器是否在最佳工作状态','PLC运转','远程通讯状态','数据远传参数','压力表','压力变送器','水泵运行','噪音','震动','泵体是否发热','水泵排气','机械密封','电机运行','电机电流','电机是否发热','水泵、管道、阀门、压力水容器等密封情况','臭氧机及其功能测试是否正常','净水箱罐排污情况','原水箱排污情况','刷卡开门','水位报警','球体摄像头方向','枪机方向','泵房潮湿情况评定','泵房是否高温','除湿机是否开启','泵房照明情况','泵房内设备整洁情况','灭火器情况'];
+
+      /* 卡片容器 */
+      const Card = ({ title, color = 'blue', children }) => (
+        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+          <div className={`px-4 py-2.5 flex items-center gap-2 ${color === 'blue' ? 'bg-blue-50 border-b border-blue-100' : 'bg-emerald-50 border-b border-emerald-100'}`}>
+            <div className={`w-1 h-3.5 rounded-full shrink-0 ${color === 'blue' ? 'bg-blue-500' : 'bg-emerald-500'}`}></div>
+            <span className={`text-xs font-semibold ${color === 'blue' ? 'text-blue-800' : 'text-emerald-800'}`}>{title}</span>
+          </div>
+          <div className="px-4 py-1">{children}</div>
+        </div>
+      );
+
       return (
         <div className="flex flex-col min-h-screen bg-gray-100">
           <div className="bg-blue-600 px-4 pt-10 pb-4 sticky top-0 z-20">
@@ -2285,6 +2332,8 @@
             </div>
           </div>
           <div className="flex-1 px-4 py-4 pb-8 flex flex-col gap-4">
+
+            {/* 基本信息 */}
             <div className="bg-white rounded-2xl p-5 flex flex-col gap-4 shadow-sm">
               <span className="text-sm font-semibold text-gray-800 leading-snug">{plan.title}</span>
               <div className="flex gap-2 flex-wrap">
@@ -2306,26 +2355,6 @@
                   </div>
                 ))}
               </div>
-              {plan.items.length > 0 && (
-                <div>
-                  <p className="text-xs font-semibold text-gray-500 mb-2">检查项目</p>
-                  <div className="flex flex-wrap gap-2">
-                    {plan.items.map((item, i) => (
-                      <span key={i} className="text-xs px-2.5 py-1 bg-blue-50 text-blue-600 rounded-full border border-blue-100">{item}</span>
-                    ))}
-                  </div>
-                </div>
-              )}
-              {plan.devices && plan.devices.length > 0 && (
-                <div>
-                  <p className="text-xs font-semibold text-gray-500 mb-2">涉及设备</p>
-                  <div className="flex flex-wrap gap-2">
-                    {plan.devices.map((d, i) => (
-                      <span key={i} className="text-xs px-2.5 py-1 bg-gray-50 text-gray-600 rounded-full border border-gray-200">{d}</span>
-                    ))}
-                  </div>
-                </div>
-              )}
               {plan.result && Object.keys(plan.result).length > 0 && (
                 <div>
                   <p className="text-xs font-semibold text-gray-500 mb-2">检测结果</p>
@@ -2339,13 +2368,90 @@
                   </div>
                 </div>
               )}
-              {plan.remark && (
-                <div className="bg-amber-50 border border-amber-100 rounded-xl p-3">
-                  <p className="text-xs text-gray-400 mb-1">备注说明</p>
-                  <p className="text-xs text-gray-600 leading-relaxed">{plan.remark}</p>
-                </div>
-              )}
             </div>
+
+            {/* ── 产水模式巡检数据 ── */}
+            {pr && (
+              <>
+                <Card title="产水模式 · 运行参数" color="blue">
+                  <DR label="原水泵出口压力" value={pr.pumpOutlet} unit="MPa" />
+                  <DR label="产水电导率"     value={pr.conductivity} unit="PPM" />
+                  <DR label="膜前进口压力"   value={pr.memInlet} unit="MPa" />
+                  <DR label="膜后出口压力"   value={pr.memOutlet} unit="MPa" />
+                  <DR label="产水流量"       value={pr.productFlow} unit="M³-L/H" />
+                  <DR label="浓水快排压力"   value={pr.concRapidPressure} unit="MPa" />
+                </Card>
+                <Card title="产水模式 · 环节状态" color="blue">
+                  <StatusDict dict={pr.status} keys={产水状态键} />
+                </Card>
+                <Card title="产水模式 · 耗材记录" color="blue">
+                  <DR label="保安过滤PP棉是否更换"  value={pr.rep1SecurityYesNo} />
+                  <DR label="保安过滤PP棉更换日期"  value={pr.rep1SecurityDate} />
+                  <DR label="回水PP棉是否更换"      value={pr.rep1ReturnYesNo} />
+                  <DR label="回水PP棉更换日期"      value={pr.rep1ReturnDate} />
+                  <DR label="臭氧消解/紫外是否更换" value={pr.rep2YesNo} />
+                  <DR label="臭氧消解滤芯更换日期"  value={pr.rep2OzoneDate} />
+                  <DR label="紫外杀菌灯管更换日期"  value={pr.rep2UvDate} />
+                  <DR label="纳滤膜是否更换"        value={pr.rep3YesNo} />
+                  <DR label="纳滤膜更换日期"        value={pr.rep3NfDate} />
+                </Card>
+              </>
+            )}
+
+            {/* ── 供水模式巡检数据 ── */}
+            {sp && (
+              <>
+                <Card title="供水模式 · 运行参数" color="green">
+                  <DR label="高区水泵运行编号" value={sp.highPumpNo} />
+                  <DR label="高区出水压力"     value={sp.highPressure}    unit="MPa" />
+                  <DR label="高区电流"         value={sp.highCurrent}     unit="A" />
+                  <DR label="高区变频器频率"   value={sp.highFreq}         unit="Hz" />
+                  <DR label="高区净水箱液位"   value={sp.highTankLevel} />
+                  <DR label="高区回水电导率"   value={sp.highConductivity} />
+                  <DR label="低区水泵运行编号" value={sp.lowPumpNo} />
+                  <DR label="低区出水压力"     value={sp.lowPressure}     unit="MPa" />
+                  <DR label="低区电流"         value={sp.lowCurrent}      unit="A" />
+                  <DR label="低区变频器频率"   value={sp.lowFreq}          unit="Hz" />
+                  <DR label="低区净水箱液位"   value={sp.lowTankLevel} />
+                  <DR label="低区回水电导率"   value={sp.lowConductivity} />
+                  <DR label="加盐频率"         value={sp.saltFreq} />
+                  <DR label="消毒模式"         value={sp.disinfectionMode} />
+                </Card>
+                <Card title="供水模式 · 巡检状态" color="green">
+                  <StatusDict dict={sp.supplyStatus} keys={供水状态键} />
+                </Card>
+                <Card title="供水模式 · 水质数据" color="green">
+                  <DR label="浊度"   value={sp.turbidity}     unit="Fnu" />
+                  <DR label="臭氧"   value={sp.ozone}         unit="mg/L" />
+                  <DR label="PH"     value={sp.pH} />
+                  <DR label="温度"   value={sp.temperature}   unit="°" />
+                  <DR label="电导率" value={sp.conductivity2} unit="us/cm" />
+                </Card>
+                <Card title="供水模式 · 管道巡检说明" color="green">
+                  <DR label="高区管道说明" value={sp.highPipeNote} />
+                  <DR label="低区管道说明" value={sp.lowPipeNote} />
+                </Card>
+                <Card title="供水模式 · 抄表记录" color="green">
+                  <DR label="电表度数"     value={sp.electricReading} />
+                  <DR label="电表日期"     value={sp.electricDate} />
+                  <DR label="原水表度数"   value={sp.rawWaterReading} />
+                  <DR label="原水表日期"   value={sp.rawWaterDate} />
+                  <DR label="产水表度数"   value={sp.prodWaterReading} />
+                  <DR label="产水表日期"   value={sp.prodWaterDate} />
+                  <DR label="水质水表度数" value={sp.qualWaterReading} />
+                  <DR label="水质水表日期" value={sp.qualWaterDate} />
+                </Card>
+                <Card title="供水模式 · 其他设施说明" color="green">
+                  <div className="py-2">
+                    {sp.situationDesc
+                      ? <p className="text-xs text-gray-700 leading-relaxed">{sp.situationDesc}</p>
+                      : <span className="text-xs text-gray-300">—</span>
+                    }
+                  </div>
+                </Card>
+              </>
+            )}
+
           </div>
         </div>
       );
@@ -2677,7 +2783,7 @@
           <SectionCard title="10. 水质数据">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
-                { label:'浊度', k:'turbidity', unit:'Fnu' },
+                { label:'浊度', k:'turbidity', unit:'NTU' },
                 { label:'臭氧', k:'ozone', unit:'mg/L' },
                 { label:'PH', k:'pH', unit:'' },
                 { label:'温度', k:'temperature', unit:'°' },
@@ -2842,7 +2948,7 @@
                     const now = new Date();
                     const pad = n => String(n).padStart(2, '0');
                     const ts = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
-                    if (onComplete) onComplete(plan.id, ts);
+                    if (onComplete) onComplete(plan.id, ts, { produce, supply });
                     setShowConfirm(false);
                     onBack();
                   }}
@@ -3520,8 +3626,8 @@
             return <PlaceholderPage title="未找到巡检计划" onBack={() => nav('巡检管理')} />;
           }
           return <InspectExecutionPage plan={execPlan} onBack={() => nav('巡检管理')}
-            onComplete={(planId, ts) => setPlans(prev => prev.map(p =>
-              p.id === planId ? { ...p, status: '已完成', endTime: ts } : p
+            onComplete={(planId, ts, data) => setPlans(prev => prev.map(p =>
+              p.id === planId ? { ...p, status: '已完成', endTime: ts, inspectData: data } : p
             ))} />;
         }
         if (route.page === 'inspectSummary') {

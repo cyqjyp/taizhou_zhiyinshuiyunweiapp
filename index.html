@@ -2028,10 +2028,9 @@
                 <span className="text-xs text-gray-400 mb-0.5">项</span>
               </div>
             </div>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-2 gap-2">
               {[
                 { label: '待执行', num: 初始巡检计划.filter(t => t.status === '待执行').length, bg: 'bg-blue-50',    text: 'text-blue-600',    dot: 'bg-blue-500'    },
-                { label: '进行中', num: 初始巡检计划.filter(t => t.status === '进行中').length, bg: 'bg-amber-50',   text: 'text-amber-600',   dot: 'bg-amber-500'   },
                 { label: '已完成', num: 初始巡检计划.filter(t => t.status === '已完成').length, bg: 'bg-emerald-50', text: 'text-emerald-600', dot: 'bg-emerald-500' },
               ].map(item => (
                 <div key={item.label} className={`${item.bg} rounded-xl p-3 flex flex-col items-center gap-1.5`}>
@@ -2362,8 +2361,8 @@
     const 产水模式状态项 = 产水模式状态行.flat();
 
     /* ── 巡检执行页（待执行／进行中，“开始巡检”进入）── */
-    const InspectExecutionPage = ({ plan, onBack }) => {
-      const [inspectTab, setInspectTab] = useState('产水模式');
+    const InspectExecutionPage = ({ plan, onBack, onComplete }) => {
+      const [showConfirm, setShowConfirm] = useState(false);
       const [produce, setProduce] = useState({
         pumpOutlet: '', conductivity: '', memInlet: '', memOutlet: '', productFlow: '', concRapidPressure: '',
         status: {},
@@ -2382,9 +2381,27 @@
       const setSts = (label, value) =>
         setProduce(prev => ({ ...prev, status: { ...prev.status, [label]: value } }));
 
+      const [supply, setSupply] = useState({
+        highPumpNo: '', lowPumpNo: '',
+        highPressure: '', highCurrent: '', highFreq: '', highTankLevel: '', highConductivity: '',
+        lowPressure: '', lowCurrent: '', lowFreq: '', lowTankLevel: '', lowConductivity: '',
+        saltFreq: '', disinfectionMode: '',
+        dustCleanDate: '',
+        turbidity: '', ozone: '', pH: '', temperature: '', conductivity2: '',
+        highPipeNote: '', lowPipeNote: '',
+        situationDesc: '',
+        electricDate: '', electricReading: '',
+        rawWaterDate: '', rawWaterReading: '',
+        prodWaterDate: '', prodWaterReading: '',
+        qualWaterDate: '', qualWaterReading: '',
+        supplyStatus: {},
+      });
+      const setSupplyFld = (k, v) => setSupply(prev => ({ ...prev, [k]: v }));
+      const setSupplySts = (label, value) =>
+        setSupply(prev => ({ ...prev, supplyStatus: { ...prev.supplyStatus, [label]: value } }));
+
       const numInputCls = 'w-full min-w-0 border border-blue-200 rounded-xl px-3 py-2 text-sm text-gray-800 bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-200';
       const dateInputCls = 'w-full border border-blue-200 rounded-xl px-3 py-2 text-sm bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-200';
-      const tabBar = ['产水模式', '纯水模式', '待机模式'];
 
       const SectionCard = ({ title, hint, children }) => (
         <div className="bg-white rounded-2xl shadow-sm border border-blue-100 overflow-hidden">
@@ -2416,6 +2433,19 @@
             <label className="inline-flex items-center gap-1.5 cursor-pointer">
               <input type="radio" name={`sts-${label}`} checked={produce.status[label] === '异常'} onChange={() => setSts(label, '异常')} className="accent-blue-600 w-3.5 h-3.5" />异常
             </label>
+          </div>
+        </div>
+      );
+
+      const SupplyStatusRow = ({ label, opts = ['正常', '不正常'] }) => (
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 py-3 border-b border-gray-100 last:border-b-0 last:pb-0 first:pt-0">
+          <span className="text-xs text-gray-800 leading-snug">{label}</span>
+          <div className="flex gap-5 text-xs text-gray-700 shrink-0">
+            {opts.map(opt => (
+              <label key={opt} className="inline-flex items-center gap-1.5 cursor-pointer">
+                <input type="radio" name={`sply-${label}`} checked={supply.supplyStatus[label] === opt} onChange={() => setSupplySts(label, opt)} className="accent-blue-600 w-3.5 h-3.5" />{opt}
+              </label>
+            ))}
           </div>
         </div>
       );
@@ -2503,6 +2533,265 @@
         </div>
       );
 
+      const 供水面板 = (
+        <div className="flex flex-col gap-3 mx-px">
+          <SectionCard title="运行参数" hint="各供水区运行数据">
+            <div className="flex flex-col gap-4">
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-xs font-semibold text-gray-700">高区供水区</span>
+                  <span className="text-xs text-gray-500">水泵运行编号</span>
+                  <input type="text" placeholder="编号" className="w-16 border border-blue-200 rounded-lg px-2 py-1 text-xs bg-white outline-none focus:border-blue-500" value={supply.highPumpNo} onChange={e => setSupplyFld('highPumpNo', e.target.value)} />
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {[
+                    { label:'出水压力', k:'highPressure', unit:'MPa' },
+                    { label:'电流', k:'highCurrent', unit:'A' },
+                    { label:'变频器频率', k:'highFreq', unit:'Hz' },
+                    { label:'净水箱液位', k:'highTankLevel', unit:'' },
+                    { label:'回水电导率', k:'highConductivity', unit:'' },
+                  ].map(({ label, k, unit }) => (
+                    <div key={k} className="flex flex-col gap-1">
+                      <span className="text-xs text-gray-600">{label}</span>
+                      <div className="flex items-center gap-2">
+                        <input type="number" step="any" inputMode="decimal" placeholder="填写数值" className={numInputCls} value={supply[k]} onChange={e => setSupplyFld(k, e.target.value)} />
+                        {unit && <span className="text-xs text-blue-600 font-medium w-14 text-right shrink-0">{unit}</span>}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="pt-3 border-t border-gray-100">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-xs font-semibold text-gray-700">低区供水区</span>
+                  <span className="text-xs text-gray-500">水泵运行编号</span>
+                  <input type="text" placeholder="编号" className="w-16 border border-blue-200 rounded-lg px-2 py-1 text-xs bg-white outline-none focus:border-blue-500" value={supply.lowPumpNo} onChange={e => setSupplyFld('lowPumpNo', e.target.value)} />
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {[
+                    { label:'出水压力', k:'lowPressure', unit:'MPa' },
+                    { label:'电流', k:'lowCurrent', unit:'A' },
+                    { label:'变频器频率', k:'lowFreq', unit:'Hz' },
+                    { label:'净水箱液位', k:'lowTankLevel', unit:'' },
+                    { label:'回水电导率', k:'lowConductivity', unit:'' },
+                  ].map(({ label, k, unit }) => (
+                    <div key={k} className="flex flex-col gap-1">
+                      <span className="text-xs text-gray-600">{label}</span>
+                      <div className="flex items-center gap-2">
+                        <input type="number" step="any" inputMode="decimal" placeholder="填写数值" className={numInputCls} value={supply[k]} onChange={e => setSupplyFld(k, e.target.value)} />
+                        {unit && <span className="text-xs text-blue-600 font-medium w-14 text-right shrink-0">{unit}</span>}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="pt-3 border-t border-gray-100 flex flex-col gap-3">
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs text-gray-600">加盐频率（填写时间）</span>
+                  <input type="text" placeholder="填写时间" className={numInputCls} value={supply.saltFreq} onChange={e => setSupplyFld('saltFreq', e.target.value)} />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <span className="text-xs text-gray-600">消毒模式</span>
+                  <div className="flex gap-5 text-xs text-gray-700">
+                    {['紫外线', '臭氧'].map(opt => (
+                      <label key={opt} className="inline-flex items-center gap-1.5 cursor-pointer">
+                        <input type="radio" name="disinfectionMode" checked={supply.disinfectionMode === opt} onChange={() => setSupplyFld('disinfectionMode', opt)} className="accent-blue-600 w-3.5 h-3.5" />{opt}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </SectionCard>
+
+          <SectionCard title="1. 进线电源控制箱">
+            <div>
+              <SupplyStatusRow label="接线" opts={['正常', '松动']} />
+              <SupplyStatusRow label="空气开关" opts={['正常', '不正常']} />
+              <SupplyStatusRow label="电子元气件" opts={['正常', '老化']} />
+            </div>
+          </SectionCard>
+
+          <SectionCard title="2. 控制柜">
+            <div>
+              <SupplyStatusRow label="指示灯" opts={['正常', '不正常']} />
+              <SupplyStatusRow label="防水" opts={['是', '否']} />
+              <SupplyStatusRow label="防尘" opts={['是', '否']} />
+              <SupplyStatusRow label="内接线路" opts={['正常', '不正常']} />
+              <SupplyStatusRow label="电气元件" opts={['正常', '不正常']} />
+              <SupplyStatusRow label="每季对控制柜进行除尘" opts={['是', '否']} />
+              <div className="flex flex-col gap-1 pt-3">
+                <span className="text-xs text-gray-800">除尘日期</span>
+                <input type="date" className={dateInputCls} value={supply.dustCleanDate} onChange={e => setSupplyFld('dustCleanDate', e.target.value)} />
+              </div>
+            </div>
+          </SectionCard>
+
+          <SectionCard title="3. 变频器 / 4. PLC运转">
+            <div>
+              <SupplyStatusRow label="变频器运行" opts={['正常', '不正常']} />
+              <SupplyStatusRow label="变频器是否在最佳工作状态" opts={['是', '否']} />
+              <SupplyStatusRow label="PLC运转" opts={['正常', '不正常']} />
+            </div>
+          </SectionCard>
+
+          <SectionCard title="5. 远程通讯">
+            <div>
+              <SupplyStatusRow label="远程通讯状态" opts={['正常', '不正常']} />
+              <SupplyStatusRow label="数据远传参数" opts={['正常', '不正常']} />
+            </div>
+          </SectionCard>
+
+          <SectionCard title="6. 压力仪表">
+            <div>
+              <SupplyStatusRow label="压力表" opts={['正常', '不正常']} />
+              <SupplyStatusRow label="压力变送器" opts={['正常', '不正常']} />
+            </div>
+          </SectionCard>
+
+          <SectionCard title="7. 水泵">
+            <div>
+              <SupplyStatusRow label="水泵运行" opts={['正常', '不正常']} />
+              <SupplyStatusRow label="噪音" opts={['正常', '不正常']} />
+              <SupplyStatusRow label="震动" opts={['正常', '不正常']} />
+              <SupplyStatusRow label="泵体是否发热" opts={['是', '否']} />
+              <SupplyStatusRow label="水泵排气" opts={['是', '否']} />
+              <SupplyStatusRow label="机械密封" opts={['漏水', '不漏水']} />
+            </div>
+          </SectionCard>
+
+          <SectionCard title="8. 电机">
+            <div>
+              <SupplyStatusRow label="电机运行" opts={['正常', '不正常']} />
+              <SupplyStatusRow label="电机电流" opts={['正常', '不正常']} />
+              <SupplyStatusRow label="电机是否发热" opts={['是', '否']} />
+            </div>
+          </SectionCard>
+
+          <SectionCard title="9. 密封情况">
+            <div>
+              <SupplyStatusRow label="水泵、管道、阀门、压力水容器等密封情况" opts={['正常', '不正常']} />
+            </div>
+          </SectionCard>
+
+          <SectionCard title="10. 水质数据">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {[
+                { label:'浊度', k:'turbidity', unit:'Fnu' },
+                { label:'臭氧', k:'ozone', unit:'mg/L' },
+                { label:'PH', k:'pH', unit:'' },
+                { label:'温度', k:'temperature', unit:'°' },
+                { label:'电导率', k:'conductivity2', unit:'us/cm' },
+              ].map(({ label, k, unit }) => (
+                <div key={k} className="flex flex-col gap-1">
+                  <span className="text-xs text-gray-600">{label}</span>
+                  <div className="flex items-center gap-2">
+                    <input type="number" step="any" inputMode="decimal" placeholder="填写数值" className={numInputCls} value={supply[k]} onChange={e => setSupplyFld(k, e.target.value)} />
+                    {unit && <span className="text-xs text-blue-600 font-medium w-14 text-right shrink-0">{unit}</span>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </SectionCard>
+
+          <SectionCard title="11. 消毒机与排污">
+            <div>
+              <SupplyStatusRow label="臭氧机及其功能测试是否正常" opts={['正常', '不正常']} />
+              <SupplyStatusRow label="净水箱罐排污情况" opts={['正常', '不正常']} />
+              <SupplyStatusRow label="原水箱排污情况" opts={['正常', '不正常']} />
+            </div>
+          </SectionCard>
+
+          <SectionCard title="管道巡检说明">
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-1.5">
+                <span className="text-xs text-gray-700">高区供水管道巡检说明</span>
+                <textarea rows={3} placeholder="填写说明" className="w-full border border-blue-200 rounded-xl px-3 py-2 text-sm bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-200 resize-none" value={supply.highPipeNote} onChange={e => setSupplyFld('highPipeNote', e.target.value)} />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <span className="text-xs text-gray-700">低区供水管道巡检说明</span>
+                <textarea rows={3} placeholder="填写说明" className="w-full border border-blue-200 rounded-xl px-3 py-2 text-sm bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-200 resize-none" value={supply.lowPipeNote} onChange={e => setSupplyFld('lowPipeNote', e.target.value)} />
+              </div>
+            </div>
+          </SectionCard>
+
+          <SectionCard title="门禁">
+            <div>
+              <SupplyStatusRow label="刷卡开门" opts={['正常', '不正常']} />
+              <SupplyStatusRow label="水位报警" opts={['正常', '不正常']} />
+            </div>
+          </SectionCard>
+
+          <SectionCard title="视频">
+            <div>
+              <SupplyStatusRow label="球体摄像头方向" opts={['正常', '不正常']} />
+              <SupplyStatusRow label="枪机方向" opts={['正常', '不正常']} />
+            </div>
+          </SectionCard>
+
+          <SectionCard title="其他设施">
+            <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1.5 py-3 border-b border-gray-100">
+                <span className="text-xs text-gray-800">泵房潮湿情况评定</span>
+                <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-gray-700">
+                  {['高温', '干燥', '有点潮湿', '比较潮湿', '很潮湿', '积水很多'].map(opt => (
+                    <label key={opt} className="inline-flex items-center gap-1.5 cursor-pointer">
+                      <input type="radio" name="humidityLevel" checked={supply.supplyStatus['泵房潮湿情况评定'] === opt} onChange={() => setSupplySts('泵房潮湿情况评定', opt)} className="accent-blue-600 w-3.5 h-3.5" />{opt}
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <SupplyStatusRow label="泵房是否高温" opts={['是', '否']} />
+              <SupplyStatusRow label="除湿机是否开启" opts={['是', '否']} />
+              <SupplyStatusRow label="泵房照明情况" opts={['正常', '不正常']} />
+              <div className="flex flex-col gap-1.5 py-3 border-t border-gray-100">
+                <span className="text-xs text-gray-800">泵房内设备整洁情况</span>
+                <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-gray-700">
+                  {['积灰', '垃圾', '杂物', '积水', '蜘蛛网', '整洁'].map(opt => (
+                    <label key={opt} className="inline-flex items-center gap-1.5 cursor-pointer">
+                      <input type="radio" name="cleanLevel" checked={supply.supplyStatus['泵房内设备整洁情况'] === opt} onChange={() => setSupplySts('泵房内设备整洁情况', opt)} className="accent-blue-600 w-3.5 h-3.5" />{opt}
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div className="flex flex-col gap-1.5 py-3 border-t border-gray-100">
+                <span className="text-xs text-gray-800">灭火器情况</span>
+                <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-gray-700">
+                  {['压力正常', '每月签到一次', '无'].map(opt => (
+                    <label key={opt} className="inline-flex items-center gap-1.5 cursor-pointer">
+                      <input type="radio" name="fireExtStatus" checked={supply.supplyStatus['灭火器情况'] === opt} onChange={() => setSupplySts('灭火器情况', opt)} className="accent-blue-600 w-3.5 h-3.5" />{opt}
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div className="flex flex-col gap-1.5 pt-1">
+                <span className="text-xs text-gray-800">情况描述</span>
+                <textarea rows={3} placeholder="填写描述" className="w-full border border-blue-200 rounded-xl px-3 py-2 text-sm bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-200 resize-none" value={supply.situationDesc} onChange={e => setSupplyFld('situationDesc', e.target.value)} />
+              </div>
+            </div>
+          </SectionCard>
+
+          <SectionCard title="抄表记录">
+            <div className="flex flex-col gap-4">
+              {[
+                { label:'电表度数', dk:'electricDate', rk:'electricReading' },
+                { label:'原水表度数', dk:'rawWaterDate', rk:'rawWaterReading' },
+                { label:'产水表度数', dk:'prodWaterDate', rk:'prodWaterReading' },
+                { label:'水质水表度数', dk:'qualWaterDate', rk:'qualWaterReading' },
+              ].map(({ label, dk, rk }) => (
+                <div key={dk} className="flex flex-col gap-1.5">
+                  <span className="text-xs text-gray-700 font-medium">{label}</span>
+                  <div className="grid grid-cols-2 gap-2">
+                    <input type="date" className={dateInputCls} value={supply[dk]} onChange={e => setSupplyFld(dk, e.target.value)} />
+                    <input type="number" step="any" inputMode="decimal" placeholder="填写读数" className={numInputCls} value={supply[rk]} onChange={e => setSupplyFld(rk, e.target.value)} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </SectionCard>
+        </div>
+      );
+
       return (
         <div className="flex flex-col min-h-screen bg-gray-100">
           <div className="bg-blue-600 px-4 pt-10 pb-3 sticky top-0 z-20">
@@ -2514,22 +2803,59 @@
             </div>
             <p className="text-white/85 text-[11px] leading-snug pl-11">{plan.title}</p>
           </div>
-          <div className="sticky top-[7.25rem] z-10 bg-blue-50/90 border-b border-blue-100 px-3 pt-2 pb-2">
-            <div className="flex gap-2 overflow-x-auto pb-1">
-              {tabBar.map(t => (
-                <button
-                  key={t}
-                  type="button"
-                  onClick={() => t === '产水模式' && setInspectTab(t)}
-                  disabled={t !== '产水模式'}
-                  className={`shrink-0 px-3 py-2 rounded-xl text-xs font-semibold transition-colors ${inspectTab === t ? 'bg-white text-blue-700 shadow-sm border border-blue-200' : 'text-gray-400 border border-transparent'}`}>{t}</button>
-              ))}
+          <div className="flex-1 px-3 py-4 pb-10 overflow-y-auto flex flex-col gap-4">
+            <div className="flex items-center gap-2 px-1">
+              <div className="w-1 h-4 bg-blue-500 rounded-full shrink-0"></div>
+              <span className="text-sm font-semibold text-blue-800">产水模式</span>
             </div>
-            {inspectTab !== '产水模式' && (
-              <p className="text-[11px] text-gray-400 px-1 pt-1">暂未开放更多模式页签。</p>
-            )}
+            {产水面板}
+            <div className="flex items-center gap-2 px-1 mt-2">
+              <div className="w-1 h-4 bg-emerald-500 rounded-full shrink-0"></div>
+              <span className="text-sm font-semibold text-emerald-800">供水模式</span>
+            </div>
+            {供水面板}
+            <div className="flex gap-3 mt-1">
+              <button type="button" onClick={onBack}
+                className="flex-1 py-3 rounded-2xl border border-gray-200 text-sm font-semibold text-gray-500 bg-white active:bg-gray-50 transition-colors">
+                暂存退出
+              </button>
+              <button type="button" onClick={() => setShowConfirm(true)}
+                className="py-3 rounded-2xl bg-emerald-500 text-white text-sm font-semibold active:bg-emerald-600 transition-colors shadow-sm" style={{flex:2}}>
+                提交巡检结果
+              </button>
+            </div>
           </div>
-          <div className="flex-1 px-3 py-4 pb-10 overflow-y-auto">{inspectTab === '产水模式' && 产水面板}</div>
+
+          {/* 提交确认弹窗 */}
+          {showConfirm && (
+            <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40" onClick={() => setShowConfirm(false)}>
+              <div className="w-full max-w-sm bg-white rounded-t-3xl px-5 pt-6 pb-10 flex flex-col gap-4" onClick={e => e.stopPropagation()}>
+                <div className="flex flex-col items-center gap-2 pb-2">
+                  <div className="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center mb-1">
+                    <CheckCircle size={28} color="#10b981" />
+                  </div>
+                  <h3 className="text-base font-semibold text-gray-800">确认提交巡检结果？</h3>
+                  <p className="text-xs text-gray-500 text-center leading-relaxed">提交后本次巡检将标记为已完成，<br/>填写内容将同步保存至记录。</p>
+                </div>
+                <button type="button"
+                  onClick={() => {
+                    const now = new Date();
+                    const pad = n => String(n).padStart(2, '0');
+                    const ts = `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
+                    if (onComplete) onComplete(plan.id, ts);
+                    setShowConfirm(false);
+                    onBack();
+                  }}
+                  className="w-full py-3.5 rounded-2xl bg-emerald-500 text-white text-sm font-semibold active:bg-emerald-600 transition-colors shadow-sm">
+                  确认提交
+                </button>
+                <button type="button" onClick={() => setShowConfirm(false)}
+                  className="w-full py-3 rounded-2xl border border-gray-200 text-sm font-semibold text-gray-500 bg-gray-50 active:bg-gray-100 transition-colors">
+                  继续填写
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       );
     };
@@ -3193,7 +3519,10 @@
           if (!execPlan) {
             return <PlaceholderPage title="未找到巡检计划" onBack={() => nav('巡检管理')} />;
           }
-          return <InspectExecutionPage plan={execPlan} onBack={() => nav('巡检管理')} />;
+          return <InspectExecutionPage plan={execPlan} onBack={() => nav('巡检管理')}
+            onComplete={(planId, ts) => setPlans(prev => prev.map(p =>
+              p.id === planId ? { ...p, status: '已完成', endTime: ts } : p
+            ))} />;
         }
         if (route.page === 'inspectSummary') {
           const summaryPlan = plans.find(p => p.id === route.planId);

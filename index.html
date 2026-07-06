@@ -71,6 +71,7 @@
     const HelpCircle    = p => <Svg {...p}><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></Svg>;
     const LogOut        = p => <Svg {...p}><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></Svg>;
     const MessageSquare = p => <Svg {...p}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></Svg>;
+    const Package       = p => <Svg {...p}><path d="m16.5 9.4-7-3.15M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" x2="12" y1="22" y2="12"/></Svg>;
 
     /* ════════════════════════════════════════
        全局常量
@@ -97,7 +98,7 @@
     ════════════════════════════════════════ */
     const 设备数据 = [
       {
-        id: 'D001', name: '净水设备 A01', community: '锦绣花园', type: '净水机', status: '在线',
+        id: 'D001', name: '净水设备 A01', community: '锦绣花园', pumpRoom: '1号泵房', type: '净水机', status: '在线',
         address: '1号楼地下室机房', model: 'TZ-PW-5000A', sn: 'SN202310010001',
         installDate: '2023-10-01', lastMaintenance: '2026-01-15', operator: '张运维', phone: '13800001001',
         waterFlow: 48.6, pressure: 0.28, tds: 32, temperature: 18.5, filterLife: 76,
@@ -114,7 +115,7 @@
         ],
       },
       {
-        id: 'D002', name: '直饮设备 B01', community: '锦绣花园', type: '直饮机', status: '预警',
+        id: 'D002', name: '直饮设备 B01', community: '锦绣花园', pumpRoom: '2号泵房', type: '直饮机', status: '预警',
         address: '2号楼大厅饮水间', model: 'TZ-DW-3000B', sn: 'SN202311050002',
         installDate: '2023-11-05', lastMaintenance: '2026-02-20', operator: '张运维', phone: '13800001001',
         waterFlow: 31.2, pressure: 0.19, tds: 48, temperature: 22.1, filterLife: 91,
@@ -130,7 +131,7 @@
         ],
       },
       {
-        id: 'D003', name: '净水设备 C01', community: '翡翠湾小区', type: '净水机', status: '在线',
+        id: 'D003', name: '净水设备 C01', community: '翡翠湾小区', pumpRoom: '1号泵房', type: '净水机', status: '在线',
         address: '3号楼物业用房', model: 'TZ-PW-5000A', sn: 'SN202312010003',
         installDate: '2023-12-01', lastMaintenance: '2026-03-10', operator: '李运维', phone: '13800001002',
         waterFlow: 52.3, pressure: 0.31, tds: 28, temperature: 17.8, filterLife: 58,
@@ -143,7 +144,7 @@
         ],
       },
       {
-        id: 'D004', name: '软水设备 B03', community: '翡翠湾小区', type: '软水机', status: '故障',
+        id: 'D004', name: '软水设备 B03', community: '翡翠湾小区', pumpRoom: '2号泵房', type: '软水机', status: '故障',
         address: '5号楼换热站', model: 'TZ-SW-2000C', sn: 'SN202401100004',
         installDate: '2024-01-10', lastMaintenance: '2025-12-08', operator: '李运维', phone: '13800001002',
         waterFlow: 0, pressure: 0, tds: 0, temperature: 0, filterLife: 44,
@@ -160,7 +161,7 @@
         ],
       },
       {
-        id: 'D006', name: '净水设备 C02', community: '阳光丽景', type: '净水机', status: '离线',
+        id: 'D006', name: '净水设备 C02', community: '阳光丽景', pumpRoom: '1号泵房', type: '净水机', status: '离线',
         address: '2号楼地下车库', model: 'TZ-PW-5000A', sn: 'SN202403010006',
         installDate: '2024-03-01', lastMaintenance: '2026-01-20', operator: '张运维', phone: '13800001001',
         waterFlow: 0, pressure: 0, tds: 0, temperature: 0, filterLife: 55,
@@ -175,7 +176,7 @@
         ],
       },
       {
-        id: 'D007', name: '直饮设备 E01', community: '华悦府', type: '直饮机', status: '在线',
+        id: 'D007', name: '直饮设备 E01', community: '华悦府', pumpRoom: '1号泵房', type: '直饮机', status: '在线',
         address: '1号楼大堂', model: 'TZ-DW-3000B', sn: 'SN202404010007',
         installDate: '2024-04-01', lastMaintenance: '2026-03-25', operator: '王运维', phone: '13800001003',
         waterFlow: 36.8, pressure: 0.27, tds: 30, temperature: 19.6, filterLife: 43,
@@ -187,7 +188,7 @@
         ],
       },
       {
-        id: 'D008', name: '净水设备 D05', community: '华悦府', type: '净水机', status: '故障',
+        id: 'D008', name: '净水设备 D05', community: '华悦府', pumpRoom: '2号泵房', type: '净水机', status: '故障',
         address: '5号楼地下机房', model: 'TZ-PW-8000E', sn: 'SN202405010008',
         installDate: '2024-05-01', lastMaintenance: '2025-11-30', operator: '王运维', phone: '13800001003',
         waterFlow: 0, pressure: 0, tds: 0, temperature: 0, filterLife: 22,
@@ -203,7 +204,7 @@
         ],
       },
       {
-        id: 'D010', name: '软水设备 G02', community: '紫荆花园', type: '软水机', status: '预警',
+        id: 'D010', name: '软水设备 G02', community: '紫荆花园', pumpRoom: '1号泵房', type: '软水机', status: '预警',
         address: '4号楼水处理间', model: 'TZ-SW-2000C', sn: 'SN202407010010',
         installDate: '2024-07-01', lastMaintenance: '2026-02-10', operator: '赵运维', phone: '13800001004',
         waterFlow: 28.5, pressure: 0.22, tds: 55, temperature: 18.9, filterLife: 88,
@@ -220,8 +221,69 @@
     ];
 
     /* ════════════════════════════════════════
-       用户数据
+       耗材数据
     ════════════════════════════════════════ */
+    const 耗材种类列表 = ['全部', 'PP棉滤芯', '活性炭滤芯', 'RO反渗透膜', '纳滤膜', '复合滤芯', '紫外杀菌灯管', '软化树脂', '臭氧消解滤芯', '软化盐'];
+
+    const 耗材状态样式 = {
+      正常:   { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', dot: 'bg-emerald-500' },
+      即将到期: { bg: 'bg-amber-50',   text: 'text-amber-700',   border: 'border-amber-200',   dot: 'bg-amber-500'  },
+      已超期: { bg: 'bg-red-50',     text: 'text-red-700',     border: 'border-red-200',     dot: 'bg-red-500'    },
+    };
+
+    const 计算耗材状态 = (nextReplace) => {
+      const today = new Date('2026-04-16');
+      const next = new Date(nextReplace);
+      const diffDays = Math.ceil((next - today) / (1000 * 60 * 60 * 24));
+      if (diffDays < 0) return { status: '已超期', remainDays: diffDays };
+      if (diffDays <= 30) return { status: '即将到期', remainDays: diffDays };
+      return { status: '正常', remainDays: diffDays };
+    };
+
+    const 耗材数据 = [
+      { id: 'HC001', community: '锦绣花园', deviceId: 'D001', deviceName: '净水设备 A01', pumpRoom: '1号泵房', type: 'PP棉滤芯',     lastReplace: '2026-01-15', nextReplace: '2026-07-15', cycleMonths: 6,  operator: '张运维' },
+      { id: 'HC002', community: '锦绣花园', deviceId: 'D001', deviceName: '净水设备 A01', pumpRoom: '1号泵房', type: '活性炭滤芯',   lastReplace: '2025-10-01', nextReplace: '2026-10-01', cycleMonths: 12, operator: '张运维' },
+      { id: 'HC003', community: '锦绣花园', deviceId: 'D001', deviceName: '净水设备 A01', pumpRoom: '1号泵房', type: 'RO反渗透膜',   lastReplace: '2024-01-15', nextReplace: '2026-01-15', cycleMonths: 24, operator: '李技术' },
+      { id: 'HC004', community: '锦绣花园', deviceId: 'D002', deviceName: '直饮设备 B01', pumpRoom: '2号泵房', type: '复合滤芯',     lastReplace: '2026-02-20', nextReplace: '2026-08-20', cycleMonths: 6,  operator: '张运维' },
+      { id: 'HC005', community: '锦绣花园', deviceId: 'D002', deviceName: '直饮设备 B01', pumpRoom: '2号泵房', type: '紫外杀菌灯管', lastReplace: '2025-06-01', nextReplace: '2026-06-01', cycleMonths: 12, operator: '张运维' },
+      { id: 'HC006', community: '翡翠湾小区', deviceId: 'D003', deviceName: '净水设备 C01', pumpRoom: '1号泵房', type: 'PP棉滤芯',     lastReplace: '2026-03-10', nextReplace: '2026-09-10', cycleMonths: 6,  operator: '李运维' },
+      { id: 'HC007', community: '翡翠湾小区', deviceId: 'D003', deviceName: '净水设备 C01', pumpRoom: '1号泵房', type: '活性炭滤芯',   lastReplace: '2026-01-05', nextReplace: '2026-07-05', cycleMonths: 6,  operator: '李运维' },
+      { id: 'HC008', community: '翡翠湾小区', deviceId: 'D003', deviceName: '净水设备 C01', pumpRoom: '1号泵房', type: 'RO反渗透膜',   lastReplace: '2025-03-01', nextReplace: '2027-03-01', cycleMonths: 24, operator: '李运维' },
+      { id: 'HC009', community: '翡翠湾小区', deviceId: 'D004', deviceName: '软水设备 B03', pumpRoom: '2号泵房', type: '软化树脂',     lastReplace: '2025-12-08', nextReplace: '2028-12-08', cycleMonths: 36, operator: '李运维' },
+      { id: 'HC010', community: '翡翠湾小区', deviceId: 'D004', deviceName: '软水设备 B03', pumpRoom: '2号泵房', type: '软化盐',       lastReplace: '2026-02-10', nextReplace: '2026-05-10', cycleMonths: 3,  operator: '李运维' },
+      { id: 'HC011', community: '阳光丽景', deviceId: 'D006', deviceName: '净水设备 C02', pumpRoom: '1号泵房', type: 'PP棉滤芯',     lastReplace: '2026-01-20', nextReplace: '2026-07-20', cycleMonths: 6,  operator: '张运维' },
+      { id: 'HC012', community: '阳光丽景', deviceId: 'D006', deviceName: '净水设备 C02', pumpRoom: '1号泵房', type: 'RO反渗透膜',   lastReplace: '2024-03-01', nextReplace: '2026-03-01', cycleMonths: 24, operator: '张运维' },
+      { id: 'HC013', community: '华悦府', deviceId: 'D007', deviceName: '直饮设备 E01', pumpRoom: '1号泵房', type: '复合滤芯',     lastReplace: '2026-03-25', nextReplace: '2026-09-25', cycleMonths: 6,  operator: '王运维' },
+      { id: 'HC014', community: '华悦府', deviceId: 'D007', deviceName: '直饮设备 E01', pumpRoom: '1号泵房', type: '紫外杀菌灯管', lastReplace: '2025-04-01', nextReplace: '2026-04-01', cycleMonths: 12, operator: '王运维' },
+      { id: 'HC015', community: '华悦府', deviceId: 'D008', deviceName: '净水设备 D05', pumpRoom: '2号泵房', type: 'PP棉滤芯',     lastReplace: '2025-11-30', nextReplace: '2026-05-30', cycleMonths: 6,  operator: '王运维' },
+      { id: 'HC016', community: '华悦府', deviceId: 'D008', deviceName: '净水设备 D05', pumpRoom: '2号泵房', type: 'RO反渗透膜',   lastReplace: '2025-11-30', nextReplace: '2027-11-30', cycleMonths: 24, operator: '王运维' },
+      { id: 'HC017', community: '紫荆花园', deviceId: 'D010', deviceName: '软水设备 G02', pumpRoom: '1号泵房', type: '软化树脂',     lastReplace: '2026-02-10', nextReplace: '2029-02-10', cycleMonths: 36, operator: '赵运维' },
+      { id: 'HC018', community: '紫荆花园', deviceId: 'D010', deviceName: '软水设备 G02', pumpRoom: '1号泵房', type: 'PP棉滤芯',     lastReplace: '2025-08-01', nextReplace: '2026-02-01', cycleMonths: 6,  operator: '赵运维' },
+      { id: 'HC019', community: '紫荆花园', deviceId: 'D010', deviceName: '软水设备 G02', pumpRoom: '1号泵房', type: '臭氧消解滤芯', lastReplace: '2025-07-01', nextReplace: '2026-07-01', cycleMonths: 12, operator: '赵运维' },
+    ].map(item => {
+      const { status, remainDays } = 计算耗材状态(item.nextReplace);
+      return { ...item, status, remainDays };
+    });
+
+    const 按小区汇总耗材 = (items) => {
+      const map = {};
+      items.forEach(c => {
+        if (!map[c.community]) map[c.community] = { name: c.community, items: [], deviceSet: new Set() };
+        map[c.community].items.push(c);
+        map[c.community].deviceSet.add(c.deviceId);
+      });
+      return Object.values(map).map(c => ({
+        name: c.name,
+        total: c.items.length,
+        deviceCount: c.deviceSet.size,
+        stats: {
+          正常: c.items.filter(i => i.status === '正常').length,
+          即将到期: c.items.filter(i => i.status === '即将到期').length,
+          已超期: c.items.filter(i => i.status === '已超期').length,
+        },
+      })).sort((a, b) => b.total - a.total);
+    };
+
     const 用户数据 = [
       {
         id: 'U001', name: '张三丰', community: '锦绣花园',
@@ -1795,43 +1857,116 @@
     };
 
     /* ════════════════════════════════════════
-       设备管理列表页
+       设备管理 — 小区汇总 & 泵房设备
     ════════════════════════════════════════ */
-    const FilterChip = ({ label, active, onClick }) => (
-      <button
-        onClick={onClick}
-        className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
-          active
-            ? 'bg-blue-600 text-white border-blue-600'
-            : 'bg-white text-gray-500 border-gray-200'
-        }`}
-      >
-        {label}
-      </button>
-    );
+    const 统计设备状态 = (devices) => ({
+      在线: devices.filter(d => d.status === '在线').length,
+      离线: devices.filter(d => d.status === '离线').length,
+      预警: devices.filter(d => d.status === '预警').length,
+      故障: devices.filter(d => d.status === '故障').length,
+    });
 
-    const DeviceManagePage = ({ onBack, onDeviceClick }) => {
+    const 按小区汇总 = (devices) => {
+      const map = {};
+      devices.forEach(d => {
+        if (!map[d.community]) {
+          map[d.community] = { name: d.community, devices: [], pumpRooms: new Set() };
+        }
+        map[d.community].devices.push(d);
+        map[d.community].pumpRooms.add(d.pumpRoom);
+      });
+      return Object.values(map).map(c => ({
+        ...c,
+        total: c.devices.length,
+        pumpRoomCount: c.pumpRooms.size,
+        stats: 统计设备状态(c.devices),
+      })).sort((a, b) => b.total - a.total);
+    };
+
+    const 设备状态图标色 = (s) => {
+      const st = 状态样式[s];
+      return st.text.includes('emerald') ? '#10b981' : st.text.includes('amber') ? '#f59e0b' : st.text.includes('red') ? '#ef4444' : '#6b7280';
+    };
+
+    const 设备卡片 = ({ device, onClick, showPumpRoom = false }) => {
+      const s = 状态样式[device.status];
+      return (
+        <button
+          onClick={() => onClick(device)}
+          className="bg-white rounded-2xl p-4 text-left active:scale-98 transition-transform w-full"
+        >
+          <div className="flex items-start justify-between mb-2">
+            <div className="flex items-center gap-2">
+              <div className={`w-9 h-9 ${s.bg} rounded-xl flex items-center justify-center flex-shrink-0`}>
+                <Cpu size={18} color={设备状态图标色(device.status)} />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-gray-800">{device.name}</p>
+                <p className="text-xs text-gray-400">{device.id} · {device.model}</p>
+              </div>
+            </div>
+            <span className={`text-xs font-medium px-2 py-0.5 rounded-full border flex items-center gap-1 ${s.bg} ${s.text} ${s.border}`}>
+              <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`}></span>
+              {device.status}
+            </span>
+          </div>
+          <div className="flex items-center gap-3 ml-11 flex-wrap">
+            {showPumpRoom && (
+              <span className="flex items-center gap-1 text-xs text-gray-400">
+                <Building2 size={11} color="#9ca3af" />{device.pumpRoom}
+              </span>
+            )}
+            <span className="flex items-center gap-1 text-xs text-gray-400">
+              <MapPin size={11} color="#9ca3af" />{device.address}
+            </span>
+            <span className="flex items-center gap-1 text-xs text-gray-400">
+              <Droplets size={11} color="#9ca3af" />{device.type}
+            </span>
+            {device.filterLife > 0 && (
+              <span className="flex items-center gap-1 text-xs" style={{ color: device.filterLife > 80 ? '#ef4444' : device.filterLife > 60 ? '#f59e0b' : '#10b981' }}>
+                <Activity size={11} />滤芯 {device.filterLife}%
+              </span>
+            )}
+          </div>
+          <div className="flex justify-end mt-2">
+            <ChevronRight size={16} color="#d1d5db" />
+          </div>
+        </button>
+      );
+    };
+
+    const 状态统计栏 = ({ devices, filterStatus, onFilterStatus }) => {
+      const countByStatus = s => devices.filter(d => d.status === s).length;
+      return (
+        <div className="bg-white border-b border-gray-100 px-4 py-3 grid grid-cols-4 gap-2">
+          {['在线', '离线', '预警', '故障'].map(s => {
+            const st = 状态样式[s];
+            return (
+              <button key={s} onClick={() => onFilterStatus && onFilterStatus(filterStatus === s ? '全部' : s)}
+                className={`flex flex-col items-center py-2 rounded-xl border transition-all ${filterStatus === s ? `${st.bg} ${st.border}` : 'border-transparent'}`}>
+                <span className={`text-lg font-bold ${st.text}`}>{countByStatus(s)}</span>
+                <span className="text-xs text-gray-400">{s}</span>
+              </button>
+            );
+          })}
+        </div>
+      );
+    };
+
+    const DeviceManagePage = ({ onBack, onCommunityClick }) => {
       const [keyword, setKeyword] = useState('');
-      const [filterCommunity, setFilterCommunity] = useState('全部');
-      const [filterType, setFilterType] = useState('全部');
-      const [filterStatus, setFilterStatus] = useState('全部');
 
-      const filtered = useMemo(() => {
-        return 设备数据.filter(d => {
-          const kw = keyword.trim();
-          const matchKw = !kw || d.name.includes(kw) || d.community.includes(kw) || d.address.includes(kw);
-          const matchC = filterCommunity === '全部' || d.community === filterCommunity;
-          const matchT = filterType === '全部' || d.type === filterType;
-          const matchS = filterStatus === '全部' || d.status === filterStatus;
-          return matchKw && matchC && matchT && matchS;
-        });
-      }, [keyword, filterCommunity, filterType, filterStatus]);
+      const 小区汇总 = useMemo(() => {
+        const list = 按小区汇总(设备数据);
+        const kw = keyword.trim();
+        if (!kw) return list;
+        return list.filter(c => c.name.includes(kw));
+      }, [keyword]);
 
-      const countByStatus = s => 设备数据.filter(d => d.status === s).length;
+      const 全局统计 = 统计设备状态(设备数据);
 
       return (
         <div className="flex flex-col min-h-screen bg-gray-100">
-          {/* 顶部 */}
           <div className="bg-blue-600 px-4 pt-10 pb-4">
             <div className="flex items-center gap-3 mb-3">
               <button onClick={onBack} className="w-8 h-8 flex items-center justify-center rounded-full active:bg-blue-500">
@@ -1840,12 +1975,11 @@
               <span className="flex-1 text-white text-base font-semibold">设备管理</span>
               <span className="text-blue-200 text-sm">共 {设备数据.length} 台</span>
             </div>
-            {/* 搜索框 */}
             <div className="bg-white/20 rounded-xl flex items-center gap-2 px-3 py-2">
-           <Search size={16} color="white" />
+              <Search size={16} color="white" />
               <input
                 className="flex-1 bg-transparent text-white text-sm placeholder-blue-200 outline-none"
-                placeholder="搜索设备名称、小区、位置…"
+                placeholder="搜索小区名称…"
                 value={keyword}
                 onChange={e => setKeyword(e.target.value)}
               />
@@ -1855,35 +1989,115 @@
             </div>
           </div>
 
-          {/* 状态统计 */}
           <div className="bg-white border-b border-gray-100 px-4 py-3 grid grid-cols-4 gap-2">
             {['在线', '离线', '预警', '故障'].map(s => {
               const st = 状态样式[s];
               return (
-                <button key={s} onClick={() => setFilterStatus(filterStatus === s ? '全部' : s)}
-                  className={`flex flex-col items-center py-2 rounded-xl border transition-all ${filterStatus === s ? `${st.bg} ${st.border}` : 'border-transparent'}`}>
-                  <span className={`text-lg font-bold ${st.text}`}>{countByStatus(s)}</span>
+                <div key={s} className="flex flex-col items-center py-2 rounded-xl">
+                  <span className={`text-lg font-bold ${st.text}`}>{全局统计[s]}</span>
                   <span className="text-xs text-gray-400">{s}</span>
-                </button>
+                </div>
               );
             })}
           </div>
 
-          {/* 筛选条 */}
-          <div className="bg-white border-b border-gray-100 px-4 py-3 flex gap-3">
-            {/* 小区下拉 */}
-            <div className="flex-1 flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2">
-              <Building2 size={14} color="#9ca3af" />
-              <select
-                value={filterCommunity}
-                onChange={e => setFilterCommunity(e.target.value)}
-                className="flex-1 bg-transparent text-sm text-gray-700 outline-none appearance-none cursor-pointer"
+          <div className="flex-1 p-4 flex flex-col gap-3">
+            <p className="text-xs text-gray-400">共 {小区汇总.length} 个小区</p>
+            {小区汇总.length === 0 ? (
+              <div className="bg-white rounded-2xl p-8 flex flex-col items-center gap-3 text-gray-400">
+                <Search size={40} color="#d1d5db" />
+                <p className="text-sm">未找到符合条件的小区</p>
+              </div>
+            ) : 小区汇总.map(community => (
+              <button
+                key={community.name}
+                onClick={() => onCommunityClick(community.name)}
+                className="bg-white rounded-2xl p-4 text-left active:scale-98 transition-transform w-full"
               >
-                {社区列表.map(c => <option key={c} value={c}>{c}</option>)}
-              </select>
-              <ChevronDown size={14} color="#9ca3af" />
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Building2 size={20} color="#3b82f6" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-gray-800">{community.name}</p>
+                      <p className="text-xs text-gray-400 mt-0.5">{community.pumpRoomCount} 个泵房 · {community.total} 台设备</p>
+                    </div>
+                  </div>
+                  <ChevronRight size={18} color="#d1d5db" />
+                </div>
+                <div className="grid grid-cols-4 gap-2 ml-13">
+                  {['在线', '离线', '预警', '故障'].map(s => {
+                    const st = 状态样式[s];
+                    const count = community.stats[s];
+                    return (
+                      <div key={s} className={`${st.bg} rounded-lg py-1.5 flex flex-col items-center`}>
+                        <span className={`text-sm font-bold ${st.text}`}>{count}</span>
+                        <span className="text-xs text-gray-400">{s}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    };
+
+    const CommunityDevicePage = ({ community, onBack, onDeviceClick }) => {
+      const [keyword, setKeyword] = useState('');
+      const [filterType, setFilterType] = useState('全部');
+      const [filterStatus, setFilterStatus] = useState('全部');
+
+      const 小区设备 = useMemo(() => 设备数据.filter(d => d.community === community), [community]);
+
+      const filtered = useMemo(() => {
+        return 小区设备.filter(d => {
+          const kw = keyword.trim();
+          const matchKw = !kw || d.name.includes(kw) || d.pumpRoom.includes(kw) || d.address.includes(kw);
+          const matchT = filterType === '全部' || d.type === filterType;
+          const matchS = filterStatus === '全部' || d.status === filterStatus;
+          return matchKw && matchT && matchS;
+        });
+      }, [小区设备, keyword, filterType, filterStatus]);
+
+      const 泵房分组 = useMemo(() => {
+        const map = {};
+        filtered.forEach(d => {
+          if (!map[d.pumpRoom]) map[d.pumpRoom] = [];
+          map[d.pumpRoom].push(d);
+        });
+        return Object.entries(map).sort((a, b) => a[0].localeCompare(b[0], 'zh-CN'));
+      }, [filtered]);
+
+      return (
+        <div className="flex flex-col min-h-screen bg-gray-100">
+          <div className="bg-blue-600 px-4 pt-10 pb-4">
+            <div className="flex items-center gap-3 mb-3">
+              <button onClick={onBack} className="w-8 h-8 flex items-center justify-center rounded-full active:bg-blue-500">
+                <ArrowLeft size={22} color="white" />
+              </button>
+              <span className="flex-1 text-white text-base font-semibold">{community}</span>
+              <span className="text-blue-200 text-sm">共 {小区设备.length} 台</span>
             </div>
-            {/* 种类下拉 */}
+            <div className="bg-white/20 rounded-xl flex items-center gap-2 px-3 py-2">
+              <Search size={16} color="white" />
+              <input
+                className="flex-1 bg-transparent text-white text-sm placeholder-blue-200 outline-none"
+                placeholder="搜索设备名称、泵房、位置…"
+                value={keyword}
+                onChange={e => setKeyword(e.target.value)}
+              />
+              {keyword && (
+                <button onClick={() => setKeyword('')} className="text-blue-200 text-xs">清除</button>
+              )}
+            </div>
+          </div>
+
+          <状态统计栏 devices={小区设备} filterStatus={filterStatus} onFilterStatus={setFilterStatus} />
+
+          <div className="bg-white border-b border-gray-100 px-4 py-3 flex gap-3">
             <div className="flex-1 flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2">
               <Droplets size={14} color="#9ca3af" />
               <select
@@ -1897,63 +2111,285 @@
             </div>
           </div>
 
-          {/* 列表 */}
-          <div className="flex-1 p-4 flex flex-col gap-3">
-            <p className="text-xs text-gray-400">筛选结果：{filtered.length} 台设备</p>
-            {filtered.length === 0 ? (
+          <div className="flex-1 p-4 flex flex-col gap-4">
+            <p className="text-xs text-gray-400">筛选结果：{filtered.length} 台设备 · {泵房分组.length} 个泵房</p>
+            {泵房分组.length === 0 ? (
               <div className="bg-white rounded-2xl p-8 flex flex-col items-center gap-3 text-gray-400">
                 <Search size={40} color="#d1d5db" />
                 <p className="text-sm">未找到符合条件的设备</p>
               </div>
-            ) : filtered.map(device => {
-              const s = 状态样式[device.status];
+            ) : 泵房分组.map(([pumpRoom, devices]) => (
+              <div key={pumpRoom} className="flex flex-col gap-2">
+                <div className="flex items-center gap-2 px-1">
+                  <div className="w-7 h-7 bg-indigo-50 rounded-lg flex items-center justify-center">
+                    <Building2 size={14} color="#6366f1" />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-700">{pumpRoom}</span>
+                  <span className="text-xs text-gray-400">{devices.length} 台</span>
+                </div>
+                <div className="flex flex-col gap-2">
+                  {devices.map(device => (
+                    <设备卡片 key={device.id} device={device} onClick={onDeviceClick} />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    };
+
+    /* ════════════════════════════════════════
+       耗材管理 — 小区汇总 & 耗材明细
+    ════════════════════════════════════════ */
+    const 耗材卡片 = ({ item }) => {
+      const s = 耗材状态样式[item.status];
+      return (
+        <div className="bg-white rounded-2xl p-4 w-full">
+          <div className="flex items-start justify-between mb-2">
+            <div className="flex items-center gap-2">
+              <div className={`w-9 h-9 ${s.bg} rounded-xl flex items-center justify-center flex-shrink-0`}>
+                <Package size={18} color={item.status === '正常' ? '#10b981' : item.status === '即将到期' ? '#f59e0b' : '#ef4444'} />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-gray-800">{item.type}</p>
+                <p className="text-xs text-gray-400">{item.deviceName} · {item.pumpRoom}</p>
+              </div>
+            </div>
+            <span className={`text-xs font-medium px-2 py-0.5 rounded-full border flex items-center gap-1 ${s.bg} ${s.text} ${s.border}`}>
+              <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`}></span>
+              {item.status}
+            </span>
+          </div>
+          <div className="ml-11 flex flex-col gap-1.5">
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-gray-400">上次更换</span>
+              <span className="text-gray-700 font-medium">{item.lastReplace}</span>
+            </div>
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-gray-400">下次更换</span>
+              <span className={`font-medium ${item.status === '已超期' ? 'text-red-600' : item.status === '即将到期' ? 'text-amber-600' : 'text-gray-700'}`}>
+                {item.nextReplace}
+              </span>
+            </div>
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-gray-400">更换周期</span>
+              <span className="text-gray-700">{item.cycleMonths} 个月</span>
+            </div>
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-gray-400">剩余天数</span>
+              <span className={`font-medium ${item.status === '已超期' ? 'text-red-600' : item.status === '即将到期' ? 'text-amber-600' : 'text-emerald-600'}`}>
+                {item.remainDays < 0 ? `已超期 ${Math.abs(item.remainDays)} 天` : `剩余 ${item.remainDays} 天`}
+              </span>
+            </div>
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-gray-400">负责人</span>
+              <span className="text-gray-700">{item.operator}</span>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
+    const ConsumableManagePage = ({ onBack, onCommunityClick }) => {
+      const [keyword, setKeyword] = useState('');
+      const 小区汇总 = useMemo(() => {
+        const list = 按小区汇总耗材(耗材数据);
+        const kw = keyword.trim();
+        if (!kw) return list;
+        return list.filter(c => c.name.includes(kw));
+      }, [keyword]);
+      const 全局统计 = {
+        正常: 耗材数据.filter(c => c.status === '正常').length,
+        即将到期: 耗材数据.filter(c => c.status === '即将到期').length,
+        已超期: 耗材数据.filter(c => c.status === '已超期').length,
+      };
+
+      return (
+        <div className="flex flex-col min-h-screen bg-gray-100">
+          <div className="bg-blue-600 px-4 pt-10 pb-4">
+            <div className="flex items-center gap-3 mb-3">
+              <button onClick={onBack} className="w-8 h-8 flex items-center justify-center rounded-full active:bg-blue-500">
+                <ArrowLeft size={22} color="white" />
+              </button>
+              <span className="flex-1 text-white text-base font-semibold">耗材管理</span>
+              <span className="text-blue-200 text-sm">共 {耗材数据.length} 项</span>
+            </div>
+            <div className="bg-white/20 rounded-xl flex items-center gap-2 px-3 py-2">
+              <Search size={16} color="white" />
+              <input
+                className="flex-1 bg-transparent text-white text-sm placeholder-blue-200 outline-none"
+                placeholder="搜索小区名称…"
+                value={keyword}
+                onChange={e => setKeyword(e.target.value)}
+              />
+              {keyword && (
+                <button onClick={() => setKeyword('')} className="text-blue-200 text-xs">清除</button>
+              )}
+            </div>
+          </div>
+
+          <div className="bg-white border-b border-gray-100 px-4 py-3 grid grid-cols-3 gap-2">
+            {['正常', '即将到期', '已超期'].map(s => {
+              const st = 耗材状态样式[s];
               return (
-                <button
-                  key={device.id}
-                  onClick={() => onDeviceClick(device)}
-                  className="bg-white rounded-2xl p-4 text-left active:scale-98 transition-transform w-full"
-                >
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <div className={`w-9 h-9 ${s.bg} rounded-xl flex items-center justify-center flex-shrink-0`}>
-                        <Cpu size={18} color={s.text.replace('text-', '').includes('emerald') ? '#10b981' : s.text.includes('amber') ? '#f59e0b' : s.text.includes('red') ? '#ef4444' : '#6b7280'} />
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold text-gray-800">{device.name}</p>
-                        <p className="text-xs text-gray-400">{device.id} · {device.model}</p>
-                      </div>
+                <div key={s} className="flex flex-col items-center py-2 rounded-xl">
+                  <span className={`text-lg font-bold ${st.text}`}>{全局统计[s]}</span>
+                  <span className="text-xs text-gray-400">{s}</span>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="flex-1 p-4 flex flex-col gap-3">
+            <p className="text-xs text-gray-400">共 {小区汇总.length} 个小区</p>
+            {小区汇总.length === 0 ? (
+              <div className="bg-white rounded-2xl p-8 flex flex-col items-center gap-3 text-gray-400">
+                <Search size={40} color="#d1d5db" />
+                <p className="text-sm">未找到符合条件的小区</p>
+              </div>
+            ) : 小区汇总.map(community => (
+              <button
+                key={community.name}
+                onClick={() => onCommunityClick(community.name)}
+                className="bg-white rounded-2xl p-4 text-left active:scale-98 transition-transform w-full"
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Building2 size={20} color="#3b82f6" />
                     </div>
-                    <div className="flex flex-col items-end gap-1">
-                      <span className={`text-xs font-medium px-2 py-0.5 rounded-full border flex items-center gap-1 ${s.bg} ${s.text} ${s.border}`}>
-                        <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`}></span>
-                        {device.status}
-                      </span>
+                    <div>
+                      <p className="text-sm font-semibold text-gray-800">{community.name}</p>
+                      <p className="text-xs text-gray-400 mt-0.5">{community.deviceCount} 台设备 · {community.total} 项耗材</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 ml-11">
-                    <span className="flex items-center gap-1 text-xs text-gray-400">
-                      <Building2 size={11} color="#9ca3af" />{device.community}
-                    </span>
-                    <span className="flex items-center gap-1 text-xs text-gray-400">
-                      <MapPin size={11} color="#9ca3af" />{device.address}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-3 ml-11 mt-1">
-                    <span className="flex items-center gap-1 text-xs text-gray-400">
-                      <Droplets size={11} color="#9ca3af" />{device.type}
-                    </span>
-                    {device.filterLife > 0 && (
-                      <span className="flex items-center gap-1 text-xs" style={{ color: device.filterLife > 80 ? '#ef4444' : device.filterLife > 60 ? '#f59e0b' : '#10b981' }}>
-                        <Activity size={11} />滤芯 {device.filterLife}%
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex justify-end mt-2">
-                    <ChevronRight size={16} color="#d1d5db" />
-                  </div>
+                  <ChevronRight size={18} color="#d1d5db" />
+                </div>
+                <div className="grid grid-cols-3 gap-2 ml-13">
+                  {['正常', '即将到期', '已超期'].map(s => {
+                    const st = 耗材状态样式[s];
+                    return (
+                      <div key={s} className={`${st.bg} rounded-lg py-1.5 flex flex-col items-center`}>
+                        <span className={`text-sm font-bold ${st.text}`}>{community.stats[s]}</span>
+                        <span className="text-xs text-gray-400">{s}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    };
+
+    const CommunityConsumablePage = ({ community, onBack }) => {
+      const [keyword, setKeyword] = useState('');
+      const [filterType, setFilterType] = useState('全部');
+      const [filterStatus, setFilterStatus] = useState('全部');
+
+      const 小区耗材 = useMemo(() => 耗材数据.filter(c => c.community === community), [community]);
+
+      const filtered = useMemo(() => {
+        return 小区耗材.filter(c => {
+          const kw = keyword.trim();
+          const matchKw = !kw || c.type.includes(kw) || c.deviceName.includes(kw) || c.pumpRoom.includes(kw);
+          const matchT = filterType === '全部' || c.type === filterType;
+          const matchS = filterStatus === '全部' || c.status === filterStatus;
+          return matchKw && matchT && matchS;
+        });
+      }, [小区耗材, keyword, filterType, filterStatus]);
+
+      const 设备分组 = useMemo(() => {
+        const map = {};
+        filtered.forEach(c => {
+          if (!map[c.deviceName]) map[c.deviceName] = { deviceName: c.deviceName, pumpRoom: c.pumpRoom, items: [] };
+          map[c.deviceName].items.push(c);
+        });
+        return Object.values(map);
+      }, [filtered]);
+
+      const 小区统计 = {
+        正常: 小区耗材.filter(c => c.status === '正常').length,
+        即将到期: 小区耗材.filter(c => c.status === '即将到期').length,
+        已超期: 小区耗材.filter(c => c.status === '已超期').length,
+      };
+
+      return (
+        <div className="flex flex-col min-h-screen bg-gray-100">
+          <div className="bg-blue-600 px-4 pt-10 pb-4">
+            <div className="flex items-center gap-3 mb-3">
+              <button onClick={onBack} className="w-8 h-8 flex items-center justify-center rounded-full active:bg-blue-500">
+                <ArrowLeft size={22} color="white" />
+              </button>
+              <span className="flex-1 text-white text-base font-semibold">{community}</span>
+              <span className="text-blue-200 text-sm">共 {小区耗材.length} 项</span>
+            </div>
+            <div className="bg-white/20 rounded-xl flex items-center gap-2 px-3 py-2">
+              <Search size={16} color="white" />
+              <input
+                className="flex-1 bg-transparent text-white text-sm placeholder-blue-200 outline-none"
+                placeholder="搜索耗材种类、设备、泵房…"
+                value={keyword}
+                onChange={e => setKeyword(e.target.value)}
+              />
+              {keyword && (
+                <button onClick={() => setKeyword('')} className="text-blue-200 text-xs">清除</button>
+              )}
+            </div>
+          </div>
+
+          <div className="bg-white border-b border-gray-100 px-4 py-3 grid grid-cols-3 gap-2">
+            {['正常', '即将到期', '已超期'].map(s => {
+              const st = 耗材状态样式[s];
+              return (
+                <button key={s} onClick={() => setFilterStatus(filterStatus === s ? '全部' : s)}
+                  className={`flex flex-col items-center py-2 rounded-xl border transition-all ${filterStatus === s ? `${st.bg} ${st.border}` : 'border-transparent'}`}>
+                  <span className={`text-lg font-bold ${st.text}`}>{小区统计[s]}</span>
+                  <span className="text-xs text-gray-400">{s}</span>
                 </button>
               );
             })}
+          </div>
+
+          <div className="bg-white border-b border-gray-100 px-4 py-3">
+            <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2">
+              <Package size={14} color="#9ca3af" />
+              <select
+                value={filterType}
+                onChange={e => setFilterType(e.target.value)}
+                className="flex-1 bg-transparent text-sm text-gray-700 outline-none appearance-none cursor-pointer"
+              >
+                {耗材种类列表.map(t => <option key={t} value={t}>{t === '全部' ? '全部种类' : t}</option>)}
+              </select>
+              <ChevronDown size={14} color="#9ca3af" />
+            </div>
+          </div>
+
+          <div className="flex-1 p-4 flex flex-col gap-4">
+            <p className="text-xs text-gray-400">筛选结果：{filtered.length} 项耗材 · {设备分组.length} 台设备</p>
+            {设备分组.length === 0 ? (
+              <div className="bg-white rounded-2xl p-8 flex flex-col items-center gap-3 text-gray-400">
+                <Search size={40} color="#d1d5db" />
+                <p className="text-sm">未找到符合条件的耗材</p>
+              </div>
+            ) : 设备分组.map(group => (
+              <div key={group.deviceName} className="flex flex-col gap-2">
+                <div className="flex items-center gap-2 px-1">
+                  <div className="w-7 h-7 bg-blue-50 rounded-lg flex items-center justify-center">
+                    <Cpu size={14} color="#3b82f6" />
+                  </div>
+                  <span className="text-sm font-semibold text-gray-700">{group.deviceName}</span>
+                  <span className="text-xs text-gray-400">{group.pumpRoom} · {group.items.length} 项</span>
+                </div>
+                <div className="flex flex-col gap-2">
+                  {group.items.map(item => (
+                    <耗材卡片 key={item.id} item={item} />
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       );
@@ -2099,7 +2535,7 @@
                 { label: '报警管理', icon: <Bell size={22} color="#ef4444" />,         bg: 'bg-red-50',     page: '报警管理' },
                 { label: '巡检管理', icon: <ClipboardList size={22} color="#10b981" />,bg: 'bg-emerald-50', page: '巡检管理' },
                 { label: '维保管理', icon: <Wrench size={22} color="#f59e0b" />,       bg: 'bg-amber-50',   page: '维保管理' },
-                { label: '数据查询', icon: <BarChart2 size={22} color="#0ea5e9" />,    bg: 'bg-sky-50',     page: '数据查询' },
+                { label: '耗材管理', icon: <Package size={22} color="#3b82f6" />,    bg: 'bg-blue-50',     page: '耗材管理' },
               ].map(item => (
                 <button key={item.label} onClick={() => onNavigate(item.page)}
                   className="flex flex-col items-center gap-2 py-3 rounded-xl active:scale-95 transition-transform">
@@ -3569,7 +4005,16 @@
           return (
             <DeviceManagePage
               onBack={() => nav('home')}
-              onDeviceClick={device => setRoute({ page: 'deviceDetail', device })}
+              onCommunityClick={community => setRoute({ page: 'communityDevices', community })}
+            />
+          );
+        }
+        if (route.page === 'communityDevices') {
+          return (
+            <CommunityDevicePage
+              community={route.community}
+              onBack={() => nav('设备管理')}
+              onDeviceClick={device => setRoute({ page: 'deviceDetail', device, fromCommunity: route.community })}
             />
           );
         }
@@ -3577,7 +4022,9 @@
           return (
             <DeviceDetailPage
               device={route.device}
-              onBack={() => nav('设备管理')}
+              onBack={() => route.fromCommunity
+                ? setRoute({ page: 'communityDevices', community: route.fromCommunity })
+                : nav('设备管理')}
             />
           );
         }
@@ -3639,6 +4086,22 @@
         }
         if (route.page === '维保管理') {
           return <MaintManagePage onBack={() => nav('home')} />;
+        }
+        if (route.page === '耗材管理') {
+          return (
+            <ConsumableManagePage
+              onBack={() => nav('home')}
+              onCommunityClick={community => setRoute({ page: 'communityConsumables', community })}
+            />
+          );
+        }
+        if (route.page === 'communityConsumables') {
+          return (
+            <CommunityConsumablePage
+              community={route.community}
+              onBack={() => nav('耗材管理')}
+            />
+          );
         }
         return <PlaceholderPage title={route.page} onBack={() => nav('home')} />;
       };

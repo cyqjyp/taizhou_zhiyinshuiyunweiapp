@@ -99,6 +99,8 @@
     const 设备数据 = [
       {
         id: 'D001', name: '净水设备 A01', community: '锦绣花园', pumpRoom: '1号泵房', type: '净水机', status: '在线',
+        meterId: '300223110966',
+        manufacturer: '台州水务设备制造有限公司',
         address: '1号楼地下室机房', model: 'TZ-PW-5000A', sn: 'SN202310010001',
         installDate: '2023-10-01', lastMaintenance: '2026-01-15', operator: '张运维', phone: '13800001001',
         waterFlow: 48.6, pressure: 0.28, tds: 32, temperature: 18.5, filterLife: 76,
@@ -115,23 +117,9 @@
         ],
       },
       {
-        id: 'D002', name: '直饮设备 B01', community: '锦绣花园', pumpRoom: '2号泵房', type: '直饮机', status: '预警',
-        address: '2号楼大厅饮水间', model: 'TZ-DW-3000B', sn: 'SN202311050002',
-        installDate: '2023-11-05', lastMaintenance: '2026-02-20', operator: '张运维', phone: '13800001001',
-        waterFlow: 31.2, pressure: 0.19, tds: 48, temperature: 22.1, filterLife: 91,
-        todayWater: 124, totalWater: 876,
-        power: '正常', valve: '正常', inlet: '正常', outlet: '压力偏低', filter: '待更换', network: '正常',
-        alarmHistory: [
-          { id: 1, time: '2026-04-15 08:22', title: '滤芯寿命预警', level: '重要', content: '滤芯使用寿命已达 91%，请尽快安排更换' },
-          { id: 2, time: '2026-04-12 16:55', title: '出水压力异常', level: '一般', content: '出水压力 0.19 MPa，低于推荐值 0.22 MPa' },
-        ],
-        opHistory: [
-          { id: 1, time: '2026-02-20 11:00', user: '张运维', action: '例行维保', detail: '清洗换热器，检查管路及接头' },
-          { id: 2, time: '2025-11-30 15:20', user: '王工程师', action: '参数调整', detail: '调整出水温度上限至 75°C' },
-        ],
-      },
-      {
         id: 'D003', name: '净水设备 C01', community: '翡翠湾小区', pumpRoom: '1号泵房', type: '净水机', status: '在线',
+        meterId: '300223110967',
+        manufacturer: '台州水务设备制造有限公司',
         address: '3号楼物业用房', model: 'TZ-PW-5000A', sn: 'SN202312010003',
         installDate: '2023-12-01', lastMaintenance: '2026-03-10', operator: '李运维', phone: '13800001002',
         waterFlow: 52.3, pressure: 0.31, tds: 28, temperature: 17.8, filterLife: 58,
@@ -144,24 +132,9 @@
         ],
       },
       {
-        id: 'D004', name: '软水设备 B03', community: '翡翠湾小区', pumpRoom: '2号泵房', type: '软水机', status: '故障',
-        address: '5号楼换热站', model: 'TZ-SW-2000C', sn: 'SN202401100004',
-        installDate: '2024-01-10', lastMaintenance: '2025-12-08', operator: '李运维', phone: '13800001002',
-        waterFlow: 0, pressure: 0, tds: 0, temperature: 0, filterLife: 44,
-        todayWater: 0, totalWater: 312,
-        power: '正常', valve: '关闭', inlet: '异常', outlet: '停止', filter: '良好', network: '离线',
-        alarmHistory: [
-          { id: 1, time: '2026-04-16 06:45', title: '设备通信中断', level: '紧急', content: '设备与云端通信中断，无法获取数据，请立即处理' },
-          { id: 2, time: '2026-04-16 07:00', title: '进水异常停机', level: '紧急', content: '进水管路压力骤降，设备已触发保护停机' },
-          { id: 3, time: '2026-03-22 11:30', title: '树脂再生提醒', level: '一般', content: '软化树脂再生周期到达，请及时补充软化盐' },
-        ],
-        opHistory: [
-          { id: 1, time: '2025-12-08 10:00', user: '李运维', action: '定期维保', detail: '清洗盐箱，补充软化盐 25 kg，检查控制阀' },
-          { id: 2, time: '2025-09-15 14:30', user: '王工程师', action: '控制阀维修', detail: '更换控制阀密封圈，调试再生程序' },
-        ],
-      },
-      {
         id: 'D006', name: '净水设备 C02', community: '阳光丽景', pumpRoom: '1号泵房', type: '净水机', status: '离线',
+        meterId: '300223110968',
+        manufacturer: '台州水务设备制造有限公司',
         address: '2号楼地下车库', model: 'TZ-PW-5000A', sn: 'SN202403010006',
         installDate: '2024-03-01', lastMaintenance: '2026-01-20', operator: '张运维', phone: '13800001001',
         waterFlow: 0, pressure: 0, tds: 0, temperature: 0, filterLife: 55,
@@ -177,6 +150,8 @@
       },
       {
         id: 'D007', name: '直饮设备 E01', community: '华悦府', pumpRoom: '1号泵房', type: '直饮机', status: '在线',
+        meterId: '300223110969',
+        manufacturer: '台州水务设备制造有限公司',
         address: '1号楼大堂', model: 'TZ-DW-3000B', sn: 'SN202404010007',
         installDate: '2024-04-01', lastMaintenance: '2026-03-25', operator: '王运维', phone: '13800001003',
         waterFlow: 36.8, pressure: 0.27, tds: 30, temperature: 19.6, filterLife: 43,
@@ -188,23 +163,9 @@
         ],
       },
       {
-        id: 'D008', name: '净水设备 D05', community: '华悦府', pumpRoom: '2号泵房', type: '净水机', status: '故障',
-        address: '5号楼地下机房', model: 'TZ-PW-8000E', sn: 'SN202405010008',
-        installDate: '2024-05-01', lastMaintenance: '2025-11-30', operator: '王运维', phone: '13800001003',
-        waterFlow: 0, pressure: 0, tds: 0, temperature: 0, filterLife: 22,
-        todayWater: 0, totalWater: 298,
-        power: '异常', valve: '关闭', inlet: '正常', outlet: '停止', filter: '待更换', network: '在线',
-        alarmHistory: [
-          { id: 1, time: '2026-04-16 02:30', title: '供电异常报警', level: '紧急', content: '设备检测到供电电压波动，已触发断路保护' },
-          { id: 2, time: '2026-04-15 23:45', title: '设备停机告警', level: '紧急', content: '设备意外停机，出水中断，请尽快处理' },
-        ],
-        opHistory: [
-          { id: 1, time: '2025-11-30 14:00', user: '王运维', action: '滤芯更换', detail: '更换 RO 膜，滤芯寿命重置' },
-          { id: 2, time: '2025-08-12 10:00', user: '李技术', action: '电路检修', detail: '控制板异常，更换主控板一块' },
-        ],
-      },
-      {
         id: 'D010', name: '软水设备 G02', community: '紫荆花园', pumpRoom: '1号泵房', type: '软水机', status: '预警',
+        meterId: '300223110970',
+        manufacturer: '台州水务设备制造有限公司',
         address: '4号楼水处理间', model: 'TZ-SW-2000C', sn: 'SN202407010010',
         installDate: '2024-07-01', lastMaintenance: '2026-02-10', operator: '赵运维', phone: '13800001004',
         waterFlow: 28.5, pressure: 0.22, tds: 55, temperature: 18.9, filterLife: 88,
@@ -244,19 +205,13 @@
       { id: 'HC001', community: '锦绣花园', deviceId: 'D001', deviceName: '净水设备 A01', pumpRoom: '1号泵房', type: 'PP棉滤芯',     lastReplace: '2026-01-15', nextReplace: '2026-07-15', cycleMonths: 6,  operator: '张运维' },
       { id: 'HC002', community: '锦绣花园', deviceId: 'D001', deviceName: '净水设备 A01', pumpRoom: '1号泵房', type: '活性炭滤芯',   lastReplace: '2025-10-01', nextReplace: '2026-10-01', cycleMonths: 12, operator: '张运维' },
       { id: 'HC003', community: '锦绣花园', deviceId: 'D001', deviceName: '净水设备 A01', pumpRoom: '1号泵房', type: 'RO反渗透膜',   lastReplace: '2024-01-15', nextReplace: '2026-01-15', cycleMonths: 24, operator: '李技术' },
-      { id: 'HC004', community: '锦绣花园', deviceId: 'D002', deviceName: '直饮设备 B01', pumpRoom: '2号泵房', type: '复合滤芯',     lastReplace: '2026-02-20', nextReplace: '2026-08-20', cycleMonths: 6,  operator: '张运维' },
-      { id: 'HC005', community: '锦绣花园', deviceId: 'D002', deviceName: '直饮设备 B01', pumpRoom: '2号泵房', type: '紫外杀菌灯管', lastReplace: '2025-06-01', nextReplace: '2026-06-01', cycleMonths: 12, operator: '张运维' },
       { id: 'HC006', community: '翡翠湾小区', deviceId: 'D003', deviceName: '净水设备 C01', pumpRoom: '1号泵房', type: 'PP棉滤芯',     lastReplace: '2026-03-10', nextReplace: '2026-09-10', cycleMonths: 6,  operator: '李运维' },
       { id: 'HC007', community: '翡翠湾小区', deviceId: 'D003', deviceName: '净水设备 C01', pumpRoom: '1号泵房', type: '活性炭滤芯',   lastReplace: '2026-01-05', nextReplace: '2026-07-05', cycleMonths: 6,  operator: '李运维' },
       { id: 'HC008', community: '翡翠湾小区', deviceId: 'D003', deviceName: '净水设备 C01', pumpRoom: '1号泵房', type: 'RO反渗透膜',   lastReplace: '2025-03-01', nextReplace: '2027-03-01', cycleMonths: 24, operator: '李运维' },
-      { id: 'HC009', community: '翡翠湾小区', deviceId: 'D004', deviceName: '软水设备 B03', pumpRoom: '2号泵房', type: '软化树脂',     lastReplace: '2025-12-08', nextReplace: '2028-12-08', cycleMonths: 36, operator: '李运维' },
-      { id: 'HC010', community: '翡翠湾小区', deviceId: 'D004', deviceName: '软水设备 B03', pumpRoom: '2号泵房', type: '软化盐',       lastReplace: '2026-02-10', nextReplace: '2026-05-10', cycleMonths: 3,  operator: '李运维' },
       { id: 'HC011', community: '阳光丽景', deviceId: 'D006', deviceName: '净水设备 C02', pumpRoom: '1号泵房', type: 'PP棉滤芯',     lastReplace: '2026-01-20', nextReplace: '2026-07-20', cycleMonths: 6,  operator: '张运维' },
       { id: 'HC012', community: '阳光丽景', deviceId: 'D006', deviceName: '净水设备 C02', pumpRoom: '1号泵房', type: 'RO反渗透膜',   lastReplace: '2024-03-01', nextReplace: '2026-03-01', cycleMonths: 24, operator: '张运维' },
       { id: 'HC013', community: '华悦府', deviceId: 'D007', deviceName: '直饮设备 E01', pumpRoom: '1号泵房', type: '复合滤芯',     lastReplace: '2026-03-25', nextReplace: '2026-09-25', cycleMonths: 6,  operator: '王运维' },
       { id: 'HC014', community: '华悦府', deviceId: 'D007', deviceName: '直饮设备 E01', pumpRoom: '1号泵房', type: '紫外杀菌灯管', lastReplace: '2025-04-01', nextReplace: '2026-04-01', cycleMonths: 12, operator: '王运维' },
-      { id: 'HC015', community: '华悦府', deviceId: 'D008', deviceName: '净水设备 D05', pumpRoom: '2号泵房', type: 'PP棉滤芯',     lastReplace: '2025-11-30', nextReplace: '2026-05-30', cycleMonths: 6,  operator: '王运维' },
-      { id: 'HC016', community: '华悦府', deviceId: 'D008', deviceName: '净水设备 D05', pumpRoom: '2号泵房', type: 'RO反渗透膜',   lastReplace: '2025-11-30', nextReplace: '2027-11-30', cycleMonths: 24, operator: '王运维' },
       { id: 'HC017', community: '紫荆花园', deviceId: 'D010', deviceName: '软水设备 G02', pumpRoom: '1号泵房', type: '软化树脂',     lastReplace: '2026-02-10', nextReplace: '2029-02-10', cycleMonths: 36, operator: '赵运维' },
       { id: 'HC018', community: '紫荆花园', deviceId: 'D010', deviceName: '软水设备 G02', pumpRoom: '1号泵房', type: 'PP棉滤芯',     lastReplace: '2025-08-01', nextReplace: '2026-02-01', cycleMonths: 6,  operator: '赵运维' },
       { id: 'HC019', community: '紫荆花园', deviceId: 'D010', deviceName: '软水设备 G02', pumpRoom: '1号泵房', type: '臭氧消解滤芯', lastReplace: '2025-07-01', nextReplace: '2026-07-01', cycleMonths: 12, operator: '赵运维' },
@@ -1856,6 +1811,337 @@
       );
     };
 
+    /* ── 监测点详情：近 7 天折线图 ── */
+    const 生成监测点近7天历史 = (point) => {
+      const num = parseFloat(point.value);
+      if (point.value === '-' || Number.isNaN(num)) return null;
+      const seed = (point.key || point.name).length;
+      return Array.from({ length: 7 }, (_, i) => {
+        const d = new Date(2026, 4, 22 - (6 - i));
+        const offset = Math.sin(i + seed) * num * 0.08;
+        const val = Math.max(0, num + offset);
+        const decimals = point.unit === 'm³' ? 1 : point.unit === 'm' ? 3 : point.unit === 'MPa' ? 2 : 0;
+        return {
+          label: `${d.getMonth() + 1}/${d.getDate()}`,
+          value: parseFloat(val.toFixed(decimals)),
+        };
+      });
+    };
+
+    const LineChart7Days = ({ data, unit, color = '#3b82f6' }) => {
+      const [activeIdx, setActiveIdx] = useState(null);
+      if (!data || data.length === 0) return null;
+      const values = data.map(d => d.value);
+      const max = Math.max(...values);
+      const min = Math.min(...values);
+      const range = max - min || 1;
+      const w = 300;
+      const h = 156;
+      const padX = 28;
+      const padY = 32;
+      const chartW = w - padX * 2;
+      const chartH = h - padY - 20;
+      const coords = data.map((d, i) => ({
+        x: padX + (i / (data.length - 1)) * chartW,
+        y: padY + chartH - ((d.value - min) / range) * chartH,
+        ...d,
+      }));
+      const polyline = coords.map(c => `${c.x},${c.y}`).join(' ');
+      const area = `${coords[0].x},${padY + chartH} ${polyline} ${coords[coords.length - 1].x},${padY + chartH}`;
+      const active = activeIdx !== null ? coords[activeIdx] : null;
+      const fmtVal = v => typeof v === 'number' ? (unit === 'm' ? v.toFixed(3) : v.toFixed(1)) : v;
+
+      return (
+        <div className="w-full overflow-x-auto">
+          <svg
+            viewBox={`0 0 ${w} ${h}`}
+            className="w-full"
+            style={{ minWidth: 260 }}
+            onClick={() => setActiveIdx(null)}
+          >
+            {[0, 0.5, 1].map(r => {
+              const y = padY + chartH - r * chartH;
+              const val = (min + range * r).toFixed(unit === 'm' ? 2 : 1);
+              return (
+                <g key={r}>
+                  <line x1={padX} y1={y} x2={w - padX} y2={y} stroke="#f1f5f9" strokeWidth="1" />
+                  <text x={4} y={y + 4} fontSize="9" fill="#94a3b8">{val}</text>
+                </g>
+              );
+            })}
+            <polygon points={area} fill={`${color}18`} />
+            <polyline points={polyline} fill="none" stroke={color} strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
+            {active && (
+              <line x1={active.x} y1={padY} x2={active.x} y2={padY + chartH} stroke={color} strokeWidth="1" strokeDasharray="3 3" opacity="0.45" />
+            )}
+            {coords.map((c, i) => {
+              const selected = activeIdx === i;
+              return (
+                <g
+                  key={c.label}
+                  onClick={e => { e.stopPropagation(); setActiveIdx(selected ? null : i); }}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <circle cx={c.x} cy={c.y} r="14" fill="transparent" />
+                  <circle cx={c.x} cy={c.y} r={selected ? 5.5 : 3.5} fill={selected ? color : 'white'} stroke={color} strokeWidth={selected ? 2.5 : 2} />
+                  <text x={c.x} y={h - 6} fontSize="9" fill={selected ? color : '#94a3b8'} textAnchor="middle" fontWeight={selected ? '600' : '400'}>{c.label}</text>
+                </g>
+              );
+            })}
+            {active && (() => {
+              const tw = 88;
+              const th = 40;
+              let tx = active.x - tw / 2;
+              tx = Math.max(4, Math.min(tx, w - tw - 4));
+              const ty = Math.max(4, active.y - th - 12);
+              return (
+                <g onClick={e => e.stopPropagation()}>
+                  <rect x={tx} y={ty} width={tw} height={th} rx="8" fill="#1e293b" />
+                  <polygon points={`${active.x - 5},${ty + th} ${active.x + 5},${ty + th} ${active.x},${ty + th + 6}`} fill="#1e293b" />
+                  <text x={tx + tw / 2} y={ty + 15} fontSize="9" fill="#94a3b8" textAnchor="middle">{active.label}</text>
+                  <text x={tx + tw / 2} y={ty + 31} fontSize="12" fill="#ffffff" textAnchor="middle" fontWeight="600">
+                    {fmtVal(active.value)}{unit ? ` ${unit}` : ''}
+                  </text>
+                </g>
+              );
+            })()}
+          </svg>
+          {unit && <p className="text-xs text-gray-400 text-right mt-1">单位：{unit}</p>}
+        </div>
+      );
+    };
+
+    const 监测点报警默认参数 = {
+      rawInstFlow:           { min: '0',    max: '20',   unit: 'm³/h',  hint: '瞬时流量超出范围将触发报警' },
+      rawWaterFlow:          { min: '0',    max: '3000', unit: 'm³',    hint: '累计流量超过上限将触发报警' },
+      rawTankLevel:          { min: '0.5',  max: '4.5',  unit: 'm',     hint: '原水箱液位超出范围将触发报警' },
+      rawTankRange:          { min: '4',    max: '6',    unit: 'm',     hint: '液位量程异常将触发报警' },
+      rawPumpOutPressure:    { min: '0.10', max: '0.40', unit: 'MPa',   hint: '原水泵出水压力超出范围将触发报警' },
+      boosterOutletPressure: { min: '0.10', max: '0.45', unit: 'MPa',   hint: '增压泵出口压力超出范围将触发报警' },
+      lowZonePressure:       { min: '0.10', max: '0.35', unit: 'MPa',   hint: '低区出水压力超出范围将触发报警' },
+      highZonePressure:      { min: '0.20', max: '0.50', unit: 'MPa',   hint: '高区出水压力超出范围将触发报警' },
+      rawConductivity:       { min: '100',  max: '800',  unit: 'μS/cm', hint: '原水电导率超出范围将触发报警' },
+      outConductivity:       { min: '50',   max: '300',  unit: 'μS/cm', hint: '出水电导率超出范围将触发报警' },
+      outPH:                 { min: '6.5',  max: '8.5',  unit: '',      hint: 'pH超出范围将触发报警' },
+      outTemp:               { min: '5',    max: '30',   unit: '°C',    hint: '出水温度超出范围将触发报警' },
+      outChlorine:           { min: '0.05', max: '0.50', unit: 'mg/L',  hint: '出水余氯超出范围将触发报警' },
+    };
+
+    const TabMonitorComprehensive = ({ device, point }) => {
+      const history = useMemo(() => 生成监测点近7天历史(point), [point]);
+      const noRealtime = point.value === '-';
+      return (
+        <div className="flex flex-col gap-4">
+          <div className="bg-white rounded-2xl p-4">
+            <p className="text-xs font-semibold text-blue-500 tracking-wide mb-1 flex items-center gap-1">
+              <Hash size={12} color="#3b82f6" /> 基础信息
+            </p>
+            <InfoRow label="设备编号" value={device.id} icon={<Hash />} />
+            <InfoRow label="安装时间" value={device.installDate} icon={<CalendarDays />} />
+            <InfoRow label="厂家" value={device.manufacturer} icon={<Building2 />} />
+          </div>
+          <div className="bg-white rounded-2xl p-4">
+            <p className="text-xs font-semibold text-blue-500 tracking-wide mb-2 flex items-center gap-1">
+              <Activity size={12} color="#3b82f6" /> 实时运行数据
+            </p>
+            {noRealtime ? (
+              <div className="flex flex-col items-center gap-2 py-4 text-gray-400">
+                <WifiOff size={36} color="#d1d5db" />
+                <p className="text-sm">暂无实时数据</p>
+              </div>
+            ) : (
+              <div className="flex items-end gap-2 py-2">
+                <span className="text-3xl font-bold text-sky-500">{point.value}</span>
+                {point.unit && <span className="text-sm text-gray-500 mb-1">{point.unit}</span>}
+                <span className="text-xs text-gray-400 mb-1 ml-auto">{point.time}</span>
+              </div>
+            )}
+          </div>
+          <div className="bg-white rounded-2xl p-4">
+            <p className="text-xs font-semibold text-blue-500 tracking-wide mb-1 flex items-center gap-1">
+              <TrendingUp size={12} color="#3b82f6" /> 历史数据
+            </p>
+            <p className="text-xs text-gray-400 mb-3">近 7 天</p>
+            {history ? (
+              <LineChart7Days data={history} unit={point.unit} />
+            ) : (
+              <div className="flex flex-col items-center gap-2 py-6 text-gray-400">
+                <Activity size={32} color="#d1d5db" />
+                <p className="text-sm">暂无历史数据</p>
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    };
+
+    const TabMonitorAlarmSettings = ({ device, point }) => {
+      const defaults = 监测点报警默认参数[point.key];
+      const [enabled, setEnabled] = useState(!!defaults);
+      const [min, setMin] = useState(defaults?.min || '0');
+      const [max, setMax] = useState(defaults?.max || '100');
+      const [saveStatus, setSaveStatus] = useState('idle');
+
+      const handleSave = () => {
+        setSaveStatus('saving');
+        setTimeout(() => setSaveStatus('saved'), 800);
+        setTimeout(() => setSaveStatus('idle'), 3000);
+      };
+
+      if (!defaults) {
+        return (
+          <div className="bg-white rounded-2xl p-8 flex flex-col items-center gap-3">
+            <Settings size={32} color="#d1d5db" />
+            <p className="text-sm font-medium text-gray-500 text-center">该监测项暂不支持报警参数设置</p>
+          </div>
+        );
+      }
+
+      return (
+        <div className="flex flex-col gap-4">
+          <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4 flex items-start gap-3">
+            <div className="w-7 h-7 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+              <Bell size={14} color="#3b82f6" />
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-blue-700 mb-1">报警阈值说明</p>
+              <p className="text-xs text-blue-600 leading-relaxed">当「{point.name}」监测数值超过设定的上下限值时，系统将自动生成报警提醒。</p>
+            </div>
+          </div>
+          <div className="bg-white rounded-2xl p-4">
+            <div className="flex items-center justify-between mb-3">
+              <div>
+                <span className="text-sm font-semibold text-gray-800">{point.name}</span>
+                {defaults.unit && <span className="text-xs text-gray-400 ml-1">({defaults.unit})</span>}
+              </div>
+              <button
+                onClick={() => setEnabled(v => !v)}
+                className="w-12 h-6 rounded-full transition-all relative flex-shrink-0"
+                style={{ background: enabled ? '#3b82f6' : '#e5e7eb' }}
+              >
+                <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow-sm transition-all duration-200 ${enabled ? 'left-7' : 'left-1'}`}></div>
+              </button>
+            </div>
+            {enabled ? (
+              <>
+                <div className="flex gap-2 mb-2">
+                  <div className="flex-1 min-w-0">
+                    <label className="text-xs text-gray-400 mb-1 block font-medium">下限值</label>
+                    <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
+                      <input type="number" value={min} onChange={e => { setMin(e.target.value); setSaveStatus('idle'); }} className="flex-1 px-2 py-1.5 text-sm outline-none min-w-0 w-0" />
+                      {defaults.unit && <span className="px-1.5 text-xs text-gray-400 bg-gray-50 border-l border-gray-200 py-1.5">{defaults.unit}</span>}
+                    </div>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <label className="text-xs text-gray-400 mb-1 block font-medium">上限值</label>
+                    <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden">
+                      <input type="number" value={max} onChange={e => { setMax(e.target.value); setSaveStatus('idle'); }} className="flex-1 px-2 py-1.5 text-sm outline-none min-w-0 w-0" />
+                      {defaults.unit && <span className="px-1.5 text-xs text-gray-400 bg-gray-50 border-l border-gray-200 py-1.5">{defaults.unit}</span>}
+                    </div>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-400">{defaults.hint}</p>
+              </>
+            ) : (
+              <p className="text-xs text-gray-400">该监测项报警已关闭</p>
+            )}
+          </div>
+          <button
+            onClick={handleSave}
+            className={`w-full py-3.5 rounded-2xl font-semibold text-sm transition-all active:opacity-90 ${saveStatus === 'saved' ? 'bg-emerald-500 text-white' : 'bg-blue-600 text-white'}`}
+          >
+            {saveStatus === 'saving' ? '保存中…' : saveStatus === 'saved' ? '✓ 保存成功，报警规则已生效' : '保存报警参数设置'}
+          </button>
+          {saveStatus === 'saved' && (
+            <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-3 flex items-center gap-2">
+              <CheckCircle size={16} color="#10b981" />
+              <p className="text-xs text-emerald-700">设置已保存，系统将按新阈值实时监测并自动触发报警提醒。</p>
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    const 监测点历史预警 = {
+      rawPumpOutPressure: [
+        { id: 1, time: '2026-02-18 09:11', title: '出水压力偏低', level: '重要', content: '出水压力偏低' },
+      ],
+    };
+
+    const TabMonitorAlarmHistory = ({ point }) => {
+      const alarms = 监测点历史预警[point.key] || [];
+      return (
+        <div className="flex flex-col gap-3">
+          {alarms.length === 0 ? (
+            <div className="bg-white rounded-2xl p-8 flex flex-col items-center gap-3 text-gray-400">
+              <CheckCircle size={40} color="#6ee7b7" />
+              <p className="text-sm">近期暂无报警记录</p>
+            </div>
+          ) : alarms.map(a => {
+            const s = 报警等级样式[a.level];
+            return (
+              <div key={a.id} className={`${s.bg} border ${s.border} rounded-2xl p-4`}>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <div className={`w-2 h-2 rounded-full ${s.dot}`}></div>
+                    <span className="text-sm font-semibold text-gray-800">{a.title}</span>
+                  </div>
+                  <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${s.bg} ${s.text} border ${s.border}`}>{a.level}</span>
+                </div>
+                <p className="text-xs text-gray-600 leading-relaxed mb-2">{a.content}</p>
+                <div className="flex items-center gap-1">
+                  <Clock size={11} color="#9ca3af" />
+                  <span className="text-xs text-gray-400">{a.time}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      );
+    };
+
+    const MonitorPointDetailPage = ({ device, point, onBack }) => {
+      const [tab, setTab] = useState('综合信息');
+      const tabs = ['综合信息', '历史预警', '报警参数设置'];
+      const ps = 监测点状态样式[point.status] || 监测点状态样式['正常'];
+
+      return (
+        <div className="flex flex-col min-h-screen bg-gray-100">
+          <div className="bg-blue-600 px-4 pt-10 pb-4">
+            <div className="flex items-center gap-3 mb-2">
+              <button onClick={onBack} className="w-8 h-8 flex items-center justify-center rounded-full active:bg-blue-500">
+                <ArrowLeft size={22} color="white" />
+              </button>
+              <span className="flex-1 text-white text-base font-semibold truncate">{point.name}</span>
+              <span className={`text-xs px-2 py-0.5 rounded border flex-shrink-0 ${ps.bg} ${ps.text} ${ps.border}`}>{point.status}</span>
+            </div>
+            <div className="flex items-center gap-2 ml-11">
+              <MapPin size={12} color="#bfdbfe" />
+              <span className="text-blue-200 text-xs">{device.community} · {device.pumpRoom}</span>
+            </div>
+          </div>
+          <div className="bg-white border-b border-gray-100 flex overflow-x-auto sticky top-0 z-10">
+            {tabs.map(t => (
+              <button
+                key={t}
+                onClick={() => setTab(t)}
+                className={`flex-shrink-0 px-4 py-3 text-sm font-medium border-b-2 transition-colors ${
+                  tab === t ? 'border-blue-600 text-blue-600' : 'border-transparent text-gray-500'
+                }`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+          <div className="flex-1 p-4 overflow-y-auto">
+            {tab === '综合信息' && <TabMonitorComprehensive device={device} point={point} />}
+            {tab === '历史预警' && <TabMonitorAlarmHistory point={point} />}
+            {tab === '报警参数设置' && <TabMonitorAlarmSettings device={device} point={point} />}
+          </div>
+        </div>
+      );
+    };
+
     /* ════════════════════════════════════════
        设备管理 — 小区汇总 & 泵房设备
     ════════════════════════════════════════ */
@@ -1886,6 +2172,71 @@
     const 设备状态图标色 = (s) => {
       const st = 状态样式[s];
       return st.text.includes('emerald') ? '#10b981' : st.text.includes('amber') ? '#f59e0b' : st.text.includes('red') ? '#ef4444' : '#6b7280';
+    };
+
+    const 构建泵房监测点 = (device) => {
+      if (!device) return [];
+      const time = '2026-05-28 17:41:12';
+      const pointStatus = device.status === '离线' || device.status === '故障' ? '异常' : device.status === '预警' ? '预警' : '正常';
+      const c = device.community;
+      const rawInstFlow    = { 锦绣花园: 12.5,   翡翠湾小区: 14.2,   阳光丽景: 10.8,   华悦府: 11.6,   紫荆花园: 9.4   }[c] || 12.5;
+      const rawCumFlow     = { 锦绣花园: 1894.9, 翡翠湾小区: 2103.6, 阳光丽景: 1568.2, 华悦府: 1756.4, 紫荆花园: 1420.8 }[c] || 1894.9;
+      const rawTankLv      = { 锦绣花园: 2.18,   翡翠湾小区: 2.45,   阳光丽景: 1.86,   华悦府: 2.62,   紫荆花园: 1.74  }[c] || 2.18;
+      const rawPumpPres    = { 锦绣花园: 0.26,   翡翠湾小区: 0.28,   阳光丽景: 0.24,   华悦府: 0.27,   紫荆花园: 0.23  }[c] || 0.26;
+      const boostOutPres   = { 锦绣花园: 0.32,   翡翠湾小区: 0.35,   阳光丽景: 0.30,   华悦府: 0.33,   紫荆花园: 0.28  }[c] || 0.32;
+      const lowZonePres    = { 锦绣花园: 0.21,   翡翠湾小区: 0.23,   阳光丽景: 0.19,   华悦府: 0.22,   紫荆花园: 0.18  }[c] || 0.21;
+      const highZonePres   = { 锦绣花园: 0.38,   翡翠湾小区: 0.41,   阳光丽景: 0.35,   华悦府: 0.39,   紫荆花园: 0.33  }[c] || 0.38;
+      const rawConduct     = { 锦绣花园: 412,    翡翠湾小区: 385,    阳光丽景: 456,    华悦府: 398,    紫荆花园: 441   }[c] || 412;
+      const outConduct     = { 锦绣花园: 128,    翡翠湾小区: 115,    阳光丽景: 142,    华悦府: 121,    紫荆花园: 136   }[c] || 128;
+      const outPH          = { 锦绣花园: '7.2',  翡翠湾小区: '7.1',  阳光丽景: '7.3',  华悦府: '7.0',  紫荆花园: '7.4' }[c] || '7.2';
+      const outTemp        = { 锦绣花园: '18.5', 翡翠湾小区: '17.8', 阳光丽景: '19.2', 华悦府: '18.1', 紫荆花园: '20.1' }[c] || '18.5';
+      const outChlorine    = { 锦绣花园: '0.12', 翡翠湾小区: '0.15', 阳光丽景: '0.11', 华悦府: '0.13', 紫荆花园: '0.14' }[c] || '0.12';
+      return [
+        { key: 'rawInstFlow',          name: '原水瞬时流量',   value: rawInstFlow.toFixed(1),  unit: 'm³/h',  status: pointStatus, time, group: '水量' },
+        { key: 'rawWaterFlow',         name: '原水累计流量',   value: rawCumFlow.toFixed(1),   unit: 'm³',    status: pointStatus, time, group: '水量' },
+        { key: 'rawTankLevel',         name: '原水箱液位',     value: rawTankLv.toFixed(2),    unit: 'm',     status: pointStatus, time, group: '水量' },
+        { key: 'rawTankRange',         name: '原水箱液位量程', value: '5',                     unit: 'm',     status: pointStatus, time, group: '水量' },
+        { key: 'rawPumpOutPressure',   name: '原水泵出水压力', value: rawPumpPres.toFixed(2),  unit: 'MPa',   status: pointStatus, time, group: '水压' },
+        { key: 'boosterOutletPressure',name: '增压泵出口压力', value: boostOutPres.toFixed(2), unit: 'MPa',   status: pointStatus, time, group: '水压' },
+        { key: 'lowZonePressure',      name: '低区出水压力',   value: lowZonePres.toFixed(2),  unit: 'MPa',   status: pointStatus, time, group: '水压' },
+        { key: 'highZonePressure',     name: '高区出水压力',   value: highZonePres.toFixed(2), unit: 'MPa',   status: pointStatus, time, group: '水压' },
+        { key: 'rawConductivity',      name: '原水电导率',     value: String(rawConduct),      unit: 'μS/cm', status: pointStatus, time, group: '水质' },
+        { key: 'outConductivity',      name: '出水电导率',     value: String(outConduct),      unit: 'μS/cm', status: pointStatus, time, group: '水质' },
+        { key: 'outPH',                name: '出水pH',         value: outPH,                   unit: '',      status: pointStatus, time, group: '水质' },
+        { key: 'outTemp',              name: '出水温度',       value: outTemp,                 unit: '°C',    status: pointStatus, time, group: '水质' },
+        { key: 'outChlorine',          name: '出水余氯',       value: outChlorine,             unit: 'mg/L',  status: pointStatus, time, group: '水质' },
+      ];
+    };
+
+    const 监测点状态样式 = {
+      正常: { bg: 'bg-sky-50', text: 'text-sky-600', border: 'border-sky-100' },
+      预警: { bg: 'bg-amber-50', text: 'text-amber-600', border: 'border-amber-100' },
+      异常: { bg: 'bg-red-50', text: 'text-red-600', border: 'border-red-100' },
+    };
+
+    const 监测数据卡片 = ({ point, onDetailClick }) => {
+      const ps = 监测点状态样式[point.status] || 监测点状态样式['正常'];
+      return (
+        <div className="bg-white rounded-xl p-3.5 border border-gray-100 shadow-sm flex flex-col min-h-[132px]">
+          <div className="flex items-start justify-between gap-2 mb-1">
+            <span className="text-sm font-medium text-gray-800 leading-snug">{point.name}</span>
+            <span className={`text-xs px-2 py-0.5 rounded border flex-shrink-0 ${ps.bg} ${ps.text} ${ps.border}`}>{point.status}</span>
+          </div>
+          <p className="text-xs text-gray-400 mb-3">{point.time}</p>
+          <div className="flex items-end justify-between mt-auto gap-2">
+            <div className="flex flex-col min-w-0 flex-1">
+              <span className="text-lg font-bold text-sky-500 whitespace-nowrap leading-none">{point.value}</span>
+              {point.unit && <span className="text-xs text-gray-500 mt-1">{point.unit}</span>}
+            </div>
+            <button
+              onClick={() => onDetailClick && onDetailClick(point)}
+              className="text-xs text-blue-500 border border-blue-200 rounded-lg px-2.5 py-1 flex-shrink-0 active:bg-blue-50"
+            >
+              查看详情
+            </button>
+          </div>
+        </div>
+      );
     };
 
     const 设备卡片 = ({ device, onClick, showPumpRoom = false }) => {
@@ -1963,8 +2314,6 @@
         return list.filter(c => c.name.includes(kw));
       }, [keyword]);
 
-      const 全局统计 = 统计设备状态(设备数据);
-
       return (
         <div className="flex flex-col min-h-screen bg-gray-100">
           <div className="bg-blue-600 px-4 pt-10 pb-4">
@@ -1989,18 +2338,6 @@
             </div>
           </div>
 
-          <div className="bg-white border-b border-gray-100 px-4 py-3 grid grid-cols-4 gap-2">
-            {['在线', '离线', '预警', '故障'].map(s => {
-              const st = 状态样式[s];
-              return (
-                <div key={s} className="flex flex-col items-center py-2 rounded-xl">
-                  <span className={`text-lg font-bold ${st.text}`}>{全局统计[s]}</span>
-                  <span className="text-xs text-gray-400">{s}</span>
-                </div>
-              );
-            })}
-          </div>
-
           <div className="flex-1 p-4 flex flex-col gap-3">
             <p className="text-xs text-gray-400">共 {小区汇总.length} 个小区</p>
             {小区汇总.length === 0 ? (
@@ -2014,29 +2351,17 @@
                 onClick={() => onCommunityClick(community.name)}
                 className="bg-white rounded-2xl p-4 text-left active:scale-98 transition-transform w-full"
               >
-                <div className="flex items-start justify-between mb-3">
+                <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
                       <Building2 size={20} color="#3b82f6" />
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-gray-800">{community.name}</p>
-                      <p className="text-xs text-gray-400 mt-0.5">{community.pumpRoomCount} 个泵房 · {community.total} 台设备</p>
+                      <p className="text-xs text-gray-400 mt-0.5">1 个泵房 · {community.total} 台设备</p>
                     </div>
                   </div>
                   <ChevronRight size={18} color="#d1d5db" />
-                </div>
-                <div className="grid grid-cols-4 gap-2 ml-13">
-                  {['在线', '离线', '预警', '故障'].map(s => {
-                    const st = 状态样式[s];
-                    const count = community.stats[s];
-                    return (
-                      <div key={s} className={`${st.bg} rounded-lg py-1.5 flex flex-col items-center`}>
-                        <span className={`text-sm font-bold ${st.text}`}>{count}</span>
-                        <span className="text-xs text-gray-400">{s}</span>
-                      </div>
-                    );
-                  })}
                 </div>
               </button>
             ))}
@@ -2045,95 +2370,121 @@
       );
     };
 
-    const CommunityDevicePage = ({ community, onBack, onDeviceClick }) => {
-      const [keyword, setKeyword] = useState('');
-      const [filterType, setFilterType] = useState('全部');
-      const [filterStatus, setFilterStatus] = useState('全部');
-
+    const CommunityDevicePage = ({ community, onBack, onPointDetail }) => {
       const 小区设备 = useMemo(() => 设备数据.filter(d => d.community === community), [community]);
+      const 泵房设备 = 小区设备[0];
+      const [filterStatus, setFilterStatus] = useState('全部');
+      const [meterId, setMeterId] = useState(泵房设备?.meterId || '');
+      const [searched, setSearched] = useState(false);
+      const [searchMsg, setSearchMsg] = useState('');
 
-      const filtered = useMemo(() => {
-        return 小区设备.filter(d => {
-          const kw = keyword.trim();
-          const matchKw = !kw || d.name.includes(kw) || d.pumpRoom.includes(kw) || d.address.includes(kw);
-          const matchT = filterType === '全部' || d.type === filterType;
-          const matchS = filterStatus === '全部' || d.status === filterStatus;
-          return matchKw && matchT && matchS;
-        });
-      }, [小区设备, keyword, filterType, filterStatus]);
+      const 监测点 = useMemo(() => 构建泵房监测点(泵房设备), [泵房设备]);
+      const 筛选后设备 = useMemo(() => {
+        if (filterStatus === '全部') return 小区设备;
+        return 小区设备.filter(d => d.status === filterStatus);
+      }, [小区设备, filterStatus]);
 
-      const 泵房分组 = useMemo(() => {
-        const map = {};
-        filtered.forEach(d => {
-          if (!map[d.pumpRoom]) map[d.pumpRoom] = [];
-          map[d.pumpRoom].push(d);
-        });
-        return Object.entries(map).sort((a, b) => a[0].localeCompare(b[0], 'zh-CN'));
-      }, [filtered]);
+      const 显示监测点 = useMemo(() => {
+        if (筛选后设备.length === 0) return [];
+        if (!searched) return 监测点;
+        const kw = meterId.trim();
+        if (kw === 泵房设备?.meterId) return 监测点;
+        return [];
+      }, [监测点, 筛选后设备, searched, meterId, 泵房设备]);
+
+      const handleSearch = () => {
+        setSearched(true);
+        const kw = meterId.trim();
+        if (!kw || kw === 泵房设备?.meterId) {
+          setSearchMsg('');
+        } else {
+          setSearchMsg('未找到匹配的仪表编号');
+        }
+      };
+
+      const s = 泵房设备 ? 状态样式[泵房设备.status] : 状态样式['离线'];
 
       return (
-        <div className="flex flex-col min-h-screen bg-gray-100">
+        <div className="flex flex-col min-h-screen bg-slate-50">
           <div className="bg-blue-600 px-4 pt-10 pb-4">
             <div className="flex items-center gap-3 mb-3">
               <button onClick={onBack} className="w-8 h-8 flex items-center justify-center rounded-full active:bg-blue-500">
                 <ArrowLeft size={22} color="white" />
               </button>
-              <span className="flex-1 text-white text-base font-semibold">{community}</span>
-              <span className="text-blue-200 text-sm">共 {小区设备.length} 台</span>
-            </div>
-            <div className="bg-white/20 rounded-xl flex items-center gap-2 px-3 py-2">
-              <Search size={16} color="white" />
-              <input
-                className="flex-1 bg-transparent text-white text-sm placeholder-blue-200 outline-none"
-                placeholder="搜索设备名称、泵房、位置…"
-                value={keyword}
-                onChange={e => setKeyword(e.target.value)}
-              />
-              {keyword && (
-                <button onClick={() => setKeyword('')} className="text-blue-200 text-xs">清除</button>
+              <div className="flex-1 min-w-0">
+                <span className="text-white text-base font-semibold block truncate">{community}</span>
+                <span className="text-blue-200 text-xs">1号泵房 · {泵房设备?.name || '暂无设备'}</span>
+              </div>
+              {泵房设备 && (
+                <span className={`text-xs font-medium px-2 py-0.5 rounded-full border flex items-center gap-1 ${s.bg} ${s.text} ${s.border}`}>
+                  <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`}></span>
+                  {泵房设备.status}
+                </span>
               )}
             </div>
           </div>
 
           <状态统计栏 devices={小区设备} filterStatus={filterStatus} onFilterStatus={setFilterStatus} />
 
-          <div className="bg-white border-b border-gray-100 px-4 py-3 flex gap-3">
-            <div className="flex-1 flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2">
-              <Droplets size={14} color="#9ca3af" />
-              <select
-                value={filterType}
-                onChange={e => setFilterType(e.target.value)}
-                className="flex-1 bg-transparent text-sm text-gray-700 outline-none appearance-none cursor-pointer"
+          <div className="bg-white border-b border-gray-100 px-4 py-3">
+            <p className="text-xs text-gray-500 mb-2">仪表搜索</p>
+            <div className="flex items-center gap-2">
+              <input
+                className="flex-1 border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-blue-400"
+                placeholder="请输入仪表编号"
+                value={meterId}
+                onChange={e => { setMeterId(e.target.value); setSearchMsg(''); setSearched(false); }}
+                onKeyDown={e => e.key === 'Enter' && handleSearch()}
+              />
+              <button
+                onClick={handleSearch}
+                className="px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-xl active:bg-blue-700 flex-shrink-0"
               >
-                {种类列表.map(t => <option key={t} value={t}>{t}</option>)}
-              </select>
-              <ChevronDown size={14} color="#9ca3af" />
+                搜索
+              </button>
             </div>
+            {searchMsg && <p className="text-xs text-red-500 mt-2">{searchMsg}</p>}
           </div>
 
-          <div className="flex-1 p-4 flex flex-col gap-4">
-            <p className="text-xs text-gray-400">筛选结果：{filtered.length} 台设备 · {泵房分组.length} 个泵房</p>
-            {泵房分组.length === 0 ? (
+          <div className="flex-1 p-3 pb-6">
+            {!泵房设备 ? (
+              <div className="bg-white rounded-2xl p-8 flex flex-col items-center gap-3 text-gray-400">
+                <Building2 size={40} color="#d1d5db" />
+                <p className="text-sm">该小区暂无泵房数据</p>
+              </div>
+            ) : 筛选后设备.length === 0 ? (
+              <div className="bg-white rounded-2xl p-8 flex flex-col items-center gap-3 text-gray-400">
+                <Cpu size={40} color="#d1d5db" />
+                <p className="text-sm">该状态下暂无设备</p>
+              </div>
+            ) : 显示监测点.length === 0 ? (
               <div className="bg-white rounded-2xl p-8 flex flex-col items-center gap-3 text-gray-400">
                 <Search size={40} color="#d1d5db" />
-                <p className="text-sm">未找到符合条件的设备</p>
+                <p className="text-sm">{searchMsg || '未找到监测数据'}</p>
               </div>
-            ) : 泵房分组.map(([pumpRoom, devices]) => (
-              <div key={pumpRoom} className="flex flex-col gap-2">
-                <div className="flex items-center gap-2 px-1">
-                  <div className="w-7 h-7 bg-indigo-50 rounded-lg flex items-center justify-center">
-                    <Building2 size={14} color="#6366f1" />
-                  </div>
-                  <span className="text-sm font-semibold text-gray-700">{pumpRoom}</span>
-                  <span className="text-xs text-gray-400">{devices.length} 台</span>
-                </div>
-                <div className="flex flex-col gap-2">
-                  {devices.map(device => (
-                    <设备卡片 key={device.id} device={device} onClick={onDeviceClick} />
-                  ))}
-                </div>
+            ) : (
+              <div className="flex flex-col gap-5">
+                {['水量', '水压', '水质'].map(group => {
+                  const pts = 显示监测点.filter(p => p.group === group);
+                  if (!pts.length) return null;
+                  const groupIcon = { 水量: <Droplets size={13} color="#3b82f6" />, 水压: <Gauge size={13} color="#8b5cf6" />, 水质: <Activity size={13} color="#10b981" /> }[group];
+                  const groupColor = { 水量: 'text-blue-600', 水压: 'text-purple-600', 水质: 'text-emerald-600' }[group];
+                  return (
+                    <div key={group}>
+                      <div className={`flex items-center gap-1.5 mb-2 px-1 ${groupColor}`}>
+                        {groupIcon}
+                        <span className="text-sm font-semibold">{group}</span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2.5">
+                        {pts.map(point => (
+                          <监测数据卡片 key={point.key} point={point} onDetailClick={onPointDetail} />
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-            ))}
+            )}
           </div>
         </div>
       );
@@ -2398,7 +2749,9 @@
     /* ════════════════════════════════════════
        首页
     ════════════════════════════════════════ */
-    const HomePage = ({ onNavigate }) => (
+    const HomePage = ({ onNavigate }) => {
+      const 设备统计 = 统计设备状态(设备数据);
+      return (
       <div className="flex flex-col min-h-screen bg-gray-100 pb-6">
         {/* 头部 */}
         <div className="bg-blue-600 px-5 pt-10 pb-8 relative overflow-hidden">
@@ -2497,16 +2850,16 @@
                 <span className="text-sm text-gray-600">设备总数</span>
               </div>
               <div className="flex items-end gap-1">
-                <span className="text-2xl font-bold text-blue-600">8</span>
+                <span className="text-2xl font-bold text-blue-600">{设备数据.length}</span>
                 <span className="text-xs text-gray-400 mb-0.5">台</span>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-2">
               {[
-                { label: '在线设备', num: 3, ...状态样式['在线'] },
-                { label: '离线设备', num: 1,  ...状态样式['离线'] },
-                { label: '预警设备', num: 2,  ...状态样式['预警'] },
-                { label: '故障设备', num: 2,   ...状态样式['故障'] },
+                { label: '在线设备', num: 设备统计['在线'], ...状态样式['在线'] },
+                { label: '离线设备', num: 设备统计['离线'], ...状态样式['离线'] },
+                { label: '预警设备', num: 设备统计['预警'], ...状态样式['预警'] },
+                { label: '故障设备', num: 设备统计['故障'], ...状态样式['故障'] },
               ].map(item => (
                 <div key={item.label} className={`${item.bg} rounded-xl p-3 flex items-center justify-between`}>
                   <div className="flex items-center gap-2">
@@ -2587,6 +2940,7 @@
         </div>
       </div>
     );
+    };
 
     /* ════════════════════════════════════════
        巡检管理数据与组件
@@ -2628,15 +2982,15 @@
       const labelCls = "text-xs text-gray-500 font-medium mb-1.5 block";
 
       return (
-        <div className="fixed inset-0 bg-black/50 flex items-end justify-center z-50">
-          <div className="bg-white w-full max-w-sm rounded-t-3xl" style={{ maxHeight:'90vh', overflowY:'auto' }}>
-            <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-gray-100">
-              <span className="text-base font-semibold text-gray-800">新建巡检计划</span>
-              <button onClick={onClose} className="w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center">
-                <XCircle size={16} color="#6b7280" />
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-6 py-8" onClick={onClose}>
+          <div className="bg-white w-[88%] max-w-[300px] max-h-[calc(100vh-4rem)] overflow-y-auto rounded-2xl shadow-xl" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between px-4 pt-4 pb-2.5 border-b border-gray-100">
+              <span className="text-sm font-semibold text-gray-800">新建巡检计划</span>
+              <button onClick={onClose} className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center">
+                <XCircle size={14} color="#6b7280" />
               </button>
             </div>
-            <div className="px-5 py-4 flex flex-col gap-4">
+            <div className="px-4 py-3 flex flex-col gap-3">
               {/* 计划类型 */}
               <div>
                 <label className={labelCls}>计划类型</label>
@@ -2666,6 +3020,13 @@
                 <label className={labelCls}>计划日期 <span className="text-red-400">*</span></label>
                 <input type="date" className={fieldCls} value={form.planDate} onChange={e => set('planDate', e.target.value)} />
               </div>
+              {/* 巡检人 */}
+              <div>
+                <label className={labelCls}>巡检人 <span className="text-red-400">*</span></label>
+                <select className={fieldCls} value={form.assignee} onChange={e => set('assignee', e.target.value)}>
+                  {assignees.map(a => <option key={a} value={a}>{a}</option>)}
+                </select>
+              </div>
               {/* 巡检周期 */}
               <div>
                 <label className={labelCls}>巡检周期</label>
@@ -2691,14 +3052,14 @@
                 <textarea className={fieldCls} rows={2} placeholder="选填" value={form.remark} onChange={e => set('remark', e.target.value)} />
               </div>
               {/* 提交 */}
-              <div className="flex gap-3 pb-2">
-                <button onClick={onClose} className="flex-1 py-3 rounded-xl border border-gray-200 text-sm text-gray-600 font-medium">取消</button>
+              <div className="flex gap-2 pb-1">
+                <button onClick={onClose} className="flex-1 py-2.5 rounded-xl border border-gray-200 text-xs text-gray-600 font-medium">取消</button>
                 <button
                   onClick={() => {
                     if (!form.title.trim() || !form.planDate) return;
                     onSubmit(form);
                   }}
-                  className="flex-1 py-3 rounded-xl bg-blue-600 text-white text-sm font-semibold active:opacity-90"
+                  className="flex-1 py-2.5 rounded-xl bg-blue-600 text-white text-xs font-semibold active:opacity-90"
                 >确认创建</button>
               </div>
             </div>
@@ -2902,6 +3263,80 @@
 
     const 产水模式状态项 = 产水模式状态行.flat();
 
+    const INSPECT_NUM_INPUT_CLS = 'w-full min-w-0 border border-blue-200 rounded-xl px-3 py-2 text-sm text-gray-800 bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-200';
+    const INSPECT_DATE_INPUT_CLS = 'w-full border border-blue-200 rounded-xl px-3 py-2 text-sm bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-200';
+
+    const InspectExecSectionCard = ({ title, hint, children }) => (
+      <div className="bg-white rounded-2xl shadow-sm border border-blue-100 overflow-hidden">
+        <div className="px-4 py-3 border-b border-blue-50 bg-gradient-to-r from-blue-50 to-white">
+          <h3 className="text-sm font-semibold text-blue-900">{title}</h3>
+          {hint && <p className="text-[11px] text-gray-500 mt-0.5">{hint}</p>}
+        </div>
+        <div className="p-4">{children}</div>
+      </div>
+    );
+
+    const InspectExecNumericField = ({ label, unit, value, onChange }) => (
+      <div className="flex flex-col gap-1">
+        <span className="text-xs text-gray-600">{label}</span>
+        <div className="flex items-center gap-2">
+          <input type="number" step="any" inputMode="decimal" placeholder="填写数值" className={INSPECT_NUM_INPUT_CLS} value={value} onChange={e => onChange(e.target.value)} />
+          <span className="text-xs text-blue-600 font-medium w-14 text-right shrink-0">{unit}</span>
+        </div>
+      </div>
+    );
+
+    const InspectExecProduceStatusRow = ({ label, statusMap, onStatusChange }) => (
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 py-3 border-b border-gray-100 last:border-b-0 last:pb-0 first:pt-0">
+        <span className="text-xs text-gray-800 leading-snug">{label}</span>
+        <div className="flex gap-5 text-xs text-gray-700 shrink-0">
+          <label className="inline-flex items-center gap-1.5 cursor-pointer">
+            <input type="radio" name={`sts-${label}`} checked={statusMap[label] === '正常'} onChange={() => onStatusChange(label, '正常')} className="accent-blue-600 w-3.5 h-3.5" />正常
+          </label>
+          <label className="inline-flex items-center gap-1.5 cursor-pointer">
+            <input type="radio" name={`sts-${label}`} checked={statusMap[label] === '异常'} onChange={() => onStatusChange(label, '异常')} className="accent-blue-600 w-3.5 h-3.5" />异常
+          </label>
+        </div>
+      </div>
+    );
+
+    const InspectExecSupplyStatusRow = ({ label, opts = ['正常', '不正常'], statusMap, onStatusChange }) => (
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 py-3 border-b border-gray-100 last:border-b-0 last:pb-0 first:pt-0">
+        <span className="text-xs text-gray-800 leading-snug">{label}</span>
+        <div className="flex gap-5 text-xs text-gray-700 shrink-0">
+          {opts.map(opt => (
+            <label key={opt} className="inline-flex items-center gap-1.5 cursor-pointer">
+              <input type="radio" name={`sply-${label}`} checked={statusMap[label] === opt} onChange={() => onStatusChange(label, opt)} className="accent-blue-600 w-3.5 h-3.5" />{opt}
+            </label>
+          ))}
+        </div>
+      </div>
+    );
+
+    const InspectExecConsumableCard = ({ title, ynKey, yn, onYn, dates, dateValues, onDateChange }) => (
+      <InspectExecSectionCard title={title} hint="耗材更换">
+        <div className="flex items-center gap-6 mb-4 pb-4 border-b border-gray-100">
+          <span className="text-xs text-gray-600 shrink-0">是否更换</span>
+          <div className="flex gap-5 text-xs">
+            <label className="inline-flex items-center gap-1.5 cursor-pointer">
+              <input type="radio" name={ynKey} checked={yn === '是'} onChange={() => onYn('是')} className="accent-blue-600 w-3.5 h-3.5" />是
+            </label>
+            <label className="inline-flex items-center gap-1.5 cursor-pointer">
+              <input type="radio" name={ynKey} checked={yn === '否'} onChange={() => onYn('否')} className="accent-blue-600 w-3.5 h-3.5" />否
+            </label>
+          </div>
+        </div>
+        <div className="flex flex-col gap-4">
+          {dates.map(({ text, dk }) => (
+            <label key={dk} className="flex flex-col gap-1.5">
+              <span className="text-xs text-gray-700 leading-snug">{text}</span>
+              <input type="date" className={INSPECT_DATE_INPUT_CLS} value={dateValues[dk] || ''} onChange={e => onDateChange(dk, e.target.value)} />
+            </label>
+          ))}
+        </div>
+      </InspectExecSectionCard>
+    );
+
     /* ── 巡检执行页（待执行／进行中，“开始巡检”进入）── */
     const InspectExecutionPage = ({ plan, onBack, onComplete }) => {
       const [showConfirm, setShowConfirm] = useState(false);
@@ -2942,132 +3377,68 @@
       const setSupplySts = (label, value) =>
         setSupply(prev => ({ ...prev, supplyStatus: { ...prev.supplyStatus, [label]: value } }));
 
-      const numInputCls = 'w-full min-w-0 border border-blue-200 rounded-xl px-3 py-2 text-sm text-gray-800 bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-200';
-      const dateInputCls = 'w-full border border-blue-200 rounded-xl px-3 py-2 text-sm bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-200';
-
-      const SectionCard = ({ title, hint, children }) => (
-        <div className="bg-white rounded-2xl shadow-sm border border-blue-100 overflow-hidden">
-          <div className="px-4 py-3 border-b border-blue-50 bg-gradient-to-r from-blue-50 to-white">
-            <h3 className="text-sm font-semibold text-blue-900">{title}</h3>
-            {hint && <p className="text-[11px] text-gray-500 mt-0.5">{hint}</p>}
-          </div>
-          <div className="p-4">{children}</div>
-        </div>
-      );
-
-      const NumericField = ({ label, k, unit }) => (
-        <div className="flex flex-col gap-1">
-          <span className="text-xs text-gray-600">{label}</span>
-          <div className="flex items-center gap-2">
-            <input type="number" step="any" inputMode="decimal" placeholder="填写数值" className={numInputCls} value={produce[k]} onChange={e => setFld(k, e.target.value)} />
-            <span className="text-xs text-blue-600 font-medium w-14 text-right shrink-0">{unit}</span>
-          </div>
-        </div>
-      );
-
-      const StatusRow = ({ label }) => (
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 py-3 border-b border-gray-100 last:border-b-0 last:pb-0 first:pt-0">
-          <span className="text-xs text-gray-800 leading-snug">{label}</span>
-          <div className="flex gap-5 text-xs text-gray-700 shrink-0">
-            <label className="inline-flex items-center gap-1.5 cursor-pointer">
-              <input type="radio" name={`sts-${label}`} checked={produce.status[label] === '正常'} onChange={() => setSts(label, '正常')} className="accent-blue-600 w-3.5 h-3.5" />正常
-            </label>
-            <label className="inline-flex items-center gap-1.5 cursor-pointer">
-              <input type="radio" name={`sts-${label}`} checked={produce.status[label] === '异常'} onChange={() => setSts(label, '异常')} className="accent-blue-600 w-3.5 h-3.5" />异常
-            </label>
-          </div>
-        </div>
-      );
-
-      const SupplyStatusRow = ({ label, opts = ['正常', '不正常'] }) => (
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 py-3 border-b border-gray-100 last:border-b-0 last:pb-0 first:pt-0">
-          <span className="text-xs text-gray-800 leading-snug">{label}</span>
-          <div className="flex gap-5 text-xs text-gray-700 shrink-0">
-            {opts.map(opt => (
-              <label key={opt} className="inline-flex items-center gap-1.5 cursor-pointer">
-                <input type="radio" name={`sply-${label}`} checked={supply.supplyStatus[label] === opt} onChange={() => setSupplySts(label, opt)} className="accent-blue-600 w-3.5 h-3.5" />{opt}
-              </label>
-            ))}
-          </div>
-        </div>
-      );
-
-      const ConsumableCard = ({ title, ynKey, yn, onYn, dates }) => (
-        <SectionCard title={title} hint="耗材更换">
-          <div className="flex items-center gap-6 mb-4 pb-4 border-b border-gray-100">
-            <span className="text-xs text-gray-600 shrink-0">是否更换</span>
-            <div className="flex gap-5 text-xs">
-              <label className="inline-flex items-center gap-1.5 cursor-pointer">
-                <input type="radio" name={ynKey} checked={yn === '是'} onChange={() => onYn('是')} className="accent-blue-600 w-3.5 h-3.5" />是
-              </label>
-              <label className="inline-flex items-center gap-1.5 cursor-pointer">
-                <input type="radio" name={ynKey} checked={yn === '否'} onChange={() => onYn('否')} className="accent-blue-600 w-3.5 h-3.5" />否
-              </label>
-            </div>
-          </div>
-          <div className="flex flex-col gap-4">
-            {dates.map(({ text, dk }) => (
-              <label key={dk} className="flex flex-col gap-1.5">
-                <span className="text-xs text-gray-700 leading-snug">{text}</span>
-                <input type="date" className={dateInputCls} value={produce[dk]} onChange={e => setFld(dk, e.target.value)} />
-              </label>
-            ))}
-          </div>
-        </SectionCard>
-      );
-
       const 产水面板 = plan.type !== '设备巡检' ? (
         <div className="p-6 text-center text-sm text-gray-500 leading-relaxed">当前为水质检测类计划，专项检查表与「产水模式」台账不同，表单可按业务另行配置。</div>
       ) : (
         <div className="flex flex-col gap-3 mx-px">
-          <SectionCard title="运行参数" hint="压力、流量与电导率">
+          <InspectExecSectionCard title="运行参数" hint="压力、流量与电导率">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <NumericField label="原水泵出口压力" k="pumpOutlet" unit="MPa" />
-              <NumericField label="产水电导率" k="conductivity" unit="PPM" />
-              <NumericField label="膜前进口压力" k="memInlet" unit="MPa" />
-              <NumericField label="膜后出口压力" k="memOutlet" unit="MPa" />
-              <NumericField label="产水流量" k="productFlow" unit="M³-L/H" />
-              <NumericField label="浓水快排压力" k="concRapidPressure" unit="MPa" />
+              <InspectExecNumericField label="原水泵出口压力" unit="MPa" value={produce.pumpOutlet} onChange={v => setFld('pumpOutlet', v)} />
+              <InspectExecNumericField label="产水电导率" unit="PPM" value={produce.conductivity} onChange={v => setFld('conductivity', v)} />
+              <InspectExecNumericField label="膜前进口压力" unit="MPa" value={produce.memInlet} onChange={v => setFld('memInlet', v)} />
+              <InspectExecNumericField label="膜后出口压力" unit="MPa" value={produce.memOutlet} onChange={v => setFld('memOutlet', v)} />
+              <InspectExecNumericField label="产水流量" unit="M³-L/H" value={produce.productFlow} onChange={v => setFld('productFlow', v)} />
+              <InspectExecNumericField label="浓水快排压力" unit="MPa" value={produce.concRapidPressure} onChange={v => setFld('concRapidPressure', v)} />
             </div>
-          </SectionCard>
+          </InspectExecSectionCard>
 
-          <SectionCard title="环节状态" hint="现场确认以下项目是否正常">
-            <div>{产水模式状态项.map(label => (<StatusRow key={label} label={label} />))}</div>
-          </SectionCard>
+          <InspectExecSectionCard title="环节状态" hint="现场确认以下项目是否正常">
+            <div>{产水模式状态项.map(label => (
+              <InspectExecProduceStatusRow key={label} label={label} statusMap={produce.status} onStatusChange={setSts} />
+            ))}</div>
+          </InspectExecSectionCard>
 
-          <ConsumableCard
+          <InspectExecConsumableCard
             title="保安过滤 PP 棉滤芯"
             ynKey="rep1secyn"
             yn={produce.rep1SecurityYesNo}
             onYn={v => setFld('rep1SecurityYesNo', v)}
+            dateValues={produce}
+            onDateChange={(dk, v) => setFld(dk, v)}
             dates={[
               { text: '更换日期（建议3—6个月一次）', dk: 'rep1SecurityDate' },
             ]}
           />
-          <ConsumableCard
+          <InspectExecConsumableCard
             title="回水 PP 棉滤芯"
             ynKey="rep1retyn"
             yn={produce.rep1ReturnYesNo}
             onYn={v => setFld('rep1ReturnYesNo', v)}
+            dateValues={produce}
+            onDateChange={(dk, v) => setFld(dk, v)}
             dates={[
               { text: '更换日期（建议3—6个月一次）', dk: 'rep1ReturnDate' },
             ]}
           />
-          <ConsumableCard
+          <InspectExecConsumableCard
             title="臭氧消解 / 紫外杀菌"
             ynKey="rep2yn"
             yn={produce.rep2YesNo}
             onYn={v => setFld('rep2YesNo', v)}
+            dateValues={produce}
+            onDateChange={(dk, v) => setFld(dk, v)}
             dates={[
               { text: '臭氧消解呼吸滤芯更换日期（建议12个月一次）', dk: 'rep2OzoneDate' },
               { text: '紫外杀菌灯管更换日期（建议12个月一次）', dk: 'rep2UvDate' },
             ]}
           />
-          <ConsumableCard
+          <InspectExecConsumableCard
             title="纳滤膜"
             ynKey="rep3yn"
             yn={produce.rep3YesNo}
             onYn={v => setFld('rep3YesNo', v)}
+            dateValues={produce}
+            onDateChange={(dk, v) => setFld(dk, v)}
             dates={[
               { text: '纳滤膜更换日期（建议24个月一次）', dk: 'rep3NfDate' },
             ]}
@@ -3077,7 +3448,7 @@
 
       const 供水面板 = (
         <div className="flex flex-col gap-3 mx-px">
-          <SectionCard title="运行参数" hint="各供水区运行数据">
+          <InspectExecSectionCard title="运行参数" hint="各供水区运行数据">
             <div className="flex flex-col gap-4">
               <div>
                 <div className="flex items-center gap-2 mb-3">
@@ -3096,7 +3467,7 @@
                     <div key={k} className="flex flex-col gap-1">
                       <span className="text-xs text-gray-600">{label}</span>
                       <div className="flex items-center gap-2">
-                        <input type="number" step="any" inputMode="decimal" placeholder="填写数值" className={numInputCls} value={supply[k]} onChange={e => setSupplyFld(k, e.target.value)} />
+                        <input type="number" step="any" inputMode="decimal" placeholder="填写数值" className={INSPECT_NUM_INPUT_CLS} value={supply[k]} onChange={e => setSupplyFld(k, e.target.value)} />
                         {unit && <span className="text-xs text-blue-600 font-medium w-14 text-right shrink-0">{unit}</span>}
                       </div>
                     </div>
@@ -3120,7 +3491,7 @@
                     <div key={k} className="flex flex-col gap-1">
                       <span className="text-xs text-gray-600">{label}</span>
                       <div className="flex items-center gap-2">
-                        <input type="number" step="any" inputMode="decimal" placeholder="填写数值" className={numInputCls} value={supply[k]} onChange={e => setSupplyFld(k, e.target.value)} />
+                        <input type="number" step="any" inputMode="decimal" placeholder="填写数值" className={INSPECT_NUM_INPUT_CLS} value={supply[k]} onChange={e => setSupplyFld(k, e.target.value)} />
                         {unit && <span className="text-xs text-blue-600 font-medium w-14 text-right shrink-0">{unit}</span>}
                       </div>
                     </div>
@@ -3130,7 +3501,7 @@
               <div className="pt-3 border-t border-gray-100 flex flex-col gap-3">
                 <div className="flex flex-col gap-1">
                   <span className="text-xs text-gray-600">加盐频率（填写时间）</span>
-                  <input type="text" placeholder="填写时间" className={numInputCls} value={supply.saltFreq} onChange={e => setSupplyFld('saltFreq', e.target.value)} />
+                  <input type="text" placeholder="填写时间" className={INSPECT_NUM_INPUT_CLS} value={supply.saltFreq} onChange={e => setSupplyFld('saltFreq', e.target.value)} />
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <span className="text-xs text-gray-600">消毒模式</span>
@@ -3144,79 +3515,79 @@
                 </div>
               </div>
             </div>
-          </SectionCard>
+          </InspectExecSectionCard>
 
-          <SectionCard title="1. 进线电源控制箱">
+          <InspectExecSectionCard title="1. 进线电源控制箱">
             <div>
-              <SupplyStatusRow label="接线" opts={['正常', '松动']} />
-              <SupplyStatusRow label="空气开关" opts={['正常', '不正常']} />
-              <SupplyStatusRow label="电子元气件" opts={['正常', '老化']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="接线" opts={['正常', '松动']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="空气开关" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="电子元气件" opts={['正常', '老化']} />
             </div>
-          </SectionCard>
+          </InspectExecSectionCard>
 
-          <SectionCard title="2. 控制柜">
+          <InspectExecSectionCard title="2. 控制柜">
             <div>
-              <SupplyStatusRow label="指示灯" opts={['正常', '不正常']} />
-              <SupplyStatusRow label="防水" opts={['是', '否']} />
-              <SupplyStatusRow label="防尘" opts={['是', '否']} />
-              <SupplyStatusRow label="内接线路" opts={['正常', '不正常']} />
-              <SupplyStatusRow label="电气元件" opts={['正常', '不正常']} />
-              <SupplyStatusRow label="每季对控制柜进行除尘" opts={['是', '否']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="指示灯" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="防水" opts={['是', '否']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="防尘" opts={['是', '否']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="内接线路" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="电气元件" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="每季对控制柜进行除尘" opts={['是', '否']} />
               <div className="flex flex-col gap-1 pt-3">
                 <span className="text-xs text-gray-800">除尘日期</span>
-                <input type="date" className={dateInputCls} value={supply.dustCleanDate} onChange={e => setSupplyFld('dustCleanDate', e.target.value)} />
+                <input type="date" className={INSPECT_DATE_INPUT_CLS} value={supply.dustCleanDate} onChange={e => setSupplyFld('dustCleanDate', e.target.value)} />
               </div>
             </div>
-          </SectionCard>
+          </InspectExecSectionCard>
 
-          <SectionCard title="3. 变频器 / 4. PLC运转">
+          <InspectExecSectionCard title="3. 变频器 / 4. PLC运转">
             <div>
-              <SupplyStatusRow label="变频器运行" opts={['正常', '不正常']} />
-              <SupplyStatusRow label="变频器是否在最佳工作状态" opts={['是', '否']} />
-              <SupplyStatusRow label="PLC运转" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="变频器运行" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="变频器是否在最佳工作状态" opts={['是', '否']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="PLC运转" opts={['正常', '不正常']} />
             </div>
-          </SectionCard>
+          </InspectExecSectionCard>
 
-          <SectionCard title="5. 远程通讯">
+          <InspectExecSectionCard title="5. 远程通讯">
             <div>
-              <SupplyStatusRow label="远程通讯状态" opts={['正常', '不正常']} />
-              <SupplyStatusRow label="数据远传参数" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="远程通讯状态" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="数据远传参数" opts={['正常', '不正常']} />
             </div>
-          </SectionCard>
+          </InspectExecSectionCard>
 
-          <SectionCard title="6. 压力仪表">
+          <InspectExecSectionCard title="6. 压力仪表">
             <div>
-              <SupplyStatusRow label="压力表" opts={['正常', '不正常']} />
-              <SupplyStatusRow label="压力变送器" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="压力表" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="压力变送器" opts={['正常', '不正常']} />
             </div>
-          </SectionCard>
+          </InspectExecSectionCard>
 
-          <SectionCard title="7. 水泵">
+          <InspectExecSectionCard title="7. 水泵">
             <div>
-              <SupplyStatusRow label="水泵运行" opts={['正常', '不正常']} />
-              <SupplyStatusRow label="噪音" opts={['正常', '不正常']} />
-              <SupplyStatusRow label="震动" opts={['正常', '不正常']} />
-              <SupplyStatusRow label="泵体是否发热" opts={['是', '否']} />
-              <SupplyStatusRow label="水泵排气" opts={['是', '否']} />
-              <SupplyStatusRow label="机械密封" opts={['漏水', '不漏水']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="水泵运行" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="噪音" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="震动" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="泵体是否发热" opts={['是', '否']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="水泵排气" opts={['是', '否']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="机械密封" opts={['漏水', '不漏水']} />
             </div>
-          </SectionCard>
+          </InspectExecSectionCard>
 
-          <SectionCard title="8. 电机">
+          <InspectExecSectionCard title="8. 电机">
             <div>
-              <SupplyStatusRow label="电机运行" opts={['正常', '不正常']} />
-              <SupplyStatusRow label="电机电流" opts={['正常', '不正常']} />
-              <SupplyStatusRow label="电机是否发热" opts={['是', '否']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="电机运行" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="电机电流" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="电机是否发热" opts={['是', '否']} />
             </div>
-          </SectionCard>
+          </InspectExecSectionCard>
 
-          <SectionCard title="9. 密封情况">
+          <InspectExecSectionCard title="9. 密封情况">
             <div>
-              <SupplyStatusRow label="水泵、管道、阀门、压力水容器等密封情况" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="水泵、管道、阀门、压力水容器等密封情况" opts={['正常', '不正常']} />
             </div>
-          </SectionCard>
+          </InspectExecSectionCard>
 
-          <SectionCard title="10. 水质数据">
+          <InspectExecSectionCard title="10. 水质数据">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {[
                 { label:'浊度', k:'turbidity', unit:'NTU' },
@@ -3228,23 +3599,23 @@
                 <div key={k} className="flex flex-col gap-1">
                   <span className="text-xs text-gray-600">{label}</span>
                   <div className="flex items-center gap-2">
-                    <input type="number" step="any" inputMode="decimal" placeholder="填写数值" className={numInputCls} value={supply[k]} onChange={e => setSupplyFld(k, e.target.value)} />
+                    <input type="number" step="any" inputMode="decimal" placeholder="填写数值" className={INSPECT_NUM_INPUT_CLS} value={supply[k]} onChange={e => setSupplyFld(k, e.target.value)} />
                     {unit && <span className="text-xs text-blue-600 font-medium w-14 text-right shrink-0">{unit}</span>}
                   </div>
                 </div>
               ))}
             </div>
-          </SectionCard>
+          </InspectExecSectionCard>
 
-          <SectionCard title="11. 消毒机与排污">
+          <InspectExecSectionCard title="11. 消毒机与排污">
             <div>
-              <SupplyStatusRow label="臭氧机及其功能测试是否正常" opts={['正常', '不正常']} />
-              <SupplyStatusRow label="净水箱罐排污情况" opts={['正常', '不正常']} />
-              <SupplyStatusRow label="原水箱排污情况" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="臭氧机及其功能测试是否正常" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="净水箱罐排污情况" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="原水箱排污情况" opts={['正常', '不正常']} />
             </div>
-          </SectionCard>
+          </InspectExecSectionCard>
 
-          <SectionCard title="管道巡检说明">
+          <InspectExecSectionCard title="管道巡检说明">
             <div className="flex flex-col gap-4">
               <div className="flex flex-col gap-1.5">
                 <span className="text-xs text-gray-700">高区供水管道巡检说明</span>
@@ -3255,23 +3626,23 @@
                 <textarea rows={3} placeholder="填写说明" className="w-full border border-blue-200 rounded-xl px-3 py-2 text-sm bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-200 resize-none" value={supply.lowPipeNote} onChange={e => setSupplyFld('lowPipeNote', e.target.value)} />
               </div>
             </div>
-          </SectionCard>
+          </InspectExecSectionCard>
 
-          <SectionCard title="门禁">
+          <InspectExecSectionCard title="门禁">
             <div>
-              <SupplyStatusRow label="刷卡开门" opts={['正常', '不正常']} />
-              <SupplyStatusRow label="水位报警" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="刷卡开门" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="水位报警" opts={['正常', '不正常']} />
             </div>
-          </SectionCard>
+          </InspectExecSectionCard>
 
-          <SectionCard title="视频">
+          <InspectExecSectionCard title="视频">
             <div>
-              <SupplyStatusRow label="球体摄像头方向" opts={['正常', '不正常']} />
-              <SupplyStatusRow label="枪机方向" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="球体摄像头方向" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="枪机方向" opts={['正常', '不正常']} />
             </div>
-          </SectionCard>
+          </InspectExecSectionCard>
 
-          <SectionCard title="其他设施">
+          <InspectExecSectionCard title="其他设施">
             <div className="flex flex-col gap-1">
               <div className="flex flex-col gap-1.5 py-3 border-b border-gray-100">
                 <span className="text-xs text-gray-800">泵房潮湿情况评定</span>
@@ -3283,9 +3654,9 @@
                   ))}
                 </div>
               </div>
-              <SupplyStatusRow label="泵房是否高温" opts={['是', '否']} />
-              <SupplyStatusRow label="除湿机是否开启" opts={['是', '否']} />
-              <SupplyStatusRow label="泵房照明情况" opts={['正常', '不正常']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="泵房是否高温" opts={['是', '否']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="除湿机是否开启" opts={['是', '否']} />
+              <InspectExecSupplyStatusRow statusMap={supply.supplyStatus} onStatusChange={setSupplySts} label="泵房照明情况" opts={['正常', '不正常']} />
               <div className="flex flex-col gap-1.5 py-3 border-t border-gray-100">
                 <span className="text-xs text-gray-800">泵房内设备整洁情况</span>
                 <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-gray-700">
@@ -3311,9 +3682,9 @@
                 <textarea rows={3} placeholder="填写描述" className="w-full border border-blue-200 rounded-xl px-3 py-2 text-sm bg-white outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-200 resize-none" value={supply.situationDesc} onChange={e => setSupplyFld('situationDesc', e.target.value)} />
               </div>
             </div>
-          </SectionCard>
+          </InspectExecSectionCard>
 
-          <SectionCard title="抄表记录">
+          <InspectExecSectionCard title="抄表记录">
             <div className="flex flex-col gap-4">
               {[
                 { label:'电表度数', dk:'electricDate', rk:'electricReading' },
@@ -3324,13 +3695,13 @@
                 <div key={dk} className="flex flex-col gap-1.5">
                   <span className="text-xs text-gray-700 font-medium">{label}</span>
                   <div className="grid grid-cols-2 gap-2">
-                    <input type="date" className={dateInputCls} value={supply[dk]} onChange={e => setSupplyFld(dk, e.target.value)} />
-                    <input type="number" step="any" inputMode="decimal" placeholder="填写读数" className={numInputCls} value={supply[rk]} onChange={e => setSupplyFld(rk, e.target.value)} />
+                    <input type="date" className={INSPECT_DATE_INPUT_CLS} value={supply[dk]} onChange={e => setSupplyFld(dk, e.target.value)} />
+                    <input type="number" step="any" inputMode="decimal" placeholder="填写读数" className={INSPECT_NUM_INPUT_CLS} value={supply[rk]} onChange={e => setSupplyFld(rk, e.target.value)} />
                   </div>
                 </div>
               ))}
             </div>
-          </SectionCard>
+          </InspectExecSectionCard>
         </div>
       );
 
@@ -3402,11 +3773,63 @@
       );
     };
 
+    /* ── 巡检转单弹窗 ── */
+    const InspectTransferModal = ({ plan, target, reason, onTargetChange, onReasonChange, onClose, onSubmit }) => {
+      const assignees = ['张运维','李运维','王运维','赵运维'];
+      const candidates = assignees.filter(a => a !== plan.assignee);
+      const fieldCls = "w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-blue-400";
+      const canSubmit = target && reason.trim();
+
+      return (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-6 py-8" onClick={onClose}>
+          <div className="bg-white w-[88%] max-w-[280px] max-h-[calc(100vh-4rem)] overflow-y-auto rounded-2xl shadow-xl" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between px-4 pt-4 pb-2.5 border-b border-gray-100">
+              <span className="text-sm font-semibold text-gray-800">转单</span>
+              <button onClick={onClose} className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center">
+                <XCircle size={14} color="#6b7280" />
+              </button>
+            </div>
+            <div className="px-4 py-3 flex flex-col gap-3">
+              <div className="bg-gray-50 rounded-xl p-2.5">
+                <p className="text-xs text-gray-400 mb-1">当前计划</p>
+                <p className="text-xs font-medium text-gray-800 leading-snug">{plan.title}</p>
+                <p className="text-xs text-gray-400 mt-1.5">当前执行人：<span className="text-gray-600">{plan.assignee}</span></p>
+              </div>
+              <div>
+                <label className="text-xs text-gray-500 font-medium mb-1 block">转单对象 <span className="text-red-400">*</span></label>
+                <select className={fieldCls + ' py-2 text-xs'} value={target} onChange={e => onTargetChange(e.target.value)}>
+                  <option value="">请选择转单对象</option>
+                  {candidates.map(a => <option key={a} value={a}>{a}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="text-xs text-gray-500 font-medium mb-1 block">转单原因 <span className="text-red-400">*</span></label>
+                <textarea className={fieldCls + ' py-2 text-xs resize-none'} rows={3}
+                  placeholder="请填写转单原因"
+                  value={reason} onChange={e => onReasonChange(e.target.value)} />
+              </div>
+              <div className="flex gap-2 pb-1">
+                <button onClick={onClose} className="flex-1 py-2.5 rounded-xl border border-gray-200 text-xs text-gray-600 font-medium">取消</button>
+                <button
+                  onClick={() => { if (!canSubmit) return; onSubmit(); }}
+                  className={`flex-1 py-2.5 rounded-xl text-xs font-semibold ${canSubmit ? 'bg-blue-600 text-white active:opacity-90' : 'bg-gray-100 text-gray-400'}`}
+                >确认</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
     /* ── 巡检管理主页面 ── */
     const InspectManagePage = ({ plans, setPlans, onBack, onNavigateExec, onNavigateSummary }) => {
       const [tab, setTab]           = useState('设备巡检');
       const [filterStatus, setFilter] = useState('全部');
       const [showCreate, setShowCreate] = useState(false);
+      const [transferPlan, setTransferPlan] = useState(null);
+      const [transferTarget, setTransferTarget] = useState('');
+      const [transferReason, setTransferReason] = useState('');
+      const [showTransferConfirm, setShowTransferConfirm] = useState(false);
 
       const tabPlans = useMemo(() =>
         plans.filter(p => p.type === tab && (filterStatus === '全部' || p.status === filterStatus)),
@@ -3447,6 +3870,23 @@
             : p));
         }
         onNavigateExec(plan.id);
+      };
+
+      const closeTransfer = () => {
+        setTransferPlan(null);
+        setTransferTarget('');
+        setTransferReason('');
+        setShowTransferConfirm(false);
+      };
+
+      const handleTransferFinal = () => {
+        if (!transferPlan || !transferTarget || !transferReason.trim()) return;
+        setPlans(prev => prev.map(p =>
+          p.id === transferPlan.id
+            ? { ...p, assignee: transferTarget, transferReason: transferReason.trim() }
+            : p
+        ));
+        closeTransfer();
       };
 
       return (
@@ -3560,10 +4000,23 @@
                   <div className="flex justify-between items-center mt-2">
                     <span className="text-xs text-gray-300">{plan.period}计划</span>
                   </div>
-                  <button type="button" onClick={() => handleEnterInspect(plan)}
-                    className="mt-3 w-full py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold active:bg-blue-700">
-                    {plan.status === '待执行' ? '开始巡检' : '继续巡检'}
-                  </button>
+                  {plan.status === '待执行' ? (
+                    <div className="mt-3 flex gap-2">
+                      <button type="button" onClick={() => handleEnterInspect(plan)}
+                        className="flex-1 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold active:bg-blue-700">
+                        开始巡检
+                      </button>
+                      <button type="button" onClick={() => { setTransferPlan(plan); setTransferTarget(''); setTransferReason(''); setShowTransferConfirm(false); }}
+                        className="flex-1 py-2.5 rounded-xl border border-blue-200 text-blue-600 text-sm font-semibold active:bg-blue-50">
+                        转单
+                      </button>
+                    </div>
+                  ) : (
+                    <button type="button" onClick={() => handleEnterInspect(plan)}
+                      className="mt-3 w-full py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold active:bg-blue-700">
+                      继续巡检
+                    </button>
+                  )}
                 </div>
               );
             })}
@@ -3573,6 +4026,48 @@
           {showCreate && (
             <CreatePlanModal defaultType={tab} onClose={() => setShowCreate(false)} onSubmit={handleCreate} />
           )}
+
+          {/* 转单选择弹窗 */}
+          {transferPlan && !showTransferConfirm && (
+            <InspectTransferModal
+              plan={transferPlan}
+              target={transferTarget}
+              reason={transferReason}
+              onTargetChange={setTransferTarget}
+              onReasonChange={setTransferReason}
+              onClose={closeTransfer}
+              onSubmit={() => setShowTransferConfirm(true)}
+            />
+          )}
+
+          {/* 转单二次确认 */}
+          {transferPlan && showTransferConfirm && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-6 py-8" onClick={() => setShowTransferConfirm(false)}>
+              <div className="w-[88%] max-w-[280px] max-h-[calc(100vh-4rem)] overflow-y-auto bg-white rounded-2xl shadow-xl px-4 pt-5 pb-4 flex flex-col gap-3" onClick={e => e.stopPropagation()}>
+                <div className="flex flex-col items-center gap-1.5 pb-1">
+                  <div className="w-10 h-10 bg-amber-50 rounded-full flex items-center justify-center">
+                    <User size={22} color="#f59e0b" />
+                  </div>
+                  <h3 className="text-sm font-semibold text-gray-800">确认转单？</h3>
+                  <p className="text-xs text-gray-500 text-center leading-relaxed px-1">
+                    将「{transferPlan.title}」<br/>
+                    从 <span className="font-medium text-gray-700">{transferPlan.assignee}</span> 转给 <span className="font-medium text-blue-600">{transferTarget}</span>
+                  </p>
+                  <p className="text-xs text-gray-400 text-center leading-relaxed px-1 mt-1">
+                    转单原因：<span className="text-gray-600">{transferReason}</span>
+                  </p>
+                </div>
+                <button type="button" onClick={handleTransferFinal}
+                  className="w-full py-2.5 rounded-xl bg-blue-600 text-white text-xs font-semibold active:bg-blue-700 transition-colors">
+                  确定转单
+                </button>
+                <button type="button" onClick={() => setShowTransferConfirm(false)}
+                  className="w-full py-2.5 rounded-xl border border-gray-200 text-xs font-semibold text-gray-500 bg-gray-50 active:bg-gray-100 transition-colors">
+                  取消
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       );
     };
@@ -3580,7 +4075,7 @@
     /* ════════════════════════════════════════
        维保管理数据与组件
     ════════════════════════════════════════ */
-    const 维保计划数据 = [
+    const 初始维保计划数据 = [
       { id:'MP001', title:'锦绣花园净水机季度保养',     type:'预防性维保', status:'待执行', community:'锦绣花园',   deviceType:'净水机', device:'净水设备 A01', assignee:'张运维', planDate:'2026-04-25', content:['滤芯更换','管路清洗','阀门功能检测','出水水质测试'], remark:'携带备用 RO 膜一套。' },
       { id:'MP002', title:'翡翠湾软水机故障维修',       type:'纠正性维保', status:'进行中', community:'翡翠湾小区', deviceType:'软水机', device:'软水设备 B03', assignee:'李运维', planDate:'2026-04-16', content:['故障排查','进水阀更换','软化程序调试','系统运行验证'], remark:'进水压力异常停机，已备好备件。' },
       { id:'MP003', title:'阳光丽景管线机滤芯更换',     type:'预防性维保', status:'已完成', community:'阳光丽景', deviceType:'管线机', device:'管线设备 D02', assignee:'张运维', planDate:'2026-04-08', content:['复合滤芯更换','出水嘴清洁','加热功能测试','水质检测'], remark:'滤芯寿命达到更换周期。' },
@@ -3611,6 +4106,111 @@
       待执行: { bg:'bg-gray-50',    text:'text-gray-500',    border:'border-gray-200',    dot:'bg-gray-400'    },
       进行中: { bg:'bg-amber-50',   text:'text-amber-600',   border:'border-amber-200',   dot:'bg-amber-500'   },
       已完成: { bg:'bg-emerald-50', text:'text-emerald-600', border:'border-emerald-200', dot:'bg-emerald-500' },
+      暂存:   { bg:'bg-slate-50',   text:'text-slate-500',   border:'border-slate-200',   dot:'bg-slate-400'   },
+    };
+
+    const CreateMaintPlanModal = ({ onClose, onPublish, onDraft }) => {
+      const [form, setForm] = useState({
+        title: '', planDate: '', community: '锦绣花园', device: '', assignee: '张运维', content: '', remark: '',
+      });
+      const set = (k, v) => setForm(f => ({ ...f, [k]: v }));
+
+      const communities = ['锦绣花园','翡翠湾小区','阳光丽景','华悦府','紫荆花园'];
+      const assignees = ['张运维','李运维','王运维','赵运维'];
+      const communityDevices = useMemo(
+        () => 设备数据.filter(d => d.community === form.community),
+        [form.community]
+      );
+
+      const fieldCls = "w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-blue-400";
+      const labelCls = "text-xs text-gray-500 font-medium mb-1.5 block";
+
+      const valid = () => form.title.trim() && form.planDate && form.community && form.device && form.assignee && form.content.trim();
+
+      const parseContent = () =>
+        form.content.split(/[，,、\n]+/).map(s => s.trim()).filter(Boolean);
+
+      const buildPlan = (status) => {
+        const matched = 设备数据.find(d => d.name === form.device);
+        return {
+          id: 'MP' + Date.now(),
+          title: form.title.trim(),
+          type: '预防性维保',
+          status,
+          community: form.community,
+          deviceType: matched?.type || '净水机',
+          device: form.device,
+          assignee: form.assignee,
+          planDate: form.planDate,
+          content: parseContent(),
+          remark: form.remark.trim(),
+        };
+      };
+
+      return (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-6 py-8" onClick={onClose}>
+          <div className="bg-white w-[88%] max-w-[300px] max-h-[calc(100vh-4rem)] overflow-y-auto rounded-2xl shadow-xl" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between px-4 pt-4 pb-2.5 border-b border-gray-100">
+              <span className="text-sm font-semibold text-gray-800">新增维保计划</span>
+              <button onClick={onClose} className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center">
+                <XCircle size={14} color="#6b7280" />
+              </button>
+            </div>
+            <div className="px-4 py-3 flex flex-col gap-3">
+              <div>
+                <label className={labelCls}>计划名称 <span className="text-red-400">*</span></label>
+                <input className={fieldCls} placeholder="请输入计划名称" value={form.title} onChange={e => set('title', e.target.value)} />
+              </div>
+              <div>
+                <label className={labelCls}>时间 <span className="text-red-400">*</span></label>
+                <input type="date" className={fieldCls} value={form.planDate} onChange={e => set('planDate', e.target.value)} />
+              </div>
+              <div>
+                <label className={labelCls}>地点 <span className="text-red-400">*</span></label>
+                <select className={fieldCls} value={form.community} onChange={e => { set('community', e.target.value); set('device', ''); }}>
+                  {communities.map(c => <option key={c} value={c}>{c}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className={labelCls}>维保设备 <span className="text-red-400">*</span></label>
+                <select className={fieldCls} value={form.device} onChange={e => set('device', e.target.value)}>
+                  <option value="">请选择维保设备</option>
+                  {communityDevices.map(d => <option key={d.id} value={d.name}>{d.name}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className={labelCls}>执行人 <span className="text-red-400">*</span></label>
+                <select className={fieldCls} value={form.assignee} onChange={e => set('assignee', e.target.value)}>
+                  {assignees.map(a => <option key={a} value={a}>{a}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className={labelCls}>维保内容 <span className="text-red-400">*</span></label>
+                <textarea className={fieldCls} rows={3}
+                  placeholder="如：滤芯更换、管路清洗、阀门功能检测"
+                  value={form.content} onChange={e => set('content', e.target.value)} />
+              </div>
+              <div>
+                <label className={labelCls}>备注</label>
+                <textarea className={fieldCls} rows={2}
+                  placeholder="选填，如携带备件、注意事项等"
+                  value={form.remark} onChange={e => set('remark', e.target.value)} />
+              </div>
+              <div className="flex gap-2 pb-1">
+                <button onClick={onClose} className="flex-1 py-2.5 rounded-xl border border-gray-200 text-xs text-gray-600 font-medium">取消</button>
+                <button
+                  onClick={() => { if (!form.title.trim()) return; onDraft(buildPlan('暂存')); }}
+                  className="flex-1 py-2.5 rounded-xl border border-blue-200 text-xs text-blue-600 font-medium"
+                >暂存</button>
+                <button
+                  onClick={() => { if (!valid()) return; onPublish(buildPlan('待执行')); }}
+                  className="flex-1 py-2.5 rounded-xl bg-blue-600 text-white text-xs font-semibold active:opacity-90"
+                >发布</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
     };
 
     /* 筛选芯片 */
@@ -3630,7 +4230,6 @@
 
     /* 维保计划卡片 */
     const MaintPlanCard = ({ plan, onExpand, expanded }) => {
-      const ts = 维保类型样式[plan.type];
       const ss = 维保计划状态样式[plan.status];
       return (
         <div className="bg-white rounded-2xl overflow-hidden">
@@ -3647,8 +4246,7 @@
               <span className="flex items-center gap-1 text-xs text-gray-400"><User size={11} color="#9ca3af" />{plan.assignee}</span>
               <span className="flex items-center gap-1 text-xs text-gray-400"><CalendarDays size={11} color="#9ca3af" />{plan.planDate}</span>
             </div>
-            <div className="flex items-center justify-between">
-              <span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${ts.bg} ${ts.text} ${ts.border}`}>{plan.type}</span>
+            <div className="flex justify-end">
               <ChevronDown size={14} color="#9ca3af" style={{ transform: expanded ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
             </div>
           </button>
@@ -3733,20 +4331,22 @@
 
     /* 维保管理主页面 */
     const MaintManagePage = ({ onBack }) => {
+      const [plans, setPlans]           = useState(初始维保计划数据);
       const [tab, setTab]               = useState('维保计划');
       const [expandedId, setExpanded]   = useState(null);
       const [filterComm, setComm]       = useState('全部');
       const [filterType, setType]       = useState('全部');
       const [planStatus, setPlanStatus] = useState('全部');
+      const [showCreate, setShowCreate] = useState(false);
 
       const communities = ['全部','锦绣花园','翡翠湾小区','阳光丽景','华悦府','紫荆花园'];
       const deviceTypes = ['全部','净水机','直饮机','软水机','管线机'];
 
       const filteredPlans = useMemo(() =>
-        维保计划数据.filter(p =>
+        plans.filter(p =>
           (filterComm === '全部' || p.community === filterComm) &&
           (filterType === '全部' || p.deviceType === filterType)
-        ), [filterComm, filterType]);
+        ), [plans, filterComm, filterType]);
 
       const filteredRecords = useMemo(() =>
         维保记录数据.filter(r =>
@@ -3764,11 +4364,8 @@
         待执行: filteredPlans.filter(p => p.status === '待执行').length,
         进行中: filteredPlans.filter(p => p.status === '进行中').length,
         已完成: filteredPlans.filter(p => p.status === '已完成').length,
+        暂存: filteredPlans.filter(p => p.status === '暂存').length,
       }), [filteredPlans]);
-
-      /* 记录统计 */
-      const totalCost = useMemo(() =>
-        filteredRecords.reduce((s, r) => s + r.cost, 0), [filteredRecords]);
 
       const toggle = id => setExpanded(prev => prev === id ? null : id);
 
@@ -3777,7 +4374,16 @@
         { label:'待执行', count: planCounts['待执行'],    color:'text-gray-600',    activeBg:'bg-gray-600',    inactiveBg:'bg-gray-50',    border:'border-gray-200'    },
         { label:'进行中', count: planCounts['进行中'],    color:'text-amber-600',   activeBg:'bg-amber-500',   inactiveBg:'bg-amber-50',   border:'border-amber-200'   },
         { label:'已完成', count: planCounts['已完成'],    color:'text-emerald-600', activeBg:'bg-emerald-500', inactiveBg:'bg-emerald-50', border:'border-emerald-200' },
+        { label:'暂存',   count: planCounts['暂存'],      color:'text-slate-600',   activeBg:'bg-slate-500',   inactiveBg:'bg-slate-50',   border:'border-slate-200'   },
       ];
+
+      const handleAddPlan = (plan) => {
+        setPlans(prev => [plan, ...prev]);
+        setShowCreate(false);
+        setTab('维保计划');
+        setPlanStatus(plan.status === '暂存' ? '暂存' : '待执行');
+        setExpanded(null);
+      };
 
       return (
         <div className="flex flex-col min-h-screen bg-gray-100">
@@ -3788,6 +4394,13 @@
                 <ArrowLeft size={22} color="white" />
               </button>
               <span className="flex-1 text-white text-base font-semibold">维保管理</span>
+              {tab === '维保计划' && (
+                <button onClick={() => setShowCreate(true)}
+                  className="flex items-center gap-1.5 bg-white/20 text-white text-xs font-medium px-3 py-1.5 rounded-full active:bg-white/30">
+                  <Svg size={14} color="white"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></Svg>
+                  新增维保计划
+                </button>
+              )}
             </div>
             {/* 类型 Tab */}
             <div className="flex bg-white/20 rounded-xl p-0.5">
@@ -3820,9 +4433,9 @@
             </div>
           </div>
 
-          {/* 汇总统计条 */}
-          {tab === '维保计划' ? (
-            <div className="bg-white border-b border-gray-100 px-4 py-3 grid grid-cols-4 gap-2">
+          {/* 汇总统计条（维保计划） */}
+          {tab === '维保计划' && (
+            <div className="bg-white border-b border-gray-100 px-4 py-3 grid grid-cols-5 gap-1.5">
               {状态卡片列表.map(s => {
                 const active = planStatus === s.label;
                 return (
@@ -3836,19 +4449,6 @@
                   </button>
                 );
               })}
-            </div>
-          ) : (
-            <div className="bg-white border-b border-gray-100 px-4 py-3 grid grid-cols-3 gap-2">
-              {[
-                { label:'记录总数', value: filteredRecords.length + ' 条', color:'text-blue-600' },
-                { label:'累计费用', value: '¥' + totalCost.toLocaleString(), color:'text-purple-600' },
-                { label:'平均费用', value: filteredRecords.length ? '¥' + Math.round(totalCost / filteredRecords.length) : '—', color:'text-emerald-600' },
-              ].map(s => (
-                <div key={s.label} className="flex flex-col items-center py-2">
-                  <span className={`text-base font-bold ${s.color}`}>{s.value}</span>
-                  <span className="text-xs text-gray-400 mt-0.5">{s.label}</span>
-                </div>
-              ))}
             </div>
           )}
 
@@ -3872,6 +4472,14 @@
                   ))
             )}
           </div>
+
+          {showCreate && (
+            <CreateMaintPlanModal
+              onClose={() => setShowCreate(false)}
+              onPublish={handleAddPlan}
+              onDraft={handleAddPlan}
+            />
+          )}
         </div>
       );
     };
@@ -4014,7 +4622,21 @@
             <CommunityDevicePage
               community={route.community}
               onBack={() => nav('设备管理')}
-              onDeviceClick={device => setRoute({ page: 'deviceDetail', device, fromCommunity: route.community })}
+              onPointDetail={point => setRoute({
+                page: 'monitorDetail',
+                device: 设备数据.find(d => d.community === route.community),
+                point,
+                fromCommunity: route.community,
+              })}
+            />
+          );
+        }
+        if (route.page === 'monitorDetail') {
+          return (
+            <MonitorPointDetailPage
+              device={route.device}
+              point={route.point}
+              onBack={() => setRoute({ page: 'communityDevices', community: route.fromCommunity })}
             />
           );
         }

@@ -1,0 +1,10 @@
+# 忽略docs目录下的依赖文件夹
+docs/node_modules/
+
+# 通用前端项目忽略项
+node_modules/
+dist/
+build/
+*.log
+.vscode/
+.DS_Store

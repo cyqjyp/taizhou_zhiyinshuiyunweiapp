@@ -17,7 +17,7 @@
 <body>
   <div id="root"></div>
   <script type="text/babel">
-    const { useState, useMemo, useRef } = React;
+    const { useState, useMemo, useRef, useEffect } = React;
 
     /* ════════════════════════════════════════
        图标组件（lucide-react 同款 SVG）
@@ -98,7 +98,7 @@
     ════════════════════════════════════════ */
     const 设备数据 = [
       {
-        id: 'D001', name: '净水设备 A01', community: '锦绣花园', pumpRoom: '1号泵房', type: '净水机', status: '在线',
+        id: 'D001', name: '净水设备 A01', community: '锦绣花园', pumpRoom: '1号泵房', pumpRoomLocation: '1幢地下一层', type: '净水机', status: '在线',
         meterId: '300223110966',
         manufacturer: '台州水务设备制造有限公司',
         address: '1号楼地下室机房', model: 'TZ-PW-5000A', sn: 'SN202310010001',
@@ -117,7 +117,7 @@
         ],
       },
       {
-        id: 'D003', name: '净水设备 C01', community: '翡翠湾小区', pumpRoom: '1号泵房', type: '净水机', status: '在线',
+        id: 'D003', name: '净水设备 C01', community: '翡翠湾小区', pumpRoom: '1号泵房', pumpRoomLocation: '3幢地下一层', type: '净水机', status: '在线',
         meterId: '300223110967',
         manufacturer: '台州水务设备制造有限公司',
         address: '3号楼物业用房', model: 'TZ-PW-5000A', sn: 'SN202312010003',
@@ -132,7 +132,7 @@
         ],
       },
       {
-        id: 'D006', name: '净水设备 C02', community: '阳光丽景', pumpRoom: '1号泵房', type: '净水机', status: '离线',
+        id: 'D006', name: '净水设备 C02', community: '阳光丽景', pumpRoom: '1号泵房', pumpRoomLocation: '2幢地下一层', type: '净水机', status: '离线',
         meterId: '300223110968',
         manufacturer: '台州水务设备制造有限公司',
         address: '2号楼地下车库', model: 'TZ-PW-5000A', sn: 'SN202403010006',
@@ -149,7 +149,7 @@
         ],
       },
       {
-        id: 'D007', name: '直饮设备 E01', community: '华悦府', pumpRoom: '1号泵房', type: '直饮机', status: '在线',
+        id: 'D007', name: '直饮设备 E01', community: '华悦府', pumpRoom: '1号泵房', pumpRoomLocation: '7幢地下一层', type: '直饮机', status: '在线',
         meterId: '300223110969',
         manufacturer: '台州水务设备制造有限公司',
         address: '1号楼大堂', model: 'TZ-DW-3000B', sn: 'SN202404010007',
@@ -163,7 +163,7 @@
         ],
       },
       {
-        id: 'D010', name: '软水设备 G02', community: '紫荆花园', pumpRoom: '1号泵房', type: '软水机', status: '预警',
+        id: 'D010', name: '软水设备 G02', community: '紫荆花园', pumpRoom: '1号泵房', pumpRoomLocation: '4幢地下一层', type: '软水机', status: '预警',
         meterId: '300223110970',
         manufacturer: '台州水务设备制造有限公司',
         address: '4号楼水处理间', model: 'TZ-SW-2000C', sn: 'SN202407010010',
@@ -467,43 +467,41 @@
     };
 
     /* ════════════════════════════════════════
-       用户服务 — 列表页
+       用户服务 — 小区汇总 & 用户列表
     ════════════════════════════════════════ */
-    const UserServicePage = ({ onBack, onUserClick }) => {
+    const 用户标签判定 = {
+      isArrears: u => u.balance < 50,
+      isValveClosed: u => u.valveStatus === '关闭',
+      isNoWater: u => Array.isArray(u.weekData) && u.weekData.every(v => v === 0),
+    };
+
+    const 按小区汇总用户 = (users) => {
+      const map = {};
+      users.forEach(u => {
+        if (!map[u.community]) map[u.community] = { name: u.community, users: [] };
+        map[u.community].users.push(u);
+      });
+      return Object.values(map).map(c => ({
+        name: c.name,
+        total: c.users.length,
+      })).sort((a, b) => b.total - a.total);
+    };
+
+    const UserServicePage = ({ onBack, onCommunityClick }) => {
       const [keyword, setKeyword] = useState('');
-      const [filterCommunity, setFilterCommunity] = useState('全部');
-      const [activeTag, setActiveTag] = useState('全部');
 
-      const 用户社区列表 = ['全部', ...new Set(用户数据.map(u => u.community))];
-
-      const isArrears   = u => u.balance < 50;
-      const isValveClosed = u => u.valveStatus === '关闭';
-      const isNoWater   = u => Array.isArray(u.weekData) && u.weekData.every(v => v === 0);
-
-      const tagStats = useMemo(() => ({
-        '全部':     用户数据.length,
-        '欠费': 用户数据.filter(isArrears).length,
-        '关阀': 用户数据.filter(isValveClosed).length,
-        '长期未用水': 用户数据.filter(isNoWater).length,
-      }), []);
-
-      const filtered = useMemo(() => {
+      const 小区汇总 = useMemo(() => {
+        const list = 按小区汇总用户(用户数据);
         const kw = keyword.trim();
-        return 用户数据.filter(u => {
-          const matchKw  = !kw || u.name.includes(kw) || u.id.includes(kw) || u.community.includes(kw) || u.address.includes(kw);
-          const matchC   = filterCommunity === '全部' || u.community === filterCommunity;
-          const matchTag = activeTag === '全部'       ? true
-                         : activeTag === '欠费'   ? isArrears(u)
-                         : activeTag === '关阀'   ? isValveClosed(u)
-                         : activeTag === '长期未用水' ? isNoWater(u)
-                         : true;
-          return matchKw && matchC && matchTag;
-        });
-      }, [keyword, filterCommunity, activeTag]);
+        if (!kw) return list;
+        return list.filter(c =>
+          c.name.includes(kw) ||
+          用户数据.some(u => u.community === c.name && u.name.includes(kw))
+        );
+      }, [keyword]);
 
       return (
         <div className="flex flex-col min-h-screen bg-gray-100">
-          {/* 顶部 */}
           <div className="bg-blue-600 px-4 pt-10 pb-4">
             <div className="flex items-center gap-3 mb-3">
               <button onClick={onBack} className="w-8 h-8 flex items-center justify-center rounded-full active:bg-blue-500">
@@ -512,25 +510,102 @@
               <span className="flex-1 text-white text-base font-semibold">用户服务</span>
               <span className="text-blue-200 text-sm">共 {用户数据.length} 户</span>
             </div>
-            {/* 搜索框 */}
             <div className="bg-white/20 rounded-xl flex items-center gap-2 px-3 py-2">
-            <Search size={16} color="white" />
+              <Search size={16} color="white" />
               <input
                 className="flex-1 bg-transparent text-white text-sm placeholder-blue-200 outline-none"
-                placeholder="搜索户名、户号、小区…"
+                placeholder="搜索小区名称或用户名称"
                 value={keyword}
                 onChange={e => setKeyword(e.target.value)}
               />
               {keyword && <button onClick={() => setKeyword('')} className="text-blue-200 text-xs">清除</button>}
             </div>
+          </div>
 
-            {/* 用户标签 */}
-            <div className="flex gap-2 mt-3 overflow-x-auto pb-1" style={{scrollbarWidth:'none'}}>
+          <div className="flex-1 p-4 flex flex-col gap-3">
+            <p className="text-xs text-gray-400">共 {小区汇总.length} 个小区</p>
+            {小区汇总.length === 0 ? (
+              <div className="bg-white rounded-2xl p-8 flex flex-col items-center gap-3 text-gray-400">
+                <Search size={40} color="#d1d5db" />
+                <p className="text-sm">未找到匹配的小区或用户</p>
+              </div>
+            ) : 小区汇总.map(community => (
+              <button
+                key={community.name}
+                onClick={() => onCommunityClick(community.name)}
+                className="bg-white rounded-2xl p-4 text-left active:scale-98 transition-transform w-full"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Building2 size={20} color="#3b82f6" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-gray-800">{community.name}</p>
+                      <p className="text-xs text-gray-400 mt-0.5">共 {community.total} 户</p>
+                    </div>
+                  </div>
+                  <ChevronRight size={18} color="#d1d5db" />
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      );
+    };
+
+    const CommunityUserPage = ({ community, onBack, onUserClick }) => {
+      const [keyword, setKeyword] = useState('');
+      const [activeTag, setActiveTag] = useState('全部');
+
+      const 小区用户 = useMemo(() => 用户数据.filter(u => u.community === community), [community]);
+
+      const tagStats = useMemo(() => ({
+        '全部': 小区用户.length,
+        '欠费': 小区用户.filter(用户标签判定.isArrears).length,
+        '关阀': 小区用户.filter(用户标签判定.isValveClosed).length,
+        '长期未用水': 小区用户.filter(用户标签判定.isNoWater).length,
+      }), [小区用户]);
+
+      const filtered = useMemo(() => {
+        const kw = keyword.trim();
+        return 小区用户.filter(u => {
+          const matchKw = !kw || u.name.includes(kw) || u.id.includes(kw) || u.address.includes(kw);
+          const matchTag = activeTag === '全部' ? true
+            : activeTag === '欠费' ? 用户标签判定.isArrears(u)
+            : activeTag === '关阀' ? 用户标签判定.isValveClosed(u)
+            : activeTag === '长期未用水' ? 用户标签判定.isNoWater(u)
+            : true;
+          return matchKw && matchTag;
+        });
+      }, [小区用户, keyword, activeTag]);
+
+      return (
+        <div className="flex flex-col min-h-screen bg-gray-100">
+          <div className="bg-blue-600 px-4 pt-10 pb-4">
+            <div className="flex items-center gap-3 mb-3">
+              <button onClick={onBack} className="w-8 h-8 flex items-center justify-center rounded-full active:bg-blue-500">
+                <ArrowLeft size={22} color="white" />
+              </button>
+              <span className="flex-1 text-white text-base font-semibold">{community}</span>
+              <span className="text-blue-200 text-sm">共 {小区用户.length} 户</span>
+            </div>
+            <div className="bg-white/20 rounded-xl flex items-center gap-2 px-3 py-2">
+              <Search size={16} color="white" />
+              <input
+                className="flex-1 bg-transparent text-white text-sm placeholder-blue-200 outline-none"
+                placeholder="搜索户名、户号、地址…"
+                value={keyword}
+                onChange={e => setKeyword(e.target.value)}
+              />
+              {keyword && <button onClick={() => setKeyword('')} className="text-blue-200 text-xs">清除</button>}
+            </div>
+            <div className="flex gap-2 mt-3 overflow-x-auto pb-1" style={{ scrollbarWidth: 'none' }}>
               {[
-                { key: '全部',     label: '总数',   color: activeTag==='全部'     ? 'bg-white text-blue-600' : 'bg-blue-500/50 text-white', dot: '' },
-                { key: '欠费', label: '欠费',   color: activeTag==='欠费' ? 'bg-white text-orange-500' : 'bg-blue-500/50 text-white', dot: 'bg-orange-400' },
-                { key: '关阀', label: '关阀',   color: activeTag==='关阀' ? 'bg-white text-red-500'    : 'bg-blue-500/50 text-white', dot: 'bg-red-400' },
-                { key: '长期未用水', label: '长期未用水', color: activeTag==='长期未用水' ? 'bg-white text-gray-600' : 'bg-blue-500/50 text-white', dot: 'bg-gray-400' },
+                { key: '全部', label: '总数', color: activeTag === '全部' ? 'bg-white text-blue-600' : 'bg-blue-500/50 text-white', dot: '' },
+                { key: '欠费', label: '欠费', color: activeTag === '欠费' ? 'bg-white text-orange-500' : 'bg-blue-500/50 text-white', dot: 'bg-orange-400' },
+                { key: '关阀', label: '关阀', color: activeTag === '关阀' ? 'bg-white text-red-500' : 'bg-blue-500/50 text-white', dot: 'bg-red-400' },
+                { key: '长期未用水', label: '长期未用水', color: activeTag === '长期未用水' ? 'bg-white text-gray-600' : 'bg-blue-500/50 text-white', dot: 'bg-gray-400' },
               ].map(tag => (
                 <button
                   key={tag.key}
@@ -539,33 +614,16 @@
                 >
                   {tag.dot && <span className={`w-1.5 h-1.5 rounded-full ${tag.dot}`}></span>}
                   <span>{tag.label}</span>
-                  <span className={`ml-0.5 font-bold ${activeTag===tag.key ? '' : 'text-blue-200'}`}>{tagStats[tag.key]}</span>
+                  <span className={`ml-0.5 font-bold ${activeTag === tag.key ? '' : 'text-blue-200'}`}>{tagStats[tag.key]}</span>
                 </button>
               ))}
             </div>
           </div>
 
-          {/* 小区筛选 */}
-          <div className="bg-white border-b border-gray-100 px-4 py-3">
-            <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2">
-              <Building2 size={14} color="#9ca3af" />
-              <select
-                value={filterCommunity}
-                onChange={e => setFilterCommunity(e.target.value)}
-                className="flex-1 bg-transparent text-sm text-gray-700 outline-none appearance-none cursor-pointer"
-              >
-                {用户社区列表.map(c => <option key={c} value={c}>{c}</option>)}
-              </select>
-              <ChevronDown size={14} color="#9ca3af" />
-            </div>
-          </div>
-
-          {/* 统计条 */}
           <div className="px-4 pt-3 pb-1">
             <p className="text-xs text-gray-400">共找到 <span className="text-blue-600 font-medium">{filtered.length}</span> 位用户</p>
           </div>
 
-          {/* 用户列表 */}
           <div className="flex-1 px-4 pb-6 flex flex-col gap-3 mt-2">
             {filtered.length === 0 ? (
               <div className="bg-white rounded-2xl p-8 flex flex-col items-center gap-3 text-gray-400">
@@ -576,7 +634,6 @@
               <button key={user.id} onClick={() => onUserClick(user)}
                 className="bg-white rounded-2xl p-4 text-left active:scale-98 transition-transform w-full">
                 <div className="flex items-center gap-3 mb-2">
-                  {/* 头像 */}
                   <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-blue-600 font-bold text-base">{user.name[0]}</span>
                   </div>
@@ -589,7 +646,7 @@
                           : 'bg-red-50 text-red-700 border-red-200'
                       }`}>阀门{user.valveStatus}</span>
                     </div>
-                    <p className="text-xs text-gray-400 mt-0.5 truncate">{user.community} · {user.address}</p>
+                    <p className="text-xs text-gray-400 mt-0.5 truncate">{user.address}</p>
                   </div>
                   <ChevronRight size={16} color="#d1d5db" />
                 </div>
@@ -1911,27 +1968,91 @@
       );
     };
 
+    const 仅运行状态监测点Keys = new Set([
+      'rawInletValve', 'multiMediaFilter', 'carbonFilter', 'softenerFilter',
+      'securityFilter', 'nanofiltration', 'flushValve', 'productValve',
+      'cleanWaterTank', 'ozoneGenerator', 'uvSterilizer',
+    ]);
+
+    const 监测点支持报警参数 = (point) => point?.key && !仅运行状态监测点Keys.has(point.key);
+
     const 监测点报警默认参数 = {
-      rawInstFlow:           { min: '0',    max: '20',   unit: 'm³/h',  hint: '瞬时流量超出范围将触发报警' },
-      rawWaterFlow:          { min: '0',    max: '3000', unit: 'm³',    hint: '累计流量超过上限将触发报警' },
-      rawTankLevel:          { min: '0.5',  max: '4.5',  unit: 'm',     hint: '原水箱液位超出范围将触发报警' },
-      rawTankRange:          { min: '4',    max: '6',    unit: 'm',     hint: '液位量程异常将触发报警' },
-      rawPumpOutPressure:    { min: '0.10', max: '0.40', unit: 'MPa',   hint: '原水泵出水压力超出范围将触发报警' },
-      boosterOutletPressure: { min: '0.10', max: '0.45', unit: 'MPa',   hint: '增压泵出口压力超出范围将触发报警' },
-      lowZonePressure:       { min: '0.10', max: '0.35', unit: 'MPa',   hint: '低区出水压力超出范围将触发报警' },
-      highZonePressure:      { min: '0.20', max: '0.50', unit: 'MPa',   hint: '高区出水压力超出范围将触发报警' },
-      rawConductivity:       { min: '100',  max: '800',  unit: 'μS/cm', hint: '原水电导率超出范围将触发报警' },
-      outConductivity:       { min: '50',   max: '300',  unit: 'μS/cm', hint: '出水电导率超出范围将触发报警' },
-      outPH:                 { min: '6.5',  max: '8.5',  unit: '',      hint: 'pH超出范围将触发报警' },
-      outTemp:               { min: '5',    max: '30',   unit: '°C',    hint: '出水温度超出范围将触发报警' },
-      outChlorine:           { min: '0.05', max: '0.50', unit: 'mg/L',  hint: '出水余氯超出范围将触发报警' },
+      rawWaterFlow:       { min: '0',    max: '3000', unit: 'm³',    hint: '累计流量超过上限将触发报警' },
+      rawTankLevel:       { min: '0.5',  max: '4.5',  unit: 'm',     hint: '原水箱液位超出范围将触发报警' },
+      rawPumpOutPressure: { min: '0.10', max: '0.40', unit: 'MPa',   hint: '原水泵出水压力超出范围将触发报警' },
+      rawTDS:             { min: '50',   max: '500',  unit: 'µS/cm', hint: '原水TDS超出范围将触发报警' },
+      boosterPumpSet:     { min: '0.10', max: '0.45', unit: 'MPa',   hint: '增压泵出口压力超出范围将触发报警' },
+      productTDS:         { min: '0',    max: '50',   unit: 'μS/cm', hint: '产水TDS超出范围将触发报警' },
+      productWaterFlow:   { min: '0',    max: '5000', unit: 'm³',    hint: '产水累计流量超过上限将触发报警' },
+      cleanTankLevel:     { min: '0.5',  max: '4.5',  unit: 'm',     hint: '净水箱液位超出范围将触发报警' },
+      lowZonePumpSet:     { min: '0.10', max: '0.35', unit: 'MPa',   hint: '低区出水压力超出范围将触发报警' },
+      highZonePumpSet:    { min: '0.20', max: '0.50', unit: 'MPa',   hint: '高区出水压力超出范围将触发报警' },
+      dwWaterTemp:        { min: '5',    max: '30',   unit: '℃',     hint: '水温超出范围将触发报警' },
+      dwPH:               { min: '6.5',  max: '8.5',  unit: '',      hint: '酸碱度超出范围将触发报警' },
+      dwConductivity:     { min: '5',    max: '50',   unit: 'μS/cm', hint: '电导率超出范围将触发报警' },
+      dwOzone:            { min: '0.02', max: '0.15', unit: 'mg/L',  hint: '臭氧浓度超出范围将触发报警' },
+      dwTurbidity:        { min: '0',    max: '1',    unit: 'NTU',   hint: '浊度超出范围将触发报警' },
+    };
+
+    const 获取监测点报警默认参数 = (point) => {
+      if (!point) return null;
+      if (point.key && 监测点报警默认参数[point.key]) return 监测点报警默认参数[point.key];
+      const 按名称映射 = {
+        '原水TDS': 监测点报警默认参数.rawTDS,
+        '原水流量计': 监测点报警默认参数.rawWaterFlow,
+        '原水箱液位计': 监测点报警默认参数.rawTankLevel,
+        '原水泵': 监测点报警默认参数.rawPumpOutPressure,
+        '增压泵组': 监测点报警默认参数.boosterPumpSet,
+        '产水TDS': 监测点报警默认参数.productTDS,
+        '产水流量计': 监测点报警默认参数.productWaterFlow,
+        '净水箱液位': 监测点报警默认参数.cleanTankLevel,
+        '送水泵组·低区': 监测点报警默认参数.lowZonePumpSet,
+        '送水泵组·高区': 监测点报警默认参数.highZonePumpSet,
+      };
+      return 按名称映射[point.name] || null;
+    };
+
+    const 获取监测点预警内容 = (point, device) => {
+      if (!point || point.status !== '预警') return null;
+      const base = device?.status;
+      if (base === '离线') return '设备当前处于离线状态，无法获取实时监测数据，请及时排查通信与供电。';
+      if (base === '故障') return '设备上报故障状态，请联系运维人员现场检修。';
+      const num = parseFloat(point.value);
+      if (point.value === '—' || point.value === '-' || Number.isNaN(num)) {
+        return base === '预警' ? '设备整体处于预警状态，请关注相关监测指标。' : null;
+      }
+      const alarm = 获取监测点报警默认参数(point);
+      if (alarm) {
+        const min = parseFloat(alarm.min);
+        const max = parseFloat(alarm.max);
+        const unit = alarm.unit ? ` ${alarm.unit}` : '';
+        if (!Number.isNaN(min) && num < min) {
+          return `当前监测值 ${point.value}${unit}，低于报警下限 ${alarm.min}${unit}。${alarm.hint}`;
+        }
+        if (!Number.isNaN(max) && num > max) {
+          return `当前监测值 ${point.value}${unit}，超过报警上限 ${alarm.max}${unit}。${alarm.hint}`;
+        }
+      }
+      return `${point.name}监测数值异常，超过设定报警阈值，请及时处理。`;
     };
 
     const TabMonitorComprehensive = ({ device, point }) => {
       const history = useMemo(() => 生成监测点近7天历史(point), [point]);
       const noRealtime = point.value === '-';
+      const 预警内容 = useMemo(() => 获取监测点预警内容(point, device), [point, device]);
       return (
         <div className="flex flex-col gap-4">
+          {point.status === '预警' && 预警内容 && (
+            <div className="bg-amber-50 border border-amber-100 rounded-2xl p-4 flex items-start gap-3">
+              <div className="w-7 h-7 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                <AlertTriangle size={14} color="#f59e0b" />
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-amber-700 mb-1">预警说明</p>
+                <p className="text-xs text-amber-600 leading-relaxed">{预警内容}</p>
+              </div>
+            </div>
+          )}
           <div className="bg-white rounded-2xl p-4">
             <p className="text-xs font-semibold text-blue-500 tracking-wide mb-1 flex items-center gap-1">
               <Hash size={12} color="#3b82f6" /> 基础信息
@@ -1976,17 +2097,34 @@
     };
 
     const TabMonitorAlarmSettings = ({ device, point }) => {
-      const defaults = 监测点报警默认参数[point.key];
+      const defaults = 获取监测点报警默认参数(point);
       const [enabled, setEnabled] = useState(!!defaults);
       const [min, setMin] = useState(defaults?.min || '0');
       const [max, setMax] = useState(defaults?.max || '100');
       const [saveStatus, setSaveStatus] = useState('idle');
+
+      useEffect(() => {
+        const next = 获取监测点报警默认参数(point);
+        setEnabled(!!next);
+        setMin(next?.min || '0');
+        setMax(next?.max || '100');
+        setSaveStatus('idle');
+      }, [point?.key, point?.name]);
 
       const handleSave = () => {
         setSaveStatus('saving');
         setTimeout(() => setSaveStatus('saved'), 800);
         setTimeout(() => setSaveStatus('idle'), 3000);
       };
+
+      if (!监测点支持报警参数(point)) {
+        return (
+          <div className="bg-white rounded-2xl p-8 flex flex-col items-center gap-3">
+            <Settings size={32} color="#d1d5db" />
+            <p className="text-sm font-medium text-gray-500 text-center">该监测项仅展示运行状态，无需设置报警参数</p>
+          </div>
+        );
+      }
 
       if (!defaults) {
         return (
@@ -2102,8 +2240,12 @@
 
     const MonitorPointDetailPage = ({ device, point, onBack }) => {
       const [tab, setTab] = useState('综合信息');
-      const tabs = ['综合信息', '历史预警', '报警参数设置'];
-      const ps = 监测点状态样式[point.status] || 监测点状态样式['正常'];
+      const tabs = useMemo(() => {
+        const list = ['综合信息', '历史预警'];
+        if (监测点支持报警参数(point)) list.push('报警参数设置');
+        return list;
+      }, [point]);
+      const ps = 状态样式[point.status] || 状态样式['离线'];
 
       return (
         <div className="flex flex-col min-h-screen bg-gray-100">
@@ -2113,7 +2255,10 @@
                 <ArrowLeft size={22} color="white" />
               </button>
               <span className="flex-1 text-white text-base font-semibold truncate">{point.name}</span>
-              <span className={`text-xs px-2 py-0.5 rounded border flex-shrink-0 ${ps.bg} ${ps.text} ${ps.border}`}>{point.status}</span>
+              <span className={`text-xs font-medium px-2 py-0.5 rounded-full border flex items-center gap-1 flex-shrink-0 ${ps.bg} ${ps.text} ${ps.border}`}>
+                <span className={`w-1.5 h-1.5 rounded-full ${ps.dot}`}></span>
+                {point.status}
+              </span>
             </div>
             <div className="flex items-center gap-2 ml-11">
               <MapPin size={12} color="#bfdbfe" />
@@ -2165,6 +2310,7 @@
         ...c,
         total: c.devices.length,
         pumpRoomCount: c.pumpRooms.size,
+        pumpRoomLocation: c.devices[0]?.pumpRoomLocation || c.devices[0]?.address || '—',
         stats: 统计设备状态(c.devices),
       })).sort((a, b) => b.total - a.total);
     };
@@ -2174,53 +2320,140 @@
       return st.text.includes('emerald') ? '#10b981' : st.text.includes('amber') ? '#f59e0b' : st.text.includes('red') ? '#ef4444' : '#6b7280';
     };
 
+    const 监测状态优先级 = { 在线: 1, 预警: 2, 离线: 3, 故障: 4 };
+
+    const 合并监测状态 = (statuses) => {
+      if (!statuses?.length) return '离线';
+      return statuses.reduce((worst, s) =>
+        (监测状态优先级[s] || 0) > (监测状态优先级[worst] || 0) ? s : worst, '在线');
+    };
+
+    const 设备基础监测状态 = (device) => {
+      if (!device) return '离线';
+      return device.status;
+    };
+
+    const 计算监测点状态 = (pointKey, value, device) => {
+      const base = 设备基础监测状态(device);
+      if (base === '离线' || base === '故障') return base;
+      if (仅运行状态监测点Keys.has(pointKey)) return base;
+      const num = parseFloat(value);
+      if (value === '—' || value === '-' || Number.isNaN(num)) {
+        return base === '预警' ? '预警' : '在线';
+      }
+      const alarm = 监测点报警默认参数[pointKey];
+      if (alarm) {
+        const min = parseFloat(alarm.min);
+        const max = parseFloat(alarm.max);
+        if (!Number.isNaN(min) && num < min) return '预警';
+        if (!Number.isNaN(max) && num > max) return '预警';
+      }
+      return base === '预警' ? '预警' : '在线';
+    };
+
     const 构建泵房监测点 = (device) => {
       if (!device) return [];
       const time = '2026-05-28 17:41:12';
-      const pointStatus = device.status === '离线' || device.status === '故障' ? '异常' : device.status === '预警' ? '预警' : '正常';
+      const offline = device.status === '离线' || device.status === '故障';
       const c = device.community;
-      const rawInstFlow    = { 锦绣花园: 12.5,   翡翠湾小区: 14.2,   阳光丽景: 10.8,   华悦府: 11.6,   紫荆花园: 9.4   }[c] || 12.5;
-      const rawCumFlow     = { 锦绣花园: 1894.9, 翡翠湾小区: 2103.6, 阳光丽景: 1568.2, 华悦府: 1756.4, 紫荆花园: 1420.8 }[c] || 1894.9;
-      const rawTankLv      = { 锦绣花园: 2.18,   翡翠湾小区: 2.45,   阳光丽景: 1.86,   华悦府: 2.62,   紫荆花园: 1.74  }[c] || 2.18;
-      const rawPumpPres    = { 锦绣花园: 0.26,   翡翠湾小区: 0.28,   阳光丽景: 0.24,   华悦府: 0.27,   紫荆花园: 0.23  }[c] || 0.26;
-      const boostOutPres   = { 锦绣花园: 0.32,   翡翠湾小区: 0.35,   阳光丽景: 0.30,   华悦府: 0.33,   紫荆花园: 0.28  }[c] || 0.32;
-      const lowZonePres    = { 锦绣花园: 0.21,   翡翠湾小区: 0.23,   阳光丽景: 0.19,   华悦府: 0.22,   紫荆花园: 0.18  }[c] || 0.21;
-      const highZonePres   = { 锦绣花园: 0.38,   翡翠湾小区: 0.41,   阳光丽景: 0.35,   华悦府: 0.39,   紫荆花园: 0.33  }[c] || 0.38;
-      const rawConduct     = { 锦绣花园: 412,    翡翠湾小区: 385,    阳光丽景: 456,    华悦府: 398,    紫荆花园: 441   }[c] || 412;
-      const outConduct     = { 锦绣花园: 128,    翡翠湾小区: 115,    阳光丽景: 142,    华悦府: 121,    紫荆花园: 136   }[c] || 128;
-      const outPH          = { 锦绣花园: '7.2',  翡翠湾小区: '7.1',  阳光丽景: '7.3',  华悦府: '7.0',  紫荆花园: '7.4' }[c] || '7.2';
-      const outTemp        = { 锦绣花园: '18.5', 翡翠湾小区: '17.8', 阳光丽景: '19.2', 华悦府: '18.1', 紫荆花园: '20.1' }[c] || '18.5';
-      const outChlorine    = { 锦绣花园: '0.12', 翡翠湾小区: '0.15', 阳光丽景: '0.11', 华悦府: '0.13', 紫荆花园: '0.14' }[c] || '0.12';
+      const cumFlow   = { 锦绣花园: 2073.80, 翡翠湾小区: 2103.60, 阳光丽景: 1894.90, 华悦府: 1986.40, 紫荆花园: 1756.20 }[c] || 2073.80;
+      const tankLevel = { 锦绣花园: 1.28,   翡翠湾小区: 1.45,   阳光丽景: 1.12,   华悦府: 1.36,   紫荆花园: 1.08  }[c] || 1.28;
+      const pumpPres  = { 锦绣花园: 0.01,   翡翠湾小区: 0.02,   阳光丽景: 0.01,   华悦府: 0.01,   紫荆花园: 0.01  }[c] || 0.01;
+      const rawTds    = { 锦绣花园: 87.82,  翡翠湾小区: 82.15,  阳光丽景: 91.36,  华悦府: 85.40,  紫荆花园: 94.28 }[c] || 87.82;
+      const boostOutPres  = { 锦绣花园: 0.01,   翡翠湾小区: 0.02,   阳光丽景: 0.01,   华悦府: 0.01,   紫荆花园: 0.01  }[c] || 0.01;
+      const productFlow   = { 锦绣花园: 1006.34, 翡翠湾小区: 1089.50, 阳光丽景: 945.20,  华悦府: 1024.80, 紫荆花园: 912.60 }[c] || 1006.34;
+      const cleanTankLv   = { 锦绣花园: 1.26,   翡翠湾小区: 1.38,   阳光丽景: 1.15,   华悦府: 1.32,   紫荆花园: 1.10  }[c] || 1.26;
+      const lowZonePres   = { 锦绣花园: 0.809,  翡翠湾小区: 0.825,  阳光丽景: 0.792,  华悦府: 0.816,  紫荆花园: 0.778 }[c] || 0.809;
+      const highZonePres  = { 锦绣花园: 1.214,  翡翠湾小区: 1.238,  阳光丽景: 1.186,  华悦府: 1.225,  紫荆花园: 1.168 }[c] || 1.214;
+      const valveState = offline ? '关' : '开';
+      const filterState = offline ? '—' : '反洗';
+      const uvState = offline ? '—' : '正常';
+      const st = (key, value) => 计算监测点状态(key, value, device);
       return [
-        { key: 'rawInstFlow',          name: '原水瞬时流量',   value: rawInstFlow.toFixed(1),  unit: 'm³/h',  status: pointStatus, time, group: '水量' },
-        { key: 'rawWaterFlow',         name: '原水累计流量',   value: rawCumFlow.toFixed(1),   unit: 'm³',    status: pointStatus, time, group: '水量' },
-        { key: 'rawTankLevel',         name: '原水箱液位',     value: rawTankLv.toFixed(2),    unit: 'm',     status: pointStatus, time, group: '水量' },
-        { key: 'rawTankRange',         name: '原水箱液位量程', value: '5',                     unit: 'm',     status: pointStatus, time, group: '水量' },
-        { key: 'rawPumpOutPressure',   name: '原水泵出水压力', value: rawPumpPres.toFixed(2),  unit: 'MPa',   status: pointStatus, time, group: '水压' },
-        { key: 'boosterOutletPressure',name: '增压泵出口压力', value: boostOutPres.toFixed(2), unit: 'MPa',   status: pointStatus, time, group: '水压' },
-        { key: 'lowZonePressure',      name: '低区出水压力',   value: lowZonePres.toFixed(2),  unit: 'MPa',   status: pointStatus, time, group: '水压' },
-        { key: 'highZonePressure',     name: '高区出水压力',   value: highZonePres.toFixed(2), unit: 'MPa',   status: pointStatus, time, group: '水压' },
-        { key: 'rawConductivity',      name: '原水电导率',     value: String(rawConduct),      unit: 'μS/cm', status: pointStatus, time, group: '水质' },
-        { key: 'outConductivity',      name: '出水电导率',     value: String(outConduct),      unit: 'μS/cm', status: pointStatus, time, group: '水质' },
-        { key: 'outPH',                name: '出水pH',         value: outPH,                   unit: '',      status: pointStatus, time, group: '水质' },
-        { key: 'outTemp',              name: '出水温度',       value: outTemp,                 unit: '°C',    status: pointStatus, time, group: '水质' },
-        { key: 'outChlorine',          name: '出水余氯',       value: outChlorine,             unit: 'mg/L',  status: pointStatus, time, group: '水质' },
+        { key: 'rawWaterFlow',          name: '原水流量计',     meterId: '300223110966', value: cumFlow.toFixed(2),   unit: 'm³',    status: st('rawWaterFlow', cumFlow.toFixed(2)), time },
+        { key: 'rawInletValve',         name: '原水进水阀',     value: valveState,           unit: '',      status: st('rawInletValve', valveState), time },
+        { key: 'rawTankLevel',          name: '原水箱液位计',   value: tankLevel.toFixed(2), unit: 'm',     status: st('rawTankLevel', tankLevel.toFixed(2)), time },
+        { key: 'rawPumpOutPressure',    name: '原水泵',         value: pumpPres.toFixed(2),  unit: 'MPa',   status: st('rawPumpOutPressure', pumpPres.toFixed(2)), time },
+        { key: 'rawTDS',                name: '原水TDS',        value: rawTds.toFixed(2),    unit: 'µS/cm', status: st('rawTDS', rawTds.toFixed(2)), time },
+        { key: 'multiMediaFilter',      name: '多介质过滤器',   value: filterState,          unit: '',      status: st('multiMediaFilter', filterState), time },
+        { key: 'carbonFilter',          name: '活性炭过滤器',   value: filterState,          unit: '',      status: st('carbonFilter', filterState), time },
+        { key: 'softenerFilter',        name: '软水机过滤器',   value: filterState,          unit: '',      status: st('softenerFilter', filterState), time },
+        { key: 'securityFilter',        name: '保安过滤器',     value: '—',                    unit: '',      status: st('securityFilter', '—'), time },
+        { key: 'boosterPumpSet', name: '增压泵组', searchNames: ['增压泵出口压力'], value: offline ? '—' : boostOutPres.toFixed(2), unit: 'MPa', status: st('boosterPumpSet', offline ? '—' : boostOutPres.toFixed(2)), time },
+        { key: 'nanofiltration',        name: '纳滤净水',       value: '—',                    unit: '',      status: st('nanofiltration', '—'), time },
+        { key: 'flushValve',            name: '冲洗阀',         value: valveState,           unit: '',      status: st('flushValve', valveState), time },
+        { key: 'productTDS',            name: '产水TDS',        value: '—',                    unit: 'μS/cm', status: st('productTDS', '—'), time },
+        { key: 'productWaterFlow',      name: '产水流量计',     value: productFlow.toFixed(2), unit: 'm³',    status: st('productWaterFlow', productFlow.toFixed(2)), time },
+        { key: 'productValve',          name: '产水阀',         value: valveState,           unit: '',      status: st('productValve', valveState), time },
+        { key: 'cleanWaterTank',        name: '净水箱',         value: '—',                    unit: '',      status: st('cleanWaterTank', '—'), time },
+        { key: 'cleanTankLevel',        name: '净水箱液位',     value: cleanTankLv.toFixed(2), unit: 'm',     status: st('cleanTankLevel', cleanTankLv.toFixed(2)), time },
+        { key: 'ozoneGenerator',        name: '臭氧发生器',     value: valveState,           unit: '',      status: st('ozoneGenerator', valveState), time },
+        { key: 'uvSterilizer',          name: '紫外线杀菌器',   value: uvState,              unit: '',      status: st('uvSterilizer', uvState), time },
+        { key: 'lowZonePumpSet',        name: '送水泵组·低区',  value: offline ? '—' : lowZonePres.toFixed(3),  unit: 'MPa', status: st('lowZonePumpSet', offline ? '—' : lowZonePres.toFixed(3)), time },
+        { key: 'highZonePumpSet',       name: '送水泵组·高区',  value: offline ? '—' : highZonePres.toFixed(3), unit: 'MPa', status: st('highZonePumpSet', offline ? '—' : highZonePres.toFixed(3)), time },
       ];
     };
 
-    const 监测点状态样式 = {
-      正常: { bg: 'bg-sky-50', text: 'text-sky-600', border: 'border-sky-100' },
-      预警: { bg: 'bg-amber-50', text: 'text-amber-600', border: 'border-amber-100' },
-      异常: { bg: 'bg-red-50', text: 'text-red-600', border: 'border-red-100' },
+    const 构建直饮水水质监测点 = (device) => {
+      if (!device) return [];
+      const time = '2026-05-28 17:41:12';
+      const offline = device.status === '离线' || device.status === '故障';
+      const c = device.community;
+      const waterTemp = { 锦绣花园: 18.000, 翡翠湾小区: 17.650, 阳光丽景: 18.420, 华悦府: 17.880, 紫荆花园: 18.150 }[c] || 18.000;
+      const ph        = { 锦绣花园: 6.980,  翡翠湾小区: 7.020,  阳光丽景: 6.950,  华悦府: 7.010,  紫荆花园: 6.960  }[c] || 6.980;
+      const conduct   = { 锦绣花园: 14.710, 翡翠湾小区: 13.850, 阳光丽景: 15.240, 华悦府: 14.320, 紫荆花园: 16.080 }[c] || 14.710;
+      const ozone     = { 锦绣花园: 0.0762, 翡翠湾小区: 0.0810, 阳光丽景: 0.0725, 华悦府: 0.0788, 紫荆花园: 0.0740 }[c] || 0.0762;
+      const turbidity = { 锦绣花园: 0.000,  翡翠湾小区: 0.012,  阳光丽景: 0.000,  华悦府: 0.008,  紫荆花园: 0.015  }[c] || 0.000;
+      const st = (key, value) => 计算监测点状态(key, value, device);
+      if (offline) {
+        return [
+          { key: 'dwWaterTemp',   name: '水温',   value: '—', unit: '℃',     status: st('dwWaterTemp', '—'), time },
+          { key: 'dwPH',          name: 'pH', value: '—', unit: '',      status: st('dwPH', '—'), time },
+          { key: 'dwConductivity',name: '电导率',   value: '—', unit: 'μS/cm', status: st('dwConductivity', '—'), time },
+          { key: 'dwOzone',       name: '臭氧',   value: '—', unit: 'mg/L',  status: st('dwOzone', '—'), time },
+          { key: 'dwTurbidity',   name: '浊度',   value: '—', unit: 'NTU',   status: st('dwTurbidity', '—'), time },
+        ];
+      }
+      return [
+        { key: 'dwWaterTemp',    name: '水温',   value: waterTemp.toFixed(3), unit: '℃',     status: st('dwWaterTemp', waterTemp.toFixed(3)), time },
+        { key: 'dwPH',           name: 'pH', value: ph.toFixed(3),        unit: '',      status: st('dwPH', ph.toFixed(3)), time },
+        { key: 'dwConductivity', name: '电导率',   value: conduct.toFixed(3),   unit: 'μS/cm', status: st('dwConductivity', conduct.toFixed(3)), time },
+        { key: 'dwOzone',        name: '臭氧',   value: ozone.toFixed(4),     unit: 'mg/L',  status: st('dwOzone', ozone.toFixed(4)), time },
+        { key: 'dwTurbidity',    name: '浊度',   value: turbidity.toFixed(3), unit: 'NTU',   status: st('dwTurbidity', turbidity.toFixed(3)), time },
+      ];
     };
 
+    const 汇总监测设备统计 = (device) => {
+      const 泵房点 = 构建泵房监测点(device);
+      const 直饮水点 = 构建直饮水水质监测点(device);
+      const items = 泵房点.map(p => ({ id: p.key, status: p.status }));
+      if (直饮水点.length) {
+        items.push({ id: 'dwQualityMonitor', status: 合并监测状态(直饮水点.map(p => p.status)) });
+      }
+      return items;
+    };
+
+    const 汇总全部监测设备统计 = () => 设备数据.flatMap(d => 汇总监测设备统计(d));
+
+    const 统计监测设备状态 = (items) => ({
+      在线: items.filter(d => d.status === '在线').length,
+      离线: items.filter(d => d.status === '离线').length,
+      预警: items.filter(d => d.status === '预警').length,
+      故障: items.filter(d => d.status === '故障').length,
+    });
+
     const 监测数据卡片 = ({ point, onDetailClick }) => {
-      const ps = 监测点状态样式[point.status] || 监测点状态样式['正常'];
+      const ps = 状态样式[point.status] || 状态样式['离线'];
       return (
         <div className="bg-white rounded-xl p-3.5 border border-gray-100 shadow-sm flex flex-col min-h-[132px]">
           <div className="flex items-start justify-between gap-2 mb-1">
-            <span className="text-sm font-medium text-gray-800 leading-snug">{point.name}</span>
-            <span className={`text-xs px-2 py-0.5 rounded border flex-shrink-0 ${ps.bg} ${ps.text} ${ps.border}`}>{point.status}</span>
+            <div className="min-w-0 flex-1">
+              <span className="text-sm font-medium text-gray-800 leading-snug block">{point.name}</span>
+            </div>
+            <span className={`text-xs font-medium px-2 py-0.5 rounded-full border flex items-center gap-1 flex-shrink-0 ${ps.bg} ${ps.text} ${ps.border}`}>
+              <span className={`w-1.5 h-1.5 rounded-full ${ps.dot}`}></span>
+              {point.status}
+            </span>
           </div>
           <p className="text-xs text-gray-400 mb-3">{point.time}</p>
           <div className="flex items-end justify-between mt-auto gap-2">
@@ -2322,7 +2555,6 @@
                 <ArrowLeft size={22} color="white" />
               </button>
               <span className="flex-1 text-white text-base font-semibold">设备管理</span>
-              <span className="text-blue-200 text-sm">共 {设备数据.length} 台</span>
             </div>
             <div className="bg-white/20 rounded-xl flex items-center gap-2 px-3 py-2">
               <Search size={16} color="white" />
@@ -2358,7 +2590,7 @@
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-gray-800">{community.name}</p>
-                      <p className="text-xs text-gray-400 mt-0.5">1 个泵房 · {community.total} 台设备</p>
+                      <p className="text-xs text-gray-400 mt-0.5">1 个泵房 · {community.pumpRoomLocation}</p>
                     </div>
                   </div>
                   <ChevronRight size={18} color="#d1d5db" />
@@ -2370,6 +2602,14 @@
       );
     };
 
+    const 监测点匹配搜索 = (point, kw) => {
+      if (!kw) return true;
+      if (point.meterId && String(point.meterId).includes(kw)) return true;
+      if (point.name && point.name.includes(kw)) return true;
+      if (point.searchNames && point.searchNames.some(n => n.includes(kw))) return true;
+      return false;
+    };
+
     const CommunityDevicePage = ({ community, onBack, onPointDetail }) => {
       const 小区设备 = useMemo(() => 设备数据.filter(d => d.community === community), [community]);
       const 泵房设备 = 小区设备[0];
@@ -2379,30 +2619,39 @@
       const [searchMsg, setSearchMsg] = useState('');
 
       const 监测点 = useMemo(() => 构建泵房监测点(泵房设备), [泵房设备]);
-      const 筛选后设备 = useMemo(() => {
-        if (filterStatus === '全部') return 小区设备;
-        return 小区设备.filter(d => d.status === filterStatus);
-      }, [小区设备, filterStatus]);
+      const 直饮水监测点 = useMemo(() => 构建直饮水水质监测点(泵房设备), [泵房设备]);
+      const 监测统计设备 = useMemo(() => 汇总监测设备统计(泵房设备), [泵房设备]);
+      const 直饮水聚合状态 = useMemo(() => 合并监测状态(直饮水监测点.map(p => p.status)), [直饮水监测点]);
 
       const 显示监测点 = useMemo(() => {
-        if (筛选后设备.length === 0) return [];
-        if (!searched) return 监测点;
+        if (!泵房设备) return [];
         const kw = meterId.trim();
-        if (kw === 泵房设备?.meterId) return 监测点;
-        return [];
-      }, [监测点, 筛选后设备, searched, meterId, 泵房设备]);
+        let list = (!searched || !kw) ? 监测点 : 监测点.filter(p => 监测点匹配搜索(p, kw));
+        if (filterStatus !== '全部') list = list.filter(p => p.status === filterStatus);
+        return list;
+      }, [监测点, 泵房设备, filterStatus, searched, meterId]);
+
+      const 显示直饮水监测点 = useMemo(() => {
+        if (!泵房设备) return [];
+        const kw = meterId.trim();
+        let list = (!searched || !kw) ? 直饮水监测点 : 直饮水监测点.filter(p => 监测点匹配搜索(p, kw));
+        if (filterStatus !== '全部' && 直饮水聚合状态 !== filterStatus) return [];
+        return list;
+      }, [直饮水监测点, 泵房设备, 直饮水聚合状态, filterStatus, searched, meterId]);
 
       const handleSearch = () => {
         setSearched(true);
         const kw = meterId.trim();
-        if (!kw || kw === 泵房设备?.meterId) {
+        if (!kw) {
           setSearchMsg('');
-        } else {
-          setSearchMsg('未找到匹配的仪表编号');
+          return;
         }
+        const matched = [...监测点, ...直饮水监测点].some(p => 监测点匹配搜索(p, kw));
+        setSearchMsg(matched ? '' : '未找到匹配的设备编号或设备名称');
       };
 
-      const s = 泵房设备 ? 状态样式[泵房设备.status] : 状态样式['离线'];
+      const 泵房整体状态 = useMemo(() => 合并监测状态(监测统计设备.map(d => d.status)), [监测统计设备]);
+      const s = 状态样式[泵房整体状态] || 状态样式['离线'];
 
       return (
         <div className="flex flex-col min-h-screen bg-slate-50">
@@ -2418,20 +2667,20 @@
               {泵房设备 && (
                 <span className={`text-xs font-medium px-2 py-0.5 rounded-full border flex items-center gap-1 ${s.bg} ${s.text} ${s.border}`}>
                   <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`}></span>
-                  {泵房设备.status}
+                  {泵房整体状态}
                 </span>
               )}
             </div>
           </div>
 
-          <状态统计栏 devices={小区设备} filterStatus={filterStatus} onFilterStatus={setFilterStatus} />
+          <状态统计栏 devices={监测统计设备} filterStatus={filterStatus} onFilterStatus={setFilterStatus} />
 
           <div className="bg-white border-b border-gray-100 px-4 py-3">
             <p className="text-xs text-gray-500 mb-2">仪表搜索</p>
             <div className="flex items-center gap-2">
               <input
                 className="flex-1 border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-blue-400"
-                placeholder="请输入仪表编号"
+                placeholder="请输入设备编号或设备名称"
                 value={meterId}
                 onChange={e => { setMeterId(e.target.value); setSearchMsg(''); setSearched(false); }}
                 onKeyDown={e => e.key === 'Enter' && handleSearch()}
@@ -2452,37 +2701,36 @@
                 <Building2 size={40} color="#d1d5db" />
                 <p className="text-sm">该小区暂无泵房数据</p>
               </div>
-            ) : 筛选后设备.length === 0 ? (
+            ) : 显示监测点.length === 0 && 显示直饮水监测点.length === 0 ? (
               <div className="bg-white rounded-2xl p-8 flex flex-col items-center gap-3 text-gray-400">
                 <Cpu size={40} color="#d1d5db" />
-                <p className="text-sm">该状态下暂无设备</p>
-              </div>
-            ) : 显示监测点.length === 0 ? (
-              <div className="bg-white rounded-2xl p-8 flex flex-col items-center gap-3 text-gray-400">
-                <Search size={40} color="#d1d5db" />
-                <p className="text-sm">{searchMsg || '未找到监测数据'}</p>
+                <p className="text-sm">{filterStatus !== '全部' ? '该状态下暂无设备' : (searchMsg || '未找到监测数据')}</p>
               </div>
             ) : (
               <div className="flex flex-col gap-5">
-                {['水量', '水压', '水质'].map(group => {
-                  const pts = 显示监测点.filter(p => p.group === group);
-                  if (!pts.length) return null;
-                  const groupIcon = { 水量: <Droplets size={13} color="#3b82f6" />, 水压: <Gauge size={13} color="#8b5cf6" />, 水质: <Activity size={13} color="#10b981" /> }[group];
-                  const groupColor = { 水量: 'text-blue-600', 水压: 'text-purple-600', 水质: 'text-emerald-600' }[group];
-                  return (
-                    <div key={group}>
-                      <div className={`flex items-center gap-1.5 mb-2 px-1 ${groupColor}`}>
-                        {groupIcon}
-                        <span className="text-sm font-semibold">{group}</span>
-                      </div>
-                      <div className="grid grid-cols-2 gap-2.5">
-                        {pts.map(point => (
-                          <监测数据卡片 key={point.key} point={point} onDetailClick={onPointDetail} />
-                        ))}
-                      </div>
+                {searched && searchMsg && (
+                  <p className="text-xs text-red-500 px-1">{searchMsg}</p>
+                )}
+                {显示监测点.length > 0 && (
+                  <div className="grid grid-cols-2 gap-2.5">
+                    {显示监测点.map(point => (
+                      <监测数据卡片 key={point.key} point={point} onDetailClick={onPointDetail} />
+                    ))}
+                  </div>
+                )}
+                {显示直饮水监测点.length > 0 && (
+                  <>
+                    <div className="flex items-center gap-1.5 px-1 text-teal-600">
+                      <Droplets size={13} color="#0d9488" />
+                      <span className="text-sm font-semibold">直饮水水质监测</span>
                     </div>
-                  );
-                })}
+                    <div className="grid grid-cols-2 gap-2.5">
+                      {显示直饮水监测点.map(point => (
+                        <监测数据卡片 key={point.key} point={point} onDetailClick={onPointDetail} />
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             )}
           </div>
@@ -2637,7 +2885,6 @@
 
     const CommunityConsumablePage = ({ community, onBack }) => {
       const [keyword, setKeyword] = useState('');
-      const [filterType, setFilterType] = useState('全部');
       const [filterStatus, setFilterStatus] = useState('全部');
 
       const 小区耗材 = useMemo(() => 耗材数据.filter(c => c.community === community), [community]);
@@ -2646,11 +2893,10 @@
         return 小区耗材.filter(c => {
           const kw = keyword.trim();
           const matchKw = !kw || c.type.includes(kw) || c.deviceName.includes(kw) || c.pumpRoom.includes(kw);
-          const matchT = filterType === '全部' || c.type === filterType;
           const matchS = filterStatus === '全部' || c.status === filterStatus;
-          return matchKw && matchT && matchS;
+          return matchKw && matchS;
         });
-      }, [小区耗材, keyword, filterType, filterStatus]);
+      }, [小区耗材, keyword, filterStatus]);
 
       const 设备分组 = useMemo(() => {
         const map = {};
@@ -2704,20 +2950,6 @@
             })}
           </div>
 
-          <div className="bg-white border-b border-gray-100 px-4 py-3">
-            <div className="flex items-center gap-1.5 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2">
-              <Package size={14} color="#9ca3af" />
-              <select
-                value={filterType}
-                onChange={e => setFilterType(e.target.value)}
-                className="flex-1 bg-transparent text-sm text-gray-700 outline-none appearance-none cursor-pointer"
-              >
-                {耗材种类列表.map(t => <option key={t} value={t}>{t === '全部' ? '全部种类' : t}</option>)}
-              </select>
-              <ChevronDown size={14} color="#9ca3af" />
-            </div>
-          </div>
-
           <div className="flex-1 p-4 flex flex-col gap-4">
             <p className="text-xs text-gray-400">筛选结果：{filtered.length} 项耗材 · {设备分组.length} 台设备</p>
             {设备分组.length === 0 ? (
@@ -2749,8 +2981,10 @@
     /* ════════════════════════════════════════
        首页
     ════════════════════════════════════════ */
-    const HomePage = ({ onNavigate }) => {
-      const 设备统计 = 统计设备状态(设备数据);
+    const HomePage = ({ onNavigate, plans }) => {
+      const 全部监测设备 = 汇总全部监测设备统计();
+      const 设备统计 = 统计监测设备状态(全部监测设备);
+      const 巡检统计 = useMemo(() => 统计巡检任务(plans || []), [plans]);
       return (
       <div className="flex flex-col min-h-screen bg-gray-100 pb-6">
         {/* 头部 */}
@@ -2798,7 +3032,7 @@
                 <ClipboardList size={15} color="#10b981" />
                 <span className="text-sm font-semibold text-gray-700">待办任务</span>
                 <span className="bg-amber-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center font-bold">
-                  {初始巡检计划.filter(t => t.status !== '已完成').length}
+                  {巡检统计.待执行}
                 </span>
               </div>
               <button onClick={() => onNavigate('巡检管理')} className="flex items-center gap-0.5 text-blue-500 text-xs">
@@ -2813,14 +3047,14 @@
                 <span className="text-sm text-gray-600">任务总数</span>
               </div>
               <div className="flex items-end gap-1">
-                <span className="text-2xl font-bold text-emerald-600">{初始巡检计划.length}</span>
+                <span className="text-2xl font-bold text-emerald-600">{巡检统计.全部}</span>
                 <span className="text-xs text-gray-400 mb-0.5">项</span>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-2">
               {[
-                { label: '待执行', num: 初始巡检计划.filter(t => t.status === '待执行').length, bg: 'bg-blue-50',    text: 'text-blue-600',    dot: 'bg-blue-500'    },
-                { label: '已完成', num: 初始巡检计划.filter(t => t.status === '已完成').length, bg: 'bg-emerald-50', text: 'text-emerald-600', dot: 'bg-emerald-500' },
+                { label: '待执行', num: 巡检统计.待执行, bg: 'bg-blue-50',    text: 'text-blue-600',    dot: 'bg-blue-500'    },
+                { label: '已完成', num: 巡检统计.已完成, bg: 'bg-emerald-50', text: 'text-emerald-600', dot: 'bg-emerald-500' },
               ].map(item => (
                 <div key={item.label} className={`${item.bg} rounded-xl p-3 flex flex-col items-center gap-1.5`}>
                   <div className={`w-2 h-2 rounded-full ${item.dot}`}></div>
@@ -2850,7 +3084,7 @@
                 <span className="text-sm text-gray-600">设备总数</span>
               </div>
               <div className="flex items-end gap-1">
-                <span className="text-2xl font-bold text-blue-600">{设备数据.length}</span>
+                <span className="text-2xl font-bold text-blue-600">{全部监测设备.length}</span>
                 <span className="text-xs text-gray-400 mb-0.5">台</span>
               </div>
             </div>
@@ -2957,6 +3191,12 @@
       { id:'W004', type:'水质检测', title:'华悦府季度水质安全检测',     status:'待执行', community:'华悦府',   assignee:'王运维', planDate:'2026-04-22', period:'季度', devices:[], items:['浊度','pH值','TDS','余氯','菌落总数','重金属（铅、砷）'], startTime:null, endTime:null, remark:'', result:{} },
       { id:'W005', type:'水质检测', title:'紫荆花园月度水质例行检测',   status:'已完成', community:'紫荆花园', assignee:'赵运维', planDate:'2026-03-30', period:'月度', devices:[], items:['浊度','pH值','TDS','余氯','菌落总数'], startTime:'2026-03-30 14:00', endTime:'2026-03-30 15:30', remark:'水质良好，TDS 略偏高，已建议用户增加软化盐用量。', result:{'浊度':'0.5 NTU','pH值':'7.4','TDS':'52 ppm','余氯':'0.15 mg/L','菌落总数':'<1 CFU/mL'} },
     ];
+
+    const 统计巡检任务 = (plans) => ({
+      全部: plans.length,
+      待执行: plans.filter(p => p.status === '待执行').length,
+      已完成: plans.filter(p => p.status === '已完成').length,
+    });
 
     const 巡检状态样式 = {
       待执行: { bg:'bg-blue-50',    text:'text-blue-600',    border:'border-blue-200',    dot:'bg-blue-500'    },
@@ -3836,11 +4076,7 @@
         [plans, tab, filterStatus]
       );
 
-      const counts = (type) => ({
-        全部:   plans.filter(p => p.type === type).length,
-        待执行: plans.filter(p => p.type === type && p.status === '待执行').length,
-        已完成: plans.filter(p => p.type === type && p.status === '已完成').length,
-      });
+      const counts = (type) => 统计巡检任务(plans.filter(p => p.type === type));
       const cnt = counts(tab);
 
       const handleCreate = (form) => {
@@ -4607,7 +4843,7 @@
 
       const renderContent = () => {
         if (route.page === 'home') {
-          return <HomePage onNavigate={nav} />;
+          return <HomePage onNavigate={nav} plans={plans} />;
         }
         if (route.page === '设备管理') {
           return (
@@ -4654,7 +4890,16 @@
           return (
             <UserServicePage
               onBack={() => nav('home')}
-              onUserClick={user => setRoute({ page: 'userDetail', user })}
+              onCommunityClick={community => setRoute({ page: 'communityUsers', community })}
+            />
+          );
+        }
+        if (route.page === 'communityUsers') {
+          return (
+            <CommunityUserPage
+              community={route.community}
+              onBack={() => nav('用户服务')}
+              onUserClick={user => setRoute({ page: 'userDetail', user, fromCommunity: route.community })}
             />
           );
         }
@@ -4662,7 +4907,9 @@
           return (
             <UserDetailPage
               user={route.user}
-              onBack={() => nav('用户服务')}
+              onBack={() => route.fromCommunity
+                ? setRoute({ page: 'communityUsers', community: route.fromCommunity })
+                : nav('用户服务')}
             />
           );
         }

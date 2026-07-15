@@ -72,6 +72,9 @@
     const LogOut        = p => <Svg {...p}><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></Svg>;
     const MessageSquare = p => <Svg {...p}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></Svg>;
     const Package       = p => <Svg {...p}><path d="m16.5 9.4-7-3.15M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" x2="12" y1="22" y2="12"/></Svg>;
+    const ImageIcon     = p => <Svg {...p}><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></Svg>;
+    const Plus          = p => <Svg {...p}><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></Svg>;
+    const X             = p => <Svg {...p}><path d="M18 6 6 18M6 6l12 12"/></Svg>;
 
     /* ════════════════════════════════════════
        全局常量
@@ -201,24 +204,91 @@
       return { status: '正常', remainDays: diffDays };
     };
 
-    const 耗材数据 = [
-      { id: 'HC001', community: '锦绣花园', deviceId: 'D001', deviceName: '净水设备 A01', pumpRoom: '1号泵房', type: 'PP棉滤芯',     lastReplace: '2026-01-15', nextReplace: '2026-07-15', cycleMonths: 6,  operator: '张运维' },
-      { id: 'HC002', community: '锦绣花园', deviceId: 'D001', deviceName: '净水设备 A01', pumpRoom: '1号泵房', type: '活性炭滤芯',   lastReplace: '2025-10-01', nextReplace: '2026-10-01', cycleMonths: 12, operator: '张运维' },
-      { id: 'HC003', community: '锦绣花园', deviceId: 'D001', deviceName: '净水设备 A01', pumpRoom: '1号泵房', type: 'RO反渗透膜',   lastReplace: '2024-01-15', nextReplace: '2026-01-15', cycleMonths: 24, operator: '李技术' },
-      { id: 'HC006', community: '翡翠湾小区', deviceId: 'D003', deviceName: '净水设备 C01', pumpRoom: '1号泵房', type: 'PP棉滤芯',     lastReplace: '2026-03-10', nextReplace: '2026-09-10', cycleMonths: 6,  operator: '李运维' },
-      { id: 'HC007', community: '翡翠湾小区', deviceId: 'D003', deviceName: '净水设备 C01', pumpRoom: '1号泵房', type: '活性炭滤芯',   lastReplace: '2026-01-05', nextReplace: '2026-07-05', cycleMonths: 6,  operator: '李运维' },
-      { id: 'HC008', community: '翡翠湾小区', deviceId: 'D003', deviceName: '净水设备 C01', pumpRoom: '1号泵房', type: 'RO反渗透膜',   lastReplace: '2025-03-01', nextReplace: '2027-03-01', cycleMonths: 24, operator: '李运维' },
-      { id: 'HC011', community: '阳光丽景', deviceId: 'D006', deviceName: '净水设备 C02', pumpRoom: '1号泵房', type: 'PP棉滤芯',     lastReplace: '2026-01-20', nextReplace: '2026-07-20', cycleMonths: 6,  operator: '张运维' },
-      { id: 'HC012', community: '阳光丽景', deviceId: 'D006', deviceName: '净水设备 C02', pumpRoom: '1号泵房', type: 'RO反渗透膜',   lastReplace: '2024-03-01', nextReplace: '2026-03-01', cycleMonths: 24, operator: '张运维' },
-      { id: 'HC013', community: '华悦府', deviceId: 'D007', deviceName: '直饮设备 E01', pumpRoom: '1号泵房', type: '复合滤芯',     lastReplace: '2026-03-25', nextReplace: '2026-09-25', cycleMonths: 6,  operator: '王运维' },
-      { id: 'HC014', community: '华悦府', deviceId: 'D007', deviceName: '直饮设备 E01', pumpRoom: '1号泵房', type: '紫外杀菌灯管', lastReplace: '2025-04-01', nextReplace: '2026-04-01', cycleMonths: 12, operator: '王运维' },
-      { id: 'HC017', community: '紫荆花园', deviceId: 'D010', deviceName: '软水设备 G02', pumpRoom: '1号泵房', type: '软化树脂',     lastReplace: '2026-02-10', nextReplace: '2029-02-10', cycleMonths: 36, operator: '赵运维' },
-      { id: 'HC018', community: '紫荆花园', deviceId: 'D010', deviceName: '软水设备 G02', pumpRoom: '1号泵房', type: 'PP棉滤芯',     lastReplace: '2025-08-01', nextReplace: '2026-02-01', cycleMonths: 6,  operator: '赵运维' },
-      { id: 'HC019', community: '紫荆花园', deviceId: 'D010', deviceName: '软水设备 G02', pumpRoom: '1号泵房', type: '臭氧消解滤芯', lastReplace: '2025-07-01', nextReplace: '2026-07-01', cycleMonths: 12, operator: '赵运维' },
-    ].map(item => {
-      const { status, remainDays } = 计算耗材状态(item.nextReplace);
-      return { ...item, status, remainDays };
-    });
+    const 计算耗材下次更换日期 = (lastReplace, cycleMonths) => {
+      const d = new Date(lastReplace);
+      d.setMonth(d.getMonth() + cycleMonths);
+      const pad = n => String(n).padStart(2, '0');
+      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+    };
+
+    const enrich耗材项 = (item) => {
+      const nextReplace = 计算耗材下次更换日期(item.lastReplace, item.cycleMonths);
+      const { status, remainDays } = 计算耗材状态(nextReplace);
+      return { ...item, nextReplace, status, remainDays };
+    };
+
+    const 从巡检同步耗材 = (consumables, plan, inspectData) => {
+      const { produce } = inspectData || {};
+      if (!produce || !plan) return consumables;
+      const community = plan.community;
+      const devices = plan.devices || [];
+      const mappings = [
+        { yes: produce.rep1SecurityYesNo, date: produce.rep1SecurityDate, type: 'PP棉滤芯', source: '巡检-保安过滤PP棉' },
+        { yes: produce.rep1ReturnYesNo, date: produce.rep1ReturnDate, type: 'PP棉滤芯', source: '巡检-回水PP棉' },
+        { yes: produce.rep2YesNo, date: produce.rep2OzoneDate, type: '臭氧消解滤芯', source: '巡检-臭氧消解' },
+        { yes: produce.rep2YesNo, date: produce.rep2UvDate, type: '紫外杀菌灯管', source: '巡检-紫外灯管' },
+        { yes: produce.rep3YesNo, date: produce.rep3NfDate, type: '纳滤膜', source: '巡检-纳滤膜' },
+      ];
+      let next = consumables;
+      mappings.forEach(({ yes, date, type, source }) => {
+        if (yes !== '是' || !date) return;
+        next = next.map(c => {
+          if (c.community !== community || c.type !== type) return c;
+          if (devices.length && !devices.includes(c.deviceName)) return c;
+          return enrich耗材项({ ...c, lastReplace: date, lastReplaceSource: source, webOrderId: null });
+        });
+      });
+      return next;
+    };
+
+    const 匹配维保耗材类型 = (contentItem) => {
+      if (/全套滤芯|滤芯更换/.test(contentItem)) return ['PP棉滤芯', '活性炭滤芯', 'RO反渗透膜'];
+      const rules = [
+        { kw: ['PP棉', 'PP 棉'], type: 'PP棉滤芯' },
+        { kw: ['活性炭'], type: '活性炭滤芯' },
+        { kw: ['RO膜', 'RO 膜', '反渗透'], type: 'RO反渗透膜' },
+        { kw: ['复合滤芯'], type: '复合滤芯' },
+        { kw: ['紫外', '杀菌灯'], type: '紫外杀菌灯管' },
+        { kw: ['软化树脂'], type: '软化树脂' },
+        { kw: ['软化盐'], type: '软化盐' },
+        { kw: ['臭氧消解'], type: '臭氧消解滤芯' },
+        { kw: ['纳滤'], type: '纳滤膜' },
+      ];
+      for (const r of rules) {
+        if (r.kw.some(k => contentItem.includes(k))) return [r.type];
+      }
+      return [];
+    };
+
+    const 从维保同步耗材 = (consumables, plan, checkedContent, date) => {
+      if (!plan || !checkedContent?.length) return consumables;
+      const typesToUpdate = new Set();
+      checkedContent.forEach(item => {
+        匹配维保耗材类型(item).forEach(t => typesToUpdate.add(t));
+      });
+      if (typesToUpdate.size === 0) return consumables;
+      return consumables.map(c => {
+        if (c.community !== plan.community || !typesToUpdate.has(c.type)) return c;
+        if (plan.device && !plan.device.includes('系列') && c.deviceName !== plan.device) return c;
+        return enrich耗材项({ ...c, lastReplace: date, lastReplaceSource: '维保完成同步', webOrderId: null });
+      });
+    };
+
+    const 初始耗材数据 = [
+      { id: 'HC001', community: '锦绣花园', deviceId: 'D001', deviceName: '净水设备 A01', pumpRoom: '1号泵房', type: 'PP棉滤芯',     lastReplace: '2026-01-15', cycleMonths: 6,  operator: '张运维' },
+      { id: 'HC002', community: '锦绣花园', deviceId: 'D001', deviceName: '净水设备 A01', pumpRoom: '1号泵房', type: '活性炭滤芯',   lastReplace: '2025-10-01', cycleMonths: 12, operator: '张运维' },
+      { id: 'HC003', community: '锦绣花园', deviceId: 'D001', deviceName: '净水设备 A01', pumpRoom: '1号泵房', type: 'RO反渗透膜',   lastReplace: '2024-01-15', cycleMonths: 24, operator: '李技术', webOrderId: 'WO-HC003' },
+      { id: 'HC006', community: '翡翠湾小区', deviceId: 'D003', deviceName: '净水设备 C01', pumpRoom: '1号泵房', type: 'PP棉滤芯',     lastReplace: '2026-03-10', cycleMonths: 6,  operator: '李运维' },
+      { id: 'HC007', community: '翡翠湾小区', deviceId: 'D003', deviceName: '净水设备 C01', pumpRoom: '1号泵房', type: '活性炭滤芯',   lastReplace: '2026-01-05', cycleMonths: 6,  operator: '李运维' },
+      { id: 'HC008', community: '翡翠湾小区', deviceId: 'D003', deviceName: '净水设备 C01', pumpRoom: '1号泵房', type: 'RO反渗透膜',   lastReplace: '2025-03-01', cycleMonths: 24, operator: '李运维' },
+      { id: 'HC011', community: '阳光丽景', deviceId: 'D006', deviceName: '净水设备 C02', pumpRoom: '1号泵房', type: 'PP棉滤芯',     lastReplace: '2026-01-20', cycleMonths: 6,  operator: '张运维' },
+      { id: 'HC012', community: '阳光丽景', deviceId: 'D006', deviceName: '净水设备 C02', pumpRoom: '1号泵房', type: 'RO反渗透膜',   lastReplace: '2024-03-01', cycleMonths: 24, operator: '张运维', webOrderId: 'WO-HC012' },
+      { id: 'HC013', community: '华悦府', deviceId: 'D007', deviceName: '直饮设备 E01', pumpRoom: '1号泵房', type: '复合滤芯',     lastReplace: '2026-03-25', cycleMonths: 6,  operator: '王运维' },
+      { id: 'HC014', community: '华悦府', deviceId: 'D007', deviceName: '直饮设备 E01', pumpRoom: '1号泵房', type: '紫外杀菌灯管', lastReplace: '2025-04-01', cycleMonths: 12, operator: '王运维', webOrderId: 'WO-HC014' },
+      { id: 'HC017', community: '紫荆花园', deviceId: 'D010', deviceName: '软水设备 G02', pumpRoom: '1号泵房', type: '软化树脂',     lastReplace: '2026-02-10', cycleMonths: 36, operator: '赵运维' },
+      { id: 'HC018', community: '紫荆花园', deviceId: 'D010', deviceName: '软水设备 G02', pumpRoom: '1号泵房', type: 'PP棉滤芯',     lastReplace: '2025-08-01', cycleMonths: 6,  operator: '赵运维', webOrderId: 'WO-HC018' },
+      { id: 'HC019', community: '紫荆花园', deviceId: 'D010', deviceName: '软水设备 G02', pumpRoom: '1号泵房', type: '臭氧消解滤芯', lastReplace: '2025-07-01', cycleMonths: 12, operator: '赵运维' },
+    ].map(enrich耗材项);
 
     const 按小区汇总耗材 = (items) => {
       const map = {};
@@ -1220,11 +1290,14 @@
 
     /* 即时处理弹窗 */
     const AlarmProcessModal = ({ alarm, onClose, onSubmit }) => {
+      const assignees = ['张运维', '李运维', '王运维', '赵运维'];
       const [action, setAction] = useState('处理中');
+      const [handler, setHandler] = useState('张运维');
       const [note, setNote] = useState('');
+      const fieldCls = 'w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-blue-400';
       return (
-        <div className="fixed inset-0 bg-black/50 flex items-end justify-center z-50">
-          <div className="bg-white w-full max-w-sm rounded-t-3xl p-6">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-6 py-8" onClick={onClose}>
+          <div className="bg-white w-[88%] max-w-[320px] rounded-2xl shadow-xl p-5" onClick={e => e.stopPropagation()}>
             {/* 标题 */}
             <div className="flex items-center justify-between mb-4">
               <span className="text-base font-semibold text-gray-800">处理报警事件</span>
@@ -1252,10 +1325,15 @@
                   }`}>{a}</button>
               ))}
             </div>
+            {/* 处理人 */}
+            <p className="text-xs text-gray-500 mb-2 font-medium">处理人 <span className="text-red-400">*</span></p>
+            <select className={fieldCls + ' mb-4 appearance-none cursor-pointer'} value={handler} onChange={e => setHandler(e.target.value)}>
+              {assignees.map(a => <option key={a} value={a}>{a}</option>)}
+            </select>
             {/* 处理备注 */}
             <p className="text-xs text-gray-500 mb-2 font-medium">处理备注（选填）</p>
             <textarea
-              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 outline-none resize-none mb-4"
+              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 outline-none resize-none mb-4 focus:border-blue-400"
               rows={3}
               placeholder="请输入处理说明、处理措施等…"
               value={note}
@@ -1265,7 +1343,7 @@
             <div className="flex gap-3">
               <button onClick={onClose} className="flex-1 py-3 rounded-xl border border-gray-200 text-sm text-gray-600 font-medium">取消</button>
               <button
-                onClick={() => onSubmit(alarm.id, action, note)}
+                onClick={() => onSubmit(alarm.id, action, note, handler)}
                 className={`flex-1 py-3 rounded-xl text-white text-sm font-semibold ${action === '已处理' ? 'bg-emerald-500' : 'bg-amber-500'}`}
               >确认提交</button>
             </div>
@@ -1323,11 +1401,11 @@
         [filter, alarmEvents]
       );
 
-      const handleSubmit = (id, action, note) => {
+      const handleSubmit = (id, action, note, handler) => {
         const now = new Date();
         const ts = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
         onUpdate(prev => prev.map(a => a.id === id
-          ? { ...a, status: action, handler: '张运维', handleTime: ts, note: note || a.note }
+          ? { ...a, status: action, handler, handleTime: ts, note: note || a.note }
           : a
         ));
         setProcessingAlarm(null);
@@ -2741,7 +2819,7 @@
     /* ════════════════════════════════════════
        耗材管理 — 小区汇总 & 耗材明细
     ════════════════════════════════════════ */
-    const 耗材卡片 = ({ item }) => {
+    const 耗材卡片 = ({ item, onReplace }) => {
       const s = 耗材状态样式[item.status];
       return (
         <div className="bg-white rounded-2xl p-4 w-full">
@@ -2773,7 +2851,7 @@
             </div>
             <div className="flex items-center justify-between text-xs">
               <span className="text-gray-400">更换周期</span>
-              <span className="text-gray-700">{item.cycleMonths} 个月</span>
+              <span className="text-gray-700">{item.cycleMonths} 个月（型号固定）</span>
             </div>
             <div className="flex items-center justify-between text-xs">
               <span className="text-gray-400">剩余天数</span>
@@ -2785,23 +2863,71 @@
               <span className="text-gray-400">负责人</span>
               <span className="text-gray-700">{item.operator}</span>
             </div>
+            {item.lastReplaceSource && (
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-gray-400">最近录入</span>
+                <span className="text-gray-500">{item.lastReplaceSource}</span>
+              </div>
+            )}
+          </div>
+          {item.status === '即将到期' && (
+            <p className="mt-3 text-xs text-amber-600 bg-amber-50 rounded-lg px-3 py-2">即将到期，请关注并安排更换（仅提醒，不自动生成工单）</p>
+          )}
+          {item.status === '已超期' && item.webOrderId && (
+            <p className="mt-3 text-xs text-gray-700 bg-slate-50 rounded-lg px-3 py-2">
+              已超期，更换工单 {item.webOrderId} 已提交 Web 管理平台，请前往维保管理执行
+            </p>
+          )}
+          {onReplace && (
+            <button type="button" onClick={() => onReplace(item)}
+              className="mt-3 w-full py-2.5 rounded-xl border border-blue-200 text-blue-600 text-xs font-semibold active:bg-blue-50">
+              登记更换
+            </button>
+          )}
+        </div>
+      );
+    };
+
+    const ReplaceConsumableModal = ({ item, onClose, onSubmit }) => {
+      const [replaceDate, setReplaceDate] = useState('2026-04-16');
+      return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-6 py-8" onClick={onClose}>
+          <div className="w-[88%] max-w-[320px] bg-white rounded-2xl shadow-xl px-4 pt-5 pb-5" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-base font-semibold text-gray-800">登记耗材更换</h3>
+              <button onClick={onClose} className="text-gray-400 text-sm">取消</button>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-3 mb-4 text-sm">
+              <p className="font-medium text-gray-800">{item.type}</p>
+              <p className="text-xs text-gray-500 mt-0.5">{item.deviceName} · {item.community}</p>
+            </div>
+            <label className="text-xs text-gray-500 font-medium mb-1.5 block">更换日期 <span className="text-red-400">*</span></label>
+            <input type="date" value={replaceDate} onChange={e => setReplaceDate(e.target.value)}
+              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-blue-400 mb-3" />
+            <p className="text-xs text-gray-400 mb-4 leading-relaxed">
+              提交后将更新耗材台账（上次/下次更换日期）。巡检、维保中完成的更换也会自动同步至此。
+            </p>
+            <button type="button" disabled={!replaceDate} onClick={() => onSubmit(item.id, replaceDate)}
+              className={`w-full py-3 rounded-xl text-sm font-semibold ${replaceDate ? 'bg-blue-600 text-white active:bg-blue-700' : 'bg-gray-100 text-gray-400'}`}>
+              确认登记
+            </button>
           </div>
         </div>
       );
     };
 
-    const ConsumableManagePage = ({ onBack, onCommunityClick }) => {
+    const ConsumableManagePage = ({ consumables, onBack, onCommunityClick }) => {
       const [keyword, setKeyword] = useState('');
       const 小区汇总 = useMemo(() => {
-        const list = 按小区汇总耗材(耗材数据);
+        const list = 按小区汇总耗材(consumables);
         const kw = keyword.trim();
         if (!kw) return list;
         return list.filter(c => c.name.includes(kw));
-      }, [keyword]);
+      }, [consumables, keyword]);
       const 全局统计 = {
-        正常: 耗材数据.filter(c => c.status === '正常').length,
-        即将到期: 耗材数据.filter(c => c.status === '即将到期').length,
-        已超期: 耗材数据.filter(c => c.status === '已超期').length,
+        正常: consumables.filter(c => c.status === '正常').length,
+        即将到期: consumables.filter(c => c.status === '即将到期').length,
+        已超期: consumables.filter(c => c.status === '已超期').length,
       };
 
       return (
@@ -2812,7 +2938,7 @@
                 <ArrowLeft size={22} color="white" />
               </button>
               <span className="flex-1 text-white text-base font-semibold">耗材管理</span>
-              <span className="text-blue-200 text-sm">共 {耗材数据.length} 项</span>
+              <span className="text-blue-200 text-sm">共 {consumables.length} 项</span>
             </div>
             <div className="bg-white/20 rounded-xl flex items-center gap-2 px-3 py-2">
               <Search size={16} color="white" />
@@ -2838,6 +2964,12 @@
                 </div>
               );
             })}
+          </div>
+
+          <div className="mx-4 mt-3 bg-blue-50 border border-blue-100 rounded-xl px-3 py-2.5">
+            <p className="text-xs text-blue-700 leading-relaxed">
+              <span className="font-semibold">耗材管理</span>：台账与到期预警。即将到期仅提醒；已超期自动生成 Web 更换工单。登记更换后同步更新台账。
+            </p>
           </div>
 
           <div className="flex-1 p-4 flex flex-col gap-3">
@@ -2883,11 +3015,12 @@
       );
     };
 
-    const CommunityConsumablePage = ({ community, onBack }) => {
+    const CommunityConsumablePage = ({ community, consumables, setConsumables, onBack }) => {
       const [keyword, setKeyword] = useState('');
       const [filterStatus, setFilterStatus] = useState('全部');
+      const [replaceItem, setReplaceItem] = useState(null);
 
-      const 小区耗材 = useMemo(() => 耗材数据.filter(c => c.community === community), [community]);
+      const 小区耗材 = useMemo(() => consumables.filter(c => c.community === community), [consumables, community]);
 
       const filtered = useMemo(() => {
         return 小区耗材.filter(c => {
@@ -2911,6 +3044,14 @@
         正常: 小区耗材.filter(c => c.status === '正常').length,
         即将到期: 小区耗材.filter(c => c.status === '即将到期').length,
         已超期: 小区耗材.filter(c => c.status === '已超期').length,
+      };
+
+      const handleReplaceSubmit = (itemId, replaceDate) => {
+        setConsumables(prev => prev.map(c => {
+          if (c.id !== itemId) return c;
+          return enrich耗材项({ ...c, lastReplace: replaceDate, lastReplaceSource: '耗材管理登记', webOrderId: null });
+        }));
+        setReplaceItem(null);
       };
 
       return (
@@ -2968,12 +3109,19 @@
                 </div>
                 <div className="flex flex-col gap-2">
                   {group.items.map(item => (
-                    <耗材卡片 key={item.id} item={item} />
+                    <耗材卡片 key={item.id} item={item} onReplace={setReplaceItem} />
                   ))}
                 </div>
               </div>
             ))}
           </div>
+          {replaceItem && (
+            <ReplaceConsumableModal
+              item={replaceItem}
+              onClose={() => setReplaceItem(null)}
+              onSubmit={handleReplaceSubmit}
+            />
+          )}
         </div>
       );
     };
@@ -3123,6 +3271,7 @@
                 { label: '巡检管理', icon: <ClipboardList size={22} color="#10b981" />,bg: 'bg-emerald-50', page: '巡检管理' },
                 { label: '维保管理', icon: <Wrench size={22} color="#f59e0b" />,       bg: 'bg-amber-50',   page: '维保管理' },
                 { label: '耗材管理', icon: <Package size={22} color="#3b82f6" />,    bg: 'bg-blue-50',     page: '耗材管理' },
+                { label: '用户反馈', icon: <MessageSquare size={22} color="#10b981" />, bg: 'bg-emerald-50', page: '用户反馈' },
               ].map(item => (
                 <button key={item.label} onClick={() => onNavigate(item.page)}
                   className="flex flex-col items-center gap-2 py-3 rounded-xl active:scale-95 transition-transform">
@@ -4309,11 +4458,1049 @@
     };
 
     /* ════════════════════════════════════════
+       用户反馈数据与组件
+    ════════════════════════════════════════ */
+    const 反馈类型样式 = {
+      '水压异常': { bg: 'bg-red-50',     text: 'text-red-600',     border: 'border-red-200'     },
+      '水质异常': { bg: 'bg-red-50',     text: 'text-red-600',     border: 'border-red-200'     },
+    };
+    const 反馈状态样式 = {
+      待处理:     { bg: 'bg-amber-50',   text: 'text-amber-600',   border: 'border-amber-200',   dot: 'bg-amber-500'   },
+      待回访:     { bg: 'bg-blue-50',    text: 'text-blue-600',    border: 'border-blue-200',    dot: 'bg-blue-500'    },
+      已完成:     { bg: 'bg-emerald-50', text: 'text-emerald-600', border: 'border-emerald-200', dot: 'bg-emerald-500' },
+      已提交工单: { bg: 'bg-slate-50',   text: 'text-slate-600',   border: 'border-slate-200',   dot: 'bg-slate-400'   },
+      处理中:     { bg: 'bg-blue-50',    text: 'text-blue-600',    border: 'border-blue-200',    dot: 'bg-blue-500'    },
+      已升级:     { bg: 'bg-orange-50',  text: 'text-orange-600',  border: 'border-orange-200',  dot: 'bg-orange-500'  },
+    };
+
+    const 反馈处理中待建工单 = (f) => f.status === '处理中' && f.closurePath === 'A' && !f.workOrder;
+    const 反馈处理中工单进行中 = (f) => f.status === '处理中' && f.workOrder && f.workOrder.status === '处理中';
+    const 获取回访记录列表 = (f) => {
+      if (f.followUpHistory?.length) return f.followUpHistory;
+      if (f.followUp) return [f.followUp];
+      return [];
+    };
+
+    const 初始用户反馈数据 = [
+      {
+        id: 'FB001', category: '水压异常',
+        userName: '李秀英', userId: 'U002', phone: '139****2002',
+        community: '锦绣花园', address: '2号楼 1单元 502室',
+        content: '最近几天家里直饮水出水压力明显变小，早晚高峰期几乎没水，希望能尽快上门检查。',
+        reportTime: '2026-04-16 09:35', status: '待处理',
+        assignee: null, acceptTime: null, visit: null, workOrder: null, workOrderHistory: [],
+        closurePath: null, followUpFailCount: 0, followUpHistory: [],
+        escalated: false, escalatedAt: null,
+        timeline: [{ time: '2026-04-16 09:35', actor: '李秀英', action: '用户上报：家中直饮水水压异常' }],
+      },
+      {
+        id: 'FB002', category: '水质异常',
+        userName: '王建国', userId: 'U003', phone: '137****3003',
+        community: '翡翠湾小区', address: '5号楼 2单元 801室',
+        content: '出水有轻微异味，TDS 读数比平时高很多，担心水质有问题，请安排人员上门检测。',
+        reportTime: '2026-04-15 14:20', status: '待处理',
+        assignee: null, acceptTime: null, visit: null, workOrder: null, workOrderHistory: [],
+        closurePath: null, followUpFailCount: 0, followUpHistory: [],
+        escalated: false, escalatedAt: null,
+        timeline: [
+          { time: '2026-04-15 14:20', actor: '王建国', action: '用户上报：水质异常，出水有异味' },
+        ],
+      },
+      {
+        id: 'FB003', category: '水压异常',
+        userName: '刘志强', userId: 'U005', phone: '136****5005',
+        community: '阳光丽景', address: '3号楼 1单元 1201室',
+        content: '管线机不出热水，显示屏报错 E03，重启后仍无法恢复。',
+        reportTime: '2026-04-14 10:08', status: '已完成',
+        assignee: '张运维', acceptTime: '2026-04-14 10:30',
+        closurePath: 'B', followUpFailCount: 0, followUpHistory: [],
+        escalated: false, escalatedAt: null, workOrderHistory: [],
+        visit: {
+          visitTime: '2026-04-14 15:20', inspector: '张运维',
+          siteSituation: '现场检查管线机加热模块，温控传感器故障导致无法加热。现场无备件，需更换温控模块及传感器，无法当场修复。',
+          resolution: '建议更换温控模块及传感器，提交 Web 管理平台跟进。',
+          canResolve: false,
+        },
+        workOrder: {
+          id: 'WO20260414001', title: '阳光丽景管线机温控模块更换',
+          description: '用户反馈管线机不出热水（E03）。上门检查发现温控传感器故障，需更换温控模块及传感器。',
+          createdAt: '2026-04-14 15:25', status: '已转Web', phase: 'transferred',
+        },
+        timeline: [
+          { time: '2026-04-14 10:08', actor: '刘志强', action: '用户上报：管线机不出热水' },
+          { time: '2026-04-14 10:30', actor: '张运维', action: '已接单，安排上门检查' },
+          { time: '2026-04-14 15:20', actor: '张运维', action: '完成上门检查，无法现场解决' },
+          { time: '2026-04-14 15:25', actor: '张运维', action: '提交工单 WO20260414001 至管理平台' },
+          { time: '2026-04-14 15:25', actor: '系统', action: '小程序反馈已结案，后续由 Web 管理平台跟踪' },
+        ],
+      },
+      {
+        id: 'FB004', category: '水压异常',
+        userName: '赵美华', userId: 'U004', phone: '135****4004',
+        community: '翡翠湾小区', address: '1号楼 3单元 602室',
+        content: '厨房直饮水龙头出水断断续续，怀疑是入户管路或阀门问题。',
+        reportTime: '2026-04-13 08:45', status: '已完成',
+        assignee: '张运维', acceptTime: '2026-04-13 09:10',
+        closurePath: 'B', followUpFailCount: 0, followUpHistory: [],
+        escalated: false, escalatedAt: null, workOrderHistory: [],
+        visit: {
+          visitTime: '2026-04-13 11:00', inspector: '张运维',
+          siteSituation: '检查发现入户减压阀老化，阀芯卡涩导致水压波动。需更换减压阀，现场无合适规格备件。',
+          resolution: '建议更换入户减压阀，提交 Web 管理平台处理。',
+          canResolve: false,
+        },
+        workOrder: {
+          id: 'WO20260413001', title: '翡翠湾小区入户减压阀更换',
+          description: '用户反馈水压异常。上门检查确认减压阀老化需更换，已提交工单。',
+          createdAt: '2026-04-13 11:15', status: '已转Web', phase: 'transferred',
+        },
+        timeline: [
+          { time: '2026-04-13 08:45', actor: '赵美华', action: '用户上报：直饮水水压异常' },
+          { time: '2026-04-13 09:10', actor: '张运维', action: '已接单，安排上门检查' },
+          { time: '2026-04-13 11:00', actor: '张运维', action: '完成上门检查，无法现场解决' },
+          { time: '2026-04-13 11:15', actor: '张运维', action: '提交工单 WO20260413001 至管理平台' },
+          { time: '2026-04-13 11:15', actor: '系统', action: '小程序反馈已结案，后续由 Web 管理平台跟踪' },
+        ],
+      },
+      {
+        id: 'FB005', category: '水质异常',
+        userName: '张三丰', userId: 'U001', phone: '138****1001',
+        community: '锦绣花园', address: '1号楼 2单元 301室',
+        content: '感觉出水口感有变化，TDS 值偏高，请帮忙检测一下。',
+        reportTime: '2026-04-10 16:30', status: '待回访',
+        assignee: '张运维', acceptTime: '2026-04-11 09:30',
+        closurePath: 'A', followUpFailCount: 0, followUpHistory: [],
+        escalated: false, escalatedAt: null, workOrderHistory: [],
+        visit: {
+          visitTime: '2026-04-11 09:30', inspector: '张运维',
+          siteSituation: '上门检测 TDS 42 ppm，略偏高。检查发现末端滤芯接近更换周期，出水口感略有变化。',
+          resolution: '已现场更换复合滤芯并冲洗管路，复测 TDS 28 ppm，水质恢复正常。',
+          photos: [],
+          canResolve: true,
+        },
+        followUp: null,
+        workOrder: null,
+        timeline: [
+          { time: '2026-04-10 16:30', actor: '张三丰', action: '用户上报：水质异常' },
+          { time: '2026-04-11 09:30', actor: '张运维', action: '上门检查完成，现场已处理' },
+          { time: '2026-04-11 09:30', actor: '张运维', action: '等待用户回访确认' },
+        ],
+      },
+      {
+        id: 'FB007', category: '水压异常',
+        userName: '吴婷婷', userId: 'U008', phone: '132****8008',
+        community: '紫荆花园', address: '8号楼 1单元 1002室',
+        content: '厨房水龙头出水时大时小，使用体验较差，请帮忙看看。',
+        reportTime: '2026-04-09 11:00', status: '已完成',
+        assignee: '张运维', acceptTime: '2026-04-09 14:00',
+        closurePath: 'A', followUpFailCount: 0,
+        escalated: false, escalatedAt: null, workOrderHistory: [],
+        visit: {
+          visitTime: '2026-04-09 14:00', inspector: '张运维',
+          siteSituation: '检查发现入户减压阀调节不当，部分时段水压波动明显。',
+          resolution: '重新调节减压阀压力至 0.25 MPa，并检测各出水点压力正常。',
+          photos: [],
+          canResolve: true,
+        },
+        followUp: {
+          time: '2026-04-10 10:30', operator: '张运维', source: '小程序',
+          result: '已解决', method: '电话', round: 1,
+          userFeedback: '用户表示水压已稳定，对处理结果满意。',
+        },
+        followUpHistory: [{
+          time: '2026-04-10 10:30', operator: '张运维', source: '小程序',
+          result: '已解决', method: '电话', round: 1,
+          userFeedback: '用户表示水压已稳定，对处理结果满意。',
+        }],
+        workOrder: null,
+        timeline: [
+          { time: '2026-04-09 11:00', actor: '吴婷婷', action: '用户上报：水压异常' },
+          { time: '2026-04-09 14:00', actor: '张运维', action: '上门检查完成，现场已处理' },
+          { time: '2026-04-09 14:00', actor: '张运维', action: '等待用户回访确认' },
+          { time: '2026-04-10 10:30', actor: '张运维', action: '用户回访确认：问题已解决' },
+        ],
+      },
+      {
+        id: 'FB008', category: '水质异常',
+        userName: '黄天明', userId: 'U007', phone: '131****7007',
+        community: '华悦府', address: '3号楼 2单元 601室',
+        content: '直饮水有轻微漂白粉味道，担心水质安全。',
+        reportTime: '2026-04-07 09:20', status: '处理中',
+        assignee: '张运维', acceptTime: '2026-04-07 11:00',
+        closurePath: 'A', followUpFailCount: 1,
+        escalated: false, escalatedAt: null, workOrder: null, workOrderHistory: [],
+        visit: {
+          visitTime: '2026-04-07 11:00', inspector: '张运维',
+          siteSituation: '上门检测 TDS 正常，管路无异常，判断为活性炭滤芯需冲洗。',
+          resolution: '对活性炭滤芯进行深度冲洗，并放水 5 分钟。',
+          photos: [],
+          canResolve: true,
+        },
+        followUp: {
+          time: '2026-04-08 15:00', operator: '管理员', source: 'Web 管理端',
+          result: '未解决', method: '电话', round: 1,
+          userFeedback: '用户反馈仍有轻微异味，冲洗后改善不明显，需进一步排查滤芯或管路问题。',
+        },
+        followUpHistory: [{
+          time: '2026-04-08 15:00', operator: '管理员', source: 'Web 管理端',
+          result: '未解决', method: '电话', round: 1,
+          userFeedback: '用户反馈仍有轻微异味，冲洗后改善不明显，需进一步排查滤芯或管路问题。',
+        }],
+        timeline: [
+          { time: '2026-04-07 09:20', actor: '黄天明', action: '用户上报：水质异常' },
+          { time: '2026-04-07 11:00', actor: '张运维', action: '上门检查完成，现场已处理' },
+          { time: '2026-04-07 11:00', actor: '张运维', action: '等待用户回访确认' },
+          { time: '2026-04-08 15:00', actor: '管理员', action: '用户回访未通过：问题未解决' },
+        ],
+      },
+      {
+        id: 'FB006', category: '水质异常',
+        userName: '陈淑梅', userId: 'U006', phone: '133****6006',
+        community: '阳光丽景', address: '6号楼 2单元 401室',
+        content: '软水机再生程序异常，频繁报错，已影响正常使用。',
+        reportTime: '2026-04-08 11:20', status: '已完成',
+        assignee: '张运维', acceptTime: '2026-04-08 11:45',
+        closurePath: 'B', followUpFailCount: 0, followUpHistory: [],
+        escalated: false, escalatedAt: null, workOrderHistory: [],
+        visit: {
+          visitTime: '2026-04-08 14:00', inspector: '张运维',
+          siteSituation: '控制阀程序异常，需更换控制阀组件。现场无法修复。',
+          resolution: '建议更换控制阀组件，提交 Web 管理平台处理。',
+          canResolve: false,
+        },
+        workOrder: {
+          id: 'WO20260408001', title: '阳光丽景软水机控制阀更换',
+          description: '软水机再生程序异常，控制阀故障需更换。',
+          createdAt: '2026-04-08 14:10', status: '已转Web', phase: 'transferred',
+        },
+        timeline: [
+          { time: '2026-04-08 11:20', actor: '陈淑梅', action: '用户上报：软水机再生程序异常' },
+          { time: '2026-04-08 11:45', actor: '张运维', action: '已接单，安排上门检查' },
+          { time: '2026-04-08 14:00', actor: '张运维', action: '完成上门检查，无法现场解决' },
+          { time: '2026-04-08 14:10', actor: '张运维', action: '提交工单 WO20260408001 至管理平台' },
+          { time: '2026-04-08 14:10', actor: '系统', action: '小程序反馈已结案，后续由 Web 管理平台跟踪' },
+        ],
+      },
+    ];
+
+    const 统计用户反馈 = (list) => ({
+      全部:       list.length,
+      待处理:     list.filter(f => f.status === '待处理').length,
+      待回访:     list.filter(f => f.status === '待回访').length,
+      处理中:     list.filter(f => f.status === '处理中' || f.status === '已提交工单').length,
+      已完成:     list.filter(f => f.status === '已完成').length,
+      已升级:     list.filter(f => f.status === '已升级').length,
+    });
+
+    const 反馈时间戳 = () => {
+      const t = new Date();
+      const pad = n => String(n).padStart(2, '0');
+      return `${t.getFullYear()}-${pad(t.getMonth() + 1)}-${pad(t.getDate())} ${pad(t.getHours())}:${pad(t.getMinutes())}`;
+    };
+
+    const FeedbackManagePage = ({ feedbacks, onBack, onDetail }) => {
+      const [filter, setFilter] = useState('全部');
+      const [keyword, setKeyword] = useState('');
+
+      const visibleFeedbacks = useMemo(() => feedbacks, [feedbacks]);
+      const stats = useMemo(() => 统计用户反馈(visibleFeedbacks), [visibleFeedbacks]);
+
+      const filtered = useMemo(() => {
+        const kw = keyword.trim();
+        return visibleFeedbacks.filter(f => {
+          const matchFilter = filter === '全部' ? true
+            : filter === '待处理' ? f.status === '待处理'
+            : filter === '待回访' ? f.status === '待回访'
+            : filter === '处理中' ? (f.status === '处理中' || f.status === '已提交工单')
+            : filter === '已完成' ? f.status === '已完成'
+            : filter === '已升级' ? f.status === '已升级'
+            : true;
+          const matchKw = !kw || f.userName.includes(kw) || f.community.includes(kw)
+            || f.category.includes(kw) || f.content.includes(kw) || f.address.includes(kw);
+          return matchFilter && matchKw;
+        });
+      }, [visibleFeedbacks, filter, keyword]);
+
+      const statCards = [
+        { label: '全部',       count: stats['全部'],       color: 'text-blue-600',    bg: 'bg-blue-50',    border: 'border-blue-200'    },
+        { label: '待处理',     count: stats['待处理'],     color: 'text-amber-600',   bg: 'bg-amber-50',   border: 'border-amber-200'   },
+        { label: '待回访',     count: stats['待回访'],     color: 'text-blue-600',    bg: 'bg-blue-50',    border: 'border-blue-200'    },
+        { label: '处理中',     count: stats['处理中'],     color: 'text-indigo-600',  bg: 'bg-indigo-50',  border: 'border-indigo-200'  },
+        { label: '已完成',     count: stats['已完成'],     color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-200' },
+        { label: '已升级',     count: stats['已升级'],     color: 'text-orange-600',  bg: 'bg-orange-50',  border: 'border-orange-200'  },
+      ];
+
+      return (
+        <div className="flex flex-col min-h-screen bg-gray-100">
+          <div className="bg-blue-600 px-4 pt-10 pb-4 sticky top-0 z-20">
+            <div className="flex items-center gap-3 mb-3">
+              <button onClick={onBack} className="w-8 h-8 flex items-center justify-center rounded-full active:bg-blue-500">
+                <ArrowLeft size={22} color="white" />
+              </button>
+              <span className="flex-1 text-white text-base font-semibold">用户反馈</span>
+              <span className="text-blue-200 text-sm">共 {visibleFeedbacks.length} 条</span>
+            </div>
+            <div className="bg-white/20 rounded-xl flex items-center gap-2 px-3 py-2">
+              <Search size={16} color="white" />
+              <input
+                className="flex-1 bg-transparent text-white text-sm placeholder-blue-200 outline-none"
+                placeholder="搜索用户、小区、问题类型…"
+                value={keyword}
+                onChange={e => setKeyword(e.target.value)}
+              />
+              {keyword && <button onClick={() => setKeyword('')} className="text-blue-200 text-xs">清除</button>}
+            </div>
+          </div>
+
+          <div className="bg-white border-b border-gray-100 px-4 py-3 grid grid-cols-3 gap-2">
+            {statCards.map(s => (
+              <button key={s.label} onClick={() => setFilter(s.label)}
+                className={`flex flex-col items-center py-2 px-2 rounded-xl border transition-all ${
+                  filter === s.label ? `${s.bg} ${s.border}` : 'border-transparent bg-gray-50/50'
+                }`}>
+                <span className={`text-lg font-bold ${s.color}`}>{s.count}</span>
+                <span className="text-xs text-gray-400 mt-0.5 whitespace-nowrap">{s.label}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="flex-1 p-4 flex flex-col gap-3 pb-6">
+            {filtered.length === 0 ? (
+              <div className="bg-white rounded-2xl p-8 flex flex-col items-center gap-3 text-gray-400">
+                <MessageSquare size={40} color="#d1d5db" />
+                <p className="text-sm">暂无匹配的反馈记录</p>
+              </div>
+            ) : filtered.map(fb => {
+              const ts = 反馈类型样式[fb.category] || 反馈类型样式['水压异常'];
+              const ss = 反馈状态样式[fb.status] || 反馈状态样式['待处理'];
+              return (
+                <button key={fb.id} onClick={() => onDetail(fb.id)}
+                  className="bg-white rounded-2xl p-4 text-left active:scale-98 transition-transform w-full shadow-sm">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${ts.bg} ${ts.text} ${ts.border}`}>{fb.category}</span>
+                    <span className={`text-xs font-medium px-2 py-0.5 rounded-full border flex items-center gap-1 ${ss.bg} ${ss.text} ${ss.border}`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${ss.dot}`}></span>{fb.status}
+                    </span>
+                    <span className="text-xs text-gray-400 ml-auto">{fb.reportTime.slice(5)}</span>
+                  </div>
+                  <p className="text-sm text-gray-700 mb-1.5 line-clamp-2 leading-snug">{fb.content}</p>
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <span className="flex items-center gap-1 text-xs text-gray-400">
+                      <User size={11} color="#9ca3af" />{fb.userName}
+                    </span>
+                    <span className="flex items-center gap-1 text-xs text-gray-400">
+                      <Building2 size={11} color="#9ca3af" />{fb.community}
+                    </span>
+                    <span className="flex items-center gap-1 text-xs text-gray-400">
+                      <MapPin size={11} color="#9ca3af" />{fb.address}
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      );
+    };
+
+    const VisitInspectModal = ({ feedback, onClose, onSubmit }) => {
+      const [siteSituation, setSiteSituation] = useState('');
+      const [resolution, setResolution] = useState('');
+      const [photos, setPhotos] = useState([]);
+      const [resolveType, setResolveType] = useState('现场已解决');
+      const [woNote, setWoNote] = useState('');
+      const photoInputRef = useRef(null);
+
+      const canSubmit = siteSituation.trim().length > 0
+        && resolution.trim().length > 0
+        && (resolveType === '现场已解决' || woNote.trim().length > 0);
+
+      const handleAddPhotos = (e) => {
+        const files = Array.from(e.target.files || []);
+        const remain = 3 - photos.length;
+        if (remain <= 0) return;
+        const added = files.slice(0, remain).map(file => ({
+          id: `${Date.now()}-${Math.random()}`,
+          url: URL.createObjectURL(file),
+        }));
+        setPhotos(prev => [...prev, ...added]);
+        e.target.value = '';
+      };
+
+      const handleRemovePhoto = (id) => {
+        setPhotos(prev => {
+          const target = prev.find(p => p.id === id);
+          if (target?.url) URL.revokeObjectURL(target.url);
+          return prev.filter(p => p.id !== id);
+        });
+      };
+
+      return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-6 py-8" onClick={onClose}>
+          <div className="w-[88%] max-w-[320px] max-h-[calc(100vh-4rem)] overflow-y-auto bg-white rounded-2xl shadow-xl px-4 pt-5 pb-5 flex flex-col gap-0" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-base font-semibold text-gray-800">填写上门检查</h3>
+              <button onClick={onClose} className="text-gray-400 text-sm">取消</button>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-3 mb-4">
+              <p className="text-xs text-gray-400 mb-1">用户信息</p>
+              <p className="text-sm font-medium text-gray-700">{feedback.userName} · {feedback.community}</p>
+              <p className="text-xs text-gray-500 mt-0.5">{feedback.address}</p>
+            </div>
+
+            <label className="text-xs text-gray-500 font-medium mb-1.5 block">现场情况 <span className="text-red-400">*</span></label>
+            <textarea
+              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-blue-400 resize-none mb-2"
+              rows={3}
+              placeholder="请描述现场检查情况、发现的问题…"
+              value={siteSituation}
+              onChange={e => setSiteSituation(e.target.value)}
+            />
+            <div className="mb-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs text-gray-400">现场照片（最多 3 张）</span>
+                <span className="text-xs text-gray-400">{photos.length}/3</span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {photos.map(photo => (
+                  <div key={photo.id} className="relative w-16 h-16 rounded-xl overflow-hidden border border-gray-200">
+                    <img src={photo.url} alt="现场照片" className="w-full h-full object-cover" />
+                    <button type="button" onClick={() => handleRemovePhoto(photo.id)}
+                      className="absolute top-0.5 right-0.5 w-5 h-5 bg-black/50 rounded-full flex items-center justify-center">
+                      <X size={10} color="white" />
+                    </button>
+                  </div>
+                ))}
+                {photos.length < 3 && (
+                  <button type="button" onClick={() => photoInputRef.current?.click()}
+                    className="w-16 h-16 rounded-xl border border-dashed border-gray-300 bg-gray-50 flex flex-col items-center justify-center gap-0.5 active:bg-gray-100">
+                    <Plus size={16} color="#9ca3af" />
+                    <span className="text-[10px] text-gray-400">添加</span>
+                  </button>
+                )}
+              </div>
+              <input ref={photoInputRef} type="file" accept="image/*" multiple className="hidden" onChange={handleAddPhotos} />
+            </div>
+
+            <label className="text-xs text-gray-500 font-medium mb-1.5 block">解决措施 <span className="text-red-400">*</span></label>
+            <textarea
+              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-blue-400 resize-none mb-4"
+              rows={3}
+              placeholder="请填写已采取或建议的处理措施…"
+              value={resolution}
+              onChange={e => setResolution(e.target.value)}
+            />
+
+            <p className="text-xs text-gray-500 font-medium mb-2">处理结果</p>
+            <div className="flex gap-2 mb-4">
+              {['现场已解决', '无法现场解决'].map(opt => (
+                <button key={opt} type="button" onClick={() => setResolveType(opt)}
+                  className={`flex-1 py-2.5 rounded-xl text-xs font-medium border transition-colors ${
+                    resolveType === opt
+                      ? opt === '现场已解决' ? 'bg-emerald-50 border-emerald-300 text-emerald-600' : 'bg-purple-50 border-purple-300 text-purple-600'
+                      : 'border-gray-200 text-gray-500'
+                  }`}>{opt}</button>
+              ))}
+            </div>
+            {resolveType === '无法现场解决' && (
+              <>
+                <label className="text-xs text-gray-500 font-medium mb-1.5 block">工单说明 <span className="text-red-400">*</span></label>
+                <textarea
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-blue-400 resize-none mb-2"
+                  rows={2}
+                  placeholder="说明需后续处理的问题及建议措施，将同步至 Web 管理平台…"
+                  value={woNote}
+                  onChange={e => setWoNote(e.target.value)}
+                />
+              </>
+            )}
+            <button type="button" disabled={!canSubmit}
+              onClick={() => onSubmit({
+                siteSituation: siteSituation.trim(),
+                resolution: resolution.trim(),
+                photos: photos.map(p => ({ id: p.id, url: p.url })),
+                resolveType,
+                woNote: woNote.trim(),
+              })}
+              className={`w-full py-3 rounded-xl text-sm font-semibold transition-colors ${
+                canSubmit ? 'bg-blue-600 text-white active:bg-blue-700' : 'bg-gray-100 text-gray-400'
+              }`}>
+              {resolveType === '现场已解决' ? '确认，提交待回访' : '提交工单至管理平台'}
+            </button>
+          </div>
+        </div>
+      );
+    };
+
+    const FollowUpModal = ({ feedback, onClose, onSubmit }) => {
+      const [result, setResult] = useState('已解决');
+      const [method, setMethod] = useState('电话');
+      const [userFeedback, setUserFeedback] = useState('');
+
+      const canSubmit = userFeedback.trim().length > 0;
+
+      return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-6 py-8" onClick={onClose}>
+          <div className="w-[88%] max-w-[320px] max-h-[calc(100vh-4rem)] overflow-y-auto bg-white rounded-2xl shadow-xl px-4 pt-5 pb-5" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-base font-semibold text-gray-800">用户回访</h3>
+              <button onClick={onClose} className="text-gray-400 text-sm">取消</button>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-3 mb-4">
+              <p className="text-xs text-gray-400 mb-1">回访对象</p>
+              <p className="text-sm font-medium text-gray-700">{feedback.userName} · {feedback.phone}</p>
+              <p className="text-xs text-gray-500 mt-0.5">{feedback.community} {feedback.address}</p>
+            </div>
+
+            <p className="text-xs text-gray-500 font-medium mb-2">回访结果 <span className="text-red-400">*</span></p>
+            <div className="flex gap-2 mb-4">
+              {['已解决', '未解决'].map(opt => (
+                <button key={opt} type="button" onClick={() => setResult(opt)}
+                  className={`flex-1 py-2.5 rounded-xl text-xs font-medium border transition-colors ${
+                    result === opt
+                      ? opt === '已解决' ? 'bg-emerald-50 border-emerald-300 text-emerald-600' : 'bg-red-50 border-red-300 text-red-600'
+                      : 'border-gray-200 text-gray-500'
+                  }`}>{opt}</button>
+              ))}
+            </div>
+
+            <p className="text-xs text-gray-500 font-medium mb-2">回访方式 <span className="text-red-400">*</span></p>
+            <div className="flex gap-2 mb-4">
+              {['电话', '微信', '上门'].map(opt => (
+                <button key={opt} type="button" onClick={() => setMethod(opt)}
+                  className={`flex-1 py-2.5 rounded-xl text-xs font-medium border transition-colors ${
+                    method === opt ? 'bg-blue-50 border-blue-300 text-blue-600' : 'border-gray-200 text-gray-500'
+                  }`}>{opt}</button>
+              ))}
+            </div>
+
+            <label className="text-xs text-gray-500 font-medium mb-1.5 block">用户反馈内容 <span className="text-red-400">*</span></label>
+            <textarea
+              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-blue-400 resize-none mb-2"
+              rows={3}
+              placeholder={result === '未解决' ? '请记录用户反馈的具体问题，后续将据此生成工单…' : '请记录用户回访时的反馈内容…'}
+              value={userFeedback}
+              onChange={e => setUserFeedback(e.target.value)}
+            />
+            {result === '未解决' && (
+              <p className="text-xs text-amber-600 bg-amber-50 rounded-lg px-3 py-2 mb-4 leading-relaxed">
+                回访未通过后，需单独填写工单信息并提交至 Web 管理平台。
+              </p>
+            )}
+            {result !== '未解决' && (
+              <p className="text-xs text-gray-400 mb-4 leading-relaxed">回访可在运维小程序或 Web 管理端录入，状态自动同步。</p>
+            )}
+
+            <button type="button" disabled={!canSubmit}
+              onClick={() => onSubmit({ result, method, userFeedback: userFeedback.trim() })}
+              className={`w-full py-3 rounded-xl text-sm font-semibold transition-colors ${
+                canSubmit ? 'bg-blue-600 text-white active:bg-blue-700' : 'bg-gray-100 text-gray-400'
+              }`}>
+              提交回访结果
+            </button>
+          </div>
+        </div>
+      );
+    };
+
+    const CreateWorkOrderModal = ({ feedback, onClose, onSubmit }) => {
+      const lastFailedFollowUp = [...(feedback.followUpHistory || [])].reverse()
+        .find(r => r.result === '未解决') || feedback.followUp;
+      const [title, setTitle] = useState(`${feedback.community}${feedback.category}跟进处理`);
+      const [description, setDescription] = useState(lastFailedFollowUp?.userFeedback || '');
+
+      const canSubmit = title.trim().length > 0 && description.trim().length > 0;
+
+      return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-6 py-8" onClick={onClose}>
+          <div className="w-[88%] max-w-[320px] max-h-[calc(100vh-4rem)] overflow-y-auto bg-white rounded-2xl shadow-xl px-4 pt-5 pb-5" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-base font-semibold text-gray-800">生成工单</h3>
+              <button onClick={onClose} className="text-gray-400 text-sm">取消</button>
+            </div>
+            <div className="bg-red-50 border border-red-100 rounded-xl p-3 mb-4">
+              <p className="text-xs text-red-600 leading-relaxed">
+                回访未通过，请根据用户反馈的具体问题填写工单，提交后将同步至 Web 管理平台由管理员派发。
+              </p>
+            </div>
+            {lastFailedFollowUp && (
+              <div className="bg-gray-50 rounded-xl p-3 mb-4">
+                <p className="text-xs text-gray-400 mb-1">用户回访反馈（第 {lastFailedFollowUp.round || feedback.followUpFailCount} 次）</p>
+                <p className="text-sm text-gray-700 leading-relaxed">{lastFailedFollowUp.userFeedback}</p>
+              </div>
+            )}
+            <label className="text-xs text-gray-500 font-medium mb-1.5 block">工单标题 <span className="text-red-400">*</span></label>
+            <input
+              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-blue-400 mb-4"
+              value={title}
+              onChange={e => setTitle(e.target.value)}
+            />
+            <label className="text-xs text-gray-500 font-medium mb-1.5 block">工单说明 <span className="text-red-400">*</span></label>
+            <textarea
+              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-blue-400 resize-none mb-4"
+              rows={4}
+              placeholder="说明需处理的问题及建议措施…"
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+            />
+            <button type="button" disabled={!canSubmit}
+              onClick={() => onSubmit({ title: title.trim(), description: description.trim() })}
+              className={`w-full py-3 rounded-xl text-sm font-semibold transition-colors ${
+                canSubmit ? 'bg-blue-600 text-white active:bg-blue-700' : 'bg-gray-100 text-gray-400'
+              }`}>
+              提交工单至管理平台
+            </button>
+          </div>
+        </div>
+      );
+    };
+
+    const FeedbackDetailPage = ({ feedback, setFeedbacks, onBack }) => {
+      const [showVisit, setShowVisit] = useState(false);
+      const [showFollowUp, setShowFollowUp] = useState(false);
+      const [showCreateWo, setShowCreateWo] = useState(false);
+
+      const ts = 反馈类型样式[feedback.category] || 反馈类型样式['水压异常'];
+      const ss = 反馈状态样式[feedback.status] || 反馈状态样式['待处理'];
+      const followUpRecords = 获取回访记录列表(feedback);
+      const needsCreateWo = 反馈处理中待建工单(feedback);
+      const woInProgress = 反馈处理中工单进行中(feedback);
+      const awaitingDispatch = feedback.status === '已提交工单';
+
+      const 工单状态标签 = (wo) => {
+        if (wo.status === '已转Web') return { text: '已转 Web 管理平台', cls: 'bg-slate-50 text-slate-600' };
+        if (wo.status === '已提交') return { text: '已提交至管理平台', cls: 'bg-slate-50 text-slate-600' };
+        if (wo.status === '处理中') return { text: '处理中', cls: 'bg-blue-50 text-blue-600' };
+        return { text: '已完成', cls: 'bg-emerald-50 text-emerald-600' };
+      };
+
+      const handleVisitSubmit = ({ siteSituation, resolution, photos, resolveType, woNote }) => {
+        const tsNow = 反馈时间戳();
+        const visitBase = {
+          visitTime: tsNow,
+          inspector: '张运维',
+          siteSituation,
+          resolution,
+          photos: photos || [],
+        };
+        if (resolveType === '现场已解决') {
+          setFeedbacks(prev => prev.map(f => f.id === feedback.id ? {
+            ...f, status: '待回访', closurePath: 'A', assignee: '张运维', acceptTime: tsNow,
+            followUpFailCount: 0, followUpHistory: [], workOrderHistory: f.workOrderHistory || [],
+            visit: { ...visitBase, canResolve: true },
+            followUp: null, workOrder: null,
+            timeline: [...f.timeline,
+              { time: tsNow, actor: '张运维', action: '上门检查完成，现场已处理' },
+              { time: tsNow, actor: '张运维', action: '等待用户回访确认' },
+            ],
+          } : f));
+        } else {
+          const woId = 'WO' + Date.now();
+          setFeedbacks(prev => prev.map(f => f.id === feedback.id ? {
+            ...f, status: '已完成', closurePath: 'B', assignee: '张运维', acceptTime: tsNow,
+            followUpFailCount: 0, followUpHistory: [], workOrderHistory: [],
+            visit: { ...visitBase, canResolve: false },
+            workOrder: {
+              id: woId,
+              title: `${f.community}${f.category}处理`,
+              description: `现场情况：${siteSituation}\n\n解决措施：${resolution}\n\n工单补充：${woNote}`,
+              createdAt: tsNow, status: '已转Web', phase: 'transferred',
+            },
+            timeline: [...f.timeline,
+              { time: tsNow, actor: '张运维', action: '完成上门检查，无法现场解决' },
+              { time: tsNow, actor: '张运维', action: `提交工单 ${woId} 至管理平台` },
+              { time: tsNow, actor: '系统', action: '小程序反馈已结案，后续由 Web 管理平台跟踪' },
+            ],
+          } : f));
+          setShowVisit(false);
+          return;
+        }
+        setShowVisit(false);
+      };
+
+      const handleFollowUpSubmit = ({ result, method, userFeedback }) => {
+        const tsNow = 反馈时间戳();
+        const round = (feedback.followUpHistory?.length || 0) + 1;
+        const followUpRecord = {
+          time: tsNow, operator: '张运维', source: '小程序',
+          result, method, userFeedback, round,
+        };
+        if (result === '已解决') {
+          setFeedbacks(prev => prev.map(f => f.id === feedback.id ? {
+            ...f, status: '已完成',
+            followUp: followUpRecord,
+            followUpHistory: [...(f.followUpHistory || []), followUpRecord],
+            timeline: [...f.timeline, { time: tsNow, actor: '张运维', action: '用户回访确认：问题已解决' }],
+          } : f));
+        } else {
+          const newFailCount = (feedback.followUpFailCount || 0) + 1;
+          if (newFailCount >= 2) {
+            setFeedbacks(prev => prev.map(f => f.id === feedback.id ? {
+              ...f, status: '已升级',
+              followUpFailCount: newFailCount,
+              followUp: followUpRecord,
+              followUpHistory: [...(f.followUpHistory || []), followUpRecord],
+              escalated: true, escalatedAt: tsNow,
+              escalatedReason: '第2次回访未通过，已升级管理员人工介入',
+              timeline: [...f.timeline,
+                { time: tsNow, actor: '张运维', action: '用户回访未通过：问题未解决' },
+                { time: tsNow, actor: '系统', action: '第2次回访未通过，已升级管理员人工介入' },
+              ],
+            } : f));
+          } else {
+            setFeedbacks(prev => prev.map(f => f.id === feedback.id ? {
+              ...f, status: '处理中', closurePath: 'A',
+              followUpFailCount: newFailCount,
+              followUp: followUpRecord,
+              followUpHistory: [...(f.followUpHistory || []), followUpRecord],
+              timeline: [...f.timeline, { time: tsNow, actor: '张运维', action: '用户回访未通过：问题未解决' }],
+            } : f));
+          }
+        }
+        setShowFollowUp(false);
+      };
+
+      const handleCreateWorkOrderSubmit = ({ title, description }) => {
+        const tsNow = 反馈时间戳();
+        const woId = 'WO' + Date.now();
+        setFeedbacks(prev => prev.map(f => {
+          if (f.id !== feedback.id) return f;
+          const workOrderHistory = [...(f.workOrderHistory || [])];
+          if (f.workOrder) {
+            workOrderHistory.push({ ...f.workOrder, archivedAt: tsNow });
+          }
+          return {
+            ...f, status: '已提交工单',
+            workOrderHistory,
+            workOrder: {
+              id: woId, title, description,
+              createdAt: tsNow, status: '已提交', phase: 'submitted', source: '回访跟进',
+            },
+            timeline: [...f.timeline, { time: tsNow, actor: '张运维', action: `回访跟进，提交工单 ${woId} 至管理平台` }],
+          };
+        }));
+        setShowCreateWo(false);
+      };
+
+      const handleSimulateDispatch = () => {
+        const tsNow = 反馈时间戳();
+        setFeedbacks(prev => prev.map(f => f.id === feedback.id ? {
+          ...f, status: '处理中',
+          workOrder: {
+            ...f.workOrder, status: '处理中', phase: 'dispatched',
+            assignee: '李运维', dispatchBy: '管理员', dispatchTime: tsNow,
+          },
+          timeline: [...f.timeline, { time: tsNow, actor: '管理平台', action: '管理员派发工单给 李运维' }],
+        } : f));
+      };
+
+      const handleSimulateWoComplete = () => {
+        const tsNow = 反馈时间戳();
+        setFeedbacks(prev => prev.map(f => {
+          if (f.id !== feedback.id) return f;
+          const completedWo = {
+            ...f.workOrder,
+            status: '已完成', phase: 'done',
+            completeTime: tsNow,
+            completeNote: '工单处理完成，等待用户回访确认。',
+          };
+          return {
+            ...f, status: '待回访',
+            workOrder: completedWo,
+            timeline: [...f.timeline,
+              { time: tsNow, actor: f.workOrder?.assignee || '李运维', action: '工单处理完成' },
+              { time: tsNow, actor: '系统', action: '等待用户回访确认' },
+            ],
+          };
+        }));
+      };
+
+      const renderWorkOrderCard = (wo, label) => {
+        const woLabel = 工单状态标签(wo);
+        return (
+          <div key={wo.id} className="bg-white rounded-2xl p-4">
+            <div className="flex items-center gap-2 mb-3">
+              <ClipboardList size={15} color="#64748b" />
+              <span className="text-sm font-semibold text-gray-700">{label || '关联工单'}</span>
+              <span className={`text-xs font-medium px-2 py-0.5 rounded-full ml-auto ${woLabel.cls}`}>{woLabel.text}</span>
+            </div>
+            <div className="flex flex-col gap-2 text-sm">
+              <div className="flex justify-between"><span className="text-gray-400">工单编号</span><span className="text-gray-900 font-medium">{wo.id}</span></div>
+              <div className="flex justify-between"><span className="text-gray-400">工单标题</span><span className="text-gray-900">{wo.title}</span></div>
+              <div><span className="text-gray-400 text-xs">工单说明</span><p className="text-gray-600 text-sm mt-1 leading-relaxed">{wo.description}</p></div>
+              {wo.source === '回访跟进' && (
+                <p className="text-xs text-blue-500 bg-blue-50 rounded-lg px-2 py-1.5">来源：回访未通过后生成</p>
+              )}
+              {wo.status === '已提交' && feedback.closurePath === 'A' && (
+                <div className="bg-slate-50 rounded-xl p-3 mt-1">
+                  <p className="text-xs text-slate-500 leading-relaxed mb-2">工单已上传至 Web 管理平台，等待管理员审核派发。</p>
+                  <button type="button" onClick={handleSimulateDispatch}
+                    className="text-xs text-blue-600 font-medium active:opacity-70">模拟：管理员已派发（演示）</button>
+                </div>
+              )}
+              {wo.status === '处理中' && feedback.closurePath === 'A' && (
+                <div className="bg-blue-50 rounded-xl p-3 mt-1">
+                  <p className="text-xs text-blue-600 leading-relaxed mb-2">工单处理中，完成后将自动进入用户回访环节。</p>
+                  {wo.assignee && (
+                    <p className="text-xs text-gray-500 mb-2">处理人员：{wo.assignee}</p>
+                  )}
+                  <button type="button" onClick={handleSimulateWoComplete}
+                    className="text-xs text-blue-600 font-medium active:opacity-70">模拟：工单处理完成（演示）</button>
+                </div>
+              )}
+              {wo.status === '已转Web' && (
+                <div className="bg-slate-50 rounded-xl p-3 mt-1">
+                  <p className="text-xs text-slate-500 leading-relaxed">工单已转 Web 管理平台，小程序反馈已结案，后续处理请在 Web 端查看。</p>
+                </div>
+              )}
+              {wo.assignee && wo.status !== '已转Web' && (
+                <div className="flex justify-between"><span className="text-gray-400">处理人员</span><span className="text-gray-700">{wo.assignee}</span></div>
+              )}
+              {wo.dispatchTime && (
+                <div className="flex justify-between"><span className="text-gray-400">派发时间</span><span className="text-gray-700">{wo.dispatchTime}</span></div>
+              )}
+              {wo.completeNote && (
+                <div className="bg-emerald-50 rounded-xl p-3 mt-1">
+                  <p className="text-xs text-gray-400 mb-1">处理结果</p>
+                  <p className="text-sm text-emerald-700">{wo.completeNote}</p>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      };
+
+      return (
+        <div className="flex flex-col min-h-screen bg-gray-100 pb-24">
+          <div className="bg-blue-600 px-4 pt-10 pb-4 sticky top-0 z-20">
+            <div className="flex items-center gap-3">
+              <button onClick={onBack} className="w-8 h-8 flex items-center justify-center rounded-full active:bg-blue-500">
+                <ArrowLeft size={22} color="white" />
+              </button>
+              <span className="flex-1 text-white text-base font-semibold">反馈详情</span>
+              <span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${ss.bg} ${ss.text} ${ss.border}`}>{feedback.status}</span>
+            </div>
+          </div>
+
+          <div className="flex-1 p-4 flex flex-col gap-4">
+            {/* 用户上报信息 */}
+            <div className="bg-white rounded-2xl p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <span className={`text-xs font-medium px-2 py-0.5 rounded-full border ${ts.bg} ${ts.text} ${ts.border}`}>{feedback.category}</span>
+                <span className="text-xs text-gray-400 ml-auto">{feedback.reportTime}</span>
+              </div>
+              <p className="text-sm text-gray-700 leading-relaxed mb-4">{feedback.content}</p>
+              <div className="border-t border-gray-100 pt-3 flex flex-col gap-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <User size={14} color="#9ca3af" />
+                  <span className="text-gray-600">{feedback.userName}</span>
+                  <span className="text-gray-300">|</span>
+                  <Phone size={14} color="#9ca3af" />
+                  <span className="text-gray-600">{feedback.phone}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Building2 size={14} color="#9ca3af" />
+                  <span className="text-gray-600">{feedback.community}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <MapPin size={14} color="#9ca3af" />
+                  <span className="text-gray-600">{feedback.address}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* 上门检查记录 */}
+            {feedback.visit && (
+              <div className="bg-white rounded-2xl p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <Wrench size={15} color="#3b82f6" />
+                  <span className="text-sm font-semibold text-gray-700">上门检查</span>
+                  <span className="text-xs text-gray-400 ml-auto">{feedback.visit.visitTime}</span>
+                </div>
+                <div className="bg-blue-50 rounded-xl p-3 mb-2 flex flex-col gap-3">
+                  <p className="text-xs text-gray-400">检查人员：{feedback.visit.inspector}</p>
+                  <div>
+                    <p className="text-xs text-gray-400 mb-1">现场情况</p>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      {feedback.visit.siteSituation || feedback.visit.content}
+                    </p>
+                  </div>
+                  {(feedback.visit.photos || []).length > 0 && (
+                    <div>
+                      <p className="text-xs text-gray-400 mb-2">现场照片</p>
+                      <div className="flex flex-wrap gap-2">
+                        {feedback.visit.photos.map(photo => (
+                          <img key={photo.id} src={photo.url} alt="现场照片"
+                            className="w-16 h-16 rounded-lg object-cover border border-blue-100" />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  <div>
+                    <p className="text-xs text-gray-400 mb-1">解决措施</p>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      {feedback.visit.resolution || '—'}
+                    </p>
+                  </div>
+                </div>
+                <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+                  feedback.visit.canResolve ? 'bg-blue-50 text-blue-600' : 'bg-slate-50 text-slate-600'
+                }`}>
+                  {feedback.visit.canResolve
+                    ? '现场已处理，待用户回访'
+                    : feedback.closurePath === 'B'
+                      ? '无法现场解决，已转 Web 管理平台'
+                      : '无法现场解决，已提交至管理平台'}
+                </span>
+              </div>
+            )}
+
+            {needsCreateWo && (
+              <div className="bg-amber-50 border border-amber-100 rounded-2xl p-4">
+                <p className="text-sm font-medium text-amber-700 mb-1">待生成工单</p>
+                <p className="text-xs text-amber-600 leading-relaxed">
+                  回访未通过，请根据用户反馈的具体问题生成工单并提交至 Web 管理平台。
+                </p>
+              </div>
+            )}
+
+            {/* 回访记录 */}
+            {followUpRecords.length > 0 && (
+              <div className="bg-white rounded-2xl p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <Phone size={15} color="#3b82f6" />
+                  <span className="text-sm font-semibold text-gray-700">用户回访</span>
+                  <span className="text-xs text-gray-400 ml-auto">共 {followUpRecords.length} 次</span>
+                </div>
+                <div className="flex flex-col gap-3">
+                  {followUpRecords.map((record, idx) => (
+                    <div key={idx} className="bg-gray-50 rounded-xl p-3 flex flex-col gap-2 text-sm">
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs font-medium text-gray-500">第 {record.round || idx + 1} 次回访</span>
+                        <span className="text-xs text-gray-400">{record.time}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">回访结果</span>
+                        <span className={record.result === '已解决' ? 'text-emerald-600 font-medium' : 'text-red-600 font-medium'}>
+                          {record.result}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">回访方式</span>
+                        <span className="text-gray-700">{record.method}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400">回访人员</span>
+                        <span className="text-gray-700">{record.operator}</span>
+                      </div>
+                      <div>
+                        <p className="text-xs text-gray-400 mb-1">用户反馈内容</p>
+                        <p className="text-sm text-gray-700 leading-relaxed">{record.userFeedback}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {feedback.status === '已升级' && (
+              <div className="bg-orange-50 border border-orange-100 rounded-2xl p-4">
+                <p className="text-sm font-medium text-orange-700 mb-1">已升级管理员介入</p>
+                <p className="text-xs text-orange-600 leading-relaxed">
+                  {feedback.escalatedReason || '累计2次回访未通过，已升级至 Web 管理端由管理员人工介入处理，小程序端只读。'}
+                </p>
+              </div>
+            )}
+
+            {feedback.closurePath === 'B' && feedback.status === '已完成' && (
+              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4">
+                <p className="text-sm font-medium text-slate-700 mb-1">小程序反馈已结案</p>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  工单已转 Web 管理平台，后续处理与跟踪请在 Web 端进行，无需用户回访。
+                </p>
+              </div>
+            )}
+
+            {/* 当前工单 */}
+            {feedback.workOrder && renderWorkOrderCard(feedback.workOrder)}
+
+            {/* 历史工单 */}
+            {(feedback.workOrderHistory || []).map((wo, i) => renderWorkOrderCard(wo, `历史工单 ${i + 1}`))}
+
+            {/* 处理进度 */}
+            <div className="bg-white rounded-2xl p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <Clock size={15} color="#6b7280" />
+                <span className="text-sm font-semibold text-gray-700">处理进度</span>
+              </div>
+              <div className="flex flex-col gap-0">
+                {feedback.timeline.map((item, i) => (
+                  <div key={i} className="flex gap-3">
+                    <div className="flex flex-col items-center">
+                      <div className={`w-2 h-2 rounded-full mt-1.5 ${i === feedback.timeline.length - 1 ? 'bg-blue-500' : 'bg-gray-300'}`}></div>
+                      {i < feedback.timeline.length - 1 && <div className="w-px flex-1 bg-gray-200 my-1"></div>}
+                    </div>
+                    <div className="pb-4">
+                      <p className="text-sm text-gray-700">{item.action}</p>
+                      <p className="text-xs text-gray-400 mt-0.5">{item.actor} · {item.time}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* 底部操作栏 */}
+          {(feedback.status === '待处理' || feedback.status === '待回访' || needsCreateWo) && (
+            <div className="fixed bottom-0 left-0 right-0 max-w-sm mx-auto bg-white border-t border-gray-100 px-4 py-3 flex gap-2">
+              {feedback.status === '待处理' && (
+                <button type="button" onClick={() => setShowVisit(true)}
+                  className="flex-1 py-3 rounded-xl bg-blue-600 text-white text-sm font-semibold active:bg-blue-700">
+                  填写上门检查
+                </button>
+              )}
+              {feedback.status === '待回访' && (
+                <button type="button" onClick={() => setShowFollowUp(true)}
+                  className="flex-1 py-3 rounded-xl bg-blue-600 text-white text-sm font-semibold active:bg-blue-700">
+                  用户回访
+                </button>
+              )}
+              {needsCreateWo && (
+                <button type="button" onClick={() => setShowCreateWo(true)}
+                  className="flex-1 py-3 rounded-xl bg-blue-600 text-white text-sm font-semibold active:bg-blue-700">
+                  生成工单
+                </button>
+              )}
+            </div>
+          )}
+
+          {(awaitingDispatch || woInProgress) && (
+            <div className="fixed bottom-0 left-0 right-0 max-w-sm mx-auto bg-white border-t border-gray-100 px-4 py-3">
+              <p className="text-xs text-center text-gray-400">
+                {awaitingDispatch ? '等待 Web 管理平台管理员派发工单' : '工单处理中，完成后将进入用户回访'}
+              </p>
+            </div>
+          )}
+
+          {showVisit && (
+            <VisitInspectModal feedback={feedback} onClose={() => setShowVisit(false)} onSubmit={handleVisitSubmit} />
+          )}
+          {showFollowUp && (
+            <FollowUpModal feedback={feedback} onClose={() => setShowFollowUp(false)} onSubmit={handleFollowUpSubmit} />
+          )}
+          {showCreateWo && (
+            <CreateWorkOrderModal feedback={feedback} onClose={() => setShowCreateWo(false)} onSubmit={handleCreateWorkOrderSubmit} />
+          )}
+        </div>
+      );
+    };
+
+    /* ════════════════════════════════════════
        维保管理数据与组件
     ════════════════════════════════════════ */
     const 初始维保计划数据 = [
       { id:'MP001', title:'锦绣花园净水机季度保养',     type:'预防性维保', status:'待执行', community:'锦绣花园',   deviceType:'净水机', device:'净水设备 A01', assignee:'张运维', planDate:'2026-04-25', content:['滤芯更换','管路清洗','阀门功能检测','出水水质测试'], remark:'携带备用 RO 膜一套。' },
-      { id:'MP002', title:'翡翠湾软水机故障维修',       type:'纠正性维保', status:'进行中', community:'翡翠湾小区', deviceType:'软水机', device:'软水设备 B03', assignee:'李运维', planDate:'2026-04-16', content:['故障排查','进水阀更换','软化程序调试','系统运行验证'], remark:'进水压力异常停机，已备好备件。' },
+      { id:'MP002', title:'翡翠湾软水机故障维修',       type:'纠正性维保', status:'进行中', community:'翡翠湾小区', deviceType:'软水机', device:'软水设备 B03', assignee:'李运维', planDate:'2026-04-16', startTime:'2026-04-16 09:30', content:['故障排查','进水阀更换','软化程序调试','系统运行验证'], remark:'进水压力异常停机，已备好备件。' },
       { id:'MP003', title:'阳光丽景管线机滤芯更换',     type:'预防性维保', status:'已完成', community:'阳光丽景', deviceType:'管线机', device:'管线设备 D02', assignee:'张运维', planDate:'2026-04-08', content:['复合滤芯更换','出水嘴清洁','加热功能测试','水质检测'], remark:'滤芯寿命达到更换周期。' },
       { id:'MP004', title:'华悦府直饮机电路维修',       type:'纠正性维保', status:'待执行', community:'华悦府',   deviceType:'直饮机', device:'直饮设备 E01', assignee:'王运维', planDate:'2026-04-22', content:['主控板检测','供电线路排查','保护电路测试','功能恢复验证'], remark:'供电异常，需电工配合。' },
       { id:'MP005', title:'紫荆花园净水机年度大修',     type:'预防性维保', status:'待执行', community:'紫荆花园', deviceType:'净水机', device:'净水设备系列', assignee:'赵运维', planDate:'2026-05-05', content:['全套滤芯更换','内胆消毒清洗','压力容器检测','电气全面检查','水质综合检测'], remark:'年度大修，预计停机 4 小时。' },
@@ -4323,21 +5510,16 @@
     ];
 
     const 维保记录数据 = [
-      { id:'MR001', title:'翡翠湾软水机控制阀更换',   type:'纠正性维保', community:'翡翠湾小区', deviceType:'软水机', device:'软水设备 B03', assignee:'李运维', date:'2026-04-10', duration:'3.5 小时', content:['控制阀密封圈更换','进水电磁阀更换','软化盐补充 20kg','再生程序调试'], cost:480, result:'设备恢复正常运行', remark:'更换后 TDS 值降至 38 ppm，运行稳定。' },
-      { id:'MR002', title:'阳光丽景管线机滤芯更换',   type:'预防性维保', community:'阳光丽景', deviceType:'管线机', device:'管线设备 D02', assignee:'张运维', date:'2026-04-08', duration:'1 小时', content:['复合滤芯更换','出水嘴深度清洁','热饮温度校准'], cost:120, result:'水质恢复标准，设备运行正常', remark:'更换后出水 TDS 35 ppm，符合标准。' },
-      { id:'MR003', title:'锦绣花园直饮机通信模块更换',type:'紧急维保',   community:'锦绣花园',   deviceType:'直饮机', device:'直饮设备 B01', assignee:'张运维', date:'2026-04-12', duration:'2 小时', content:['旧模块拆除','4G 通信模块安装','SIM 卡配置','数据上报联调'], cost:280, result:'通信恢复正常，数据稳定上报', remark:'更换后信号强度 -78 dBm，数据上报延迟 < 5 秒。' },
-      { id:'MR004', title:'翡翠湾净水机例行保养',     type:'预防性维保', community:'翡翠湾小区', deviceType:'净水机', device:'净水设备 C01', assignee:'李运维', date:'2026-03-20', duration:'2.5 小时', content:['PP 棉更换','活性炭滤芯更换','RO 膜状态检测','水压调节至 0.28 MPa'], cost:180, result:'各项参数正常，水质达标', remark:'本次保养费用含配件，RO 膜状态良好未更换。' },
-      { id:'MR005', title:'紫荆花园软水机软化盐补充', type:'预防性维保', community:'紫荆花园', deviceType:'软水机', device:'软水设备 G02', assignee:'赵运维', date:'2026-04-10', duration:'1 小时', content:['软化盐补充 25kg','盐箱清洁','再生程序手动触发','出水软化度检测'], cost:80, result:'软化效果恢复正常', remark:'补充后 TDS 降至 42 ppm。' },
-      { id:'MR006', title:'华悦府净水机压力容器检测', type:'预防性维保', community:'华悦府',   deviceType:'净水机', device:'净水设备 D05', assignee:'王运维', date:'2026-03-15', duration:'2 小时', content:['压力容器外观检查','工作压力测试','安全阀校验','压力表标定'], cost:200, result:'压力容器状态良好，安全阀动作正常', remark:'检测合格，建议下次检测周期 12 个月。' },
-      { id:'MR007', title:'锦绣花园净水机管路检漏',   type:'预防性维保', community:'锦绣花园',   deviceType:'净水机', device:'净水设备 A01', assignee:'张运维', date:'2026-03-05', duration:'1.5 小时', content:['管路接头全面检查','渗漏点处理','密封件更换','压力保压测试'], cost:60, result:'管路无渗漏，密封良好', remark:'发现 2 处微渗漏，已更换密封圈。' },
-      { id:'MR008', title:'阳光丽景直饮机温控维修',   type:'纠正性维保', community:'阳光丽景', deviceType:'直饮机', device:'直饮设备系列', assignee:'张运维', date:'2026-04-12', duration:'2.5 小时', content:['温控模块检测','温度传感器更换','加热电路维修','出水温度标定'], cost:320, result:'热饮出水温度稳定在 82°C', remark:'更换温控传感器后，温度控制精度 ±1°C。' },
+      { id:'MR001', title:'翡翠湾软水机控制阀更换',   community:'翡翠湾小区', deviceType:'软水机', device:'软水设备 B03', assignee:'李运维', date:'2026-04-10', content:['控制阀密封圈更换','进水电磁阀更换','软化盐补充 20kg','再生程序调试'], result:'设备恢复正常运行', remark:'更换后 TDS 值降至 38 ppm，运行稳定。' },
+      { id:'MR002', title:'阳光丽景管线机滤芯更换',   community:'阳光丽景', deviceType:'管线机', device:'管线设备 D02', assignee:'张运维', date:'2026-04-08', content:['复合滤芯更换','出水嘴深度清洁','热饮温度校准'], result:'水质恢复标准，设备运行正常', remark:'更换后出水 TDS 35 ppm，符合标准。' },
+      { id:'MR003', title:'锦绣花园直饮机通信模块更换', community:'锦绣花园',   deviceType:'直饮机', device:'直饮设备 B01', assignee:'张运维', date:'2026-04-12', content:['旧模块拆除','4G 通信模块安装','SIM 卡配置','数据上报联调'], result:'通信恢复正常，数据稳定上报', remark:'更换后信号强度 -78 dBm，数据上报延迟 < 5 秒。' },
+      { id:'MR004', title:'翡翠湾净水机例行保养',     community:'翡翠湾小区', deviceType:'净水机', device:'净水设备 C01', assignee:'李运维', date:'2026-03-20', content:['PP 棉更换','活性炭滤芯更换','RO 膜状态检测','水压调节至 0.28 MPa'], result:'各项参数正常，水质达标', remark:'RO 膜状态良好未更换。' },
+      { id:'MR005', title:'紫荆花园软水机软化盐补充', community:'紫荆花园', deviceType:'软水机', device:'软水设备 G02', assignee:'赵运维', date:'2026-04-10', content:['软化盐补充 25kg','盐箱清洁','再生程序手动触发','出水软化度检测'], result:'软化效果恢复正常', remark:'补充后 TDS 降至 42 ppm。' },
+      { id:'MR006', title:'华悦府净水机压力容器检测', community:'华悦府',   deviceType:'净水机', device:'净水设备 D05', assignee:'王运维', date:'2026-03-15', content:['压力容器外观检查','工作压力测试','安全阀校验','压力表标定'], result:'压力容器状态良好，安全阀动作正常', remark:'检测合格，建议下次检测周期 12 个月。' },
+      { id:'MR007', title:'锦绣花园净水机管路检漏',   community:'锦绣花园',   deviceType:'净水机', device:'净水设备 A01', assignee:'张运维', date:'2026-03-05', content:['管路接头全面检查','渗漏点处理','密封件更换','压力保压测试'], result:'管路无渗漏，密封良好', remark:'发现 2 处微渗漏，已更换密封圈。' },
+      { id:'MR008', title:'阳光丽景直饮机温控维修',   community:'阳光丽景', deviceType:'直饮机', device:'直饮设备系列', assignee:'张运维', date:'2026-04-12', content:['温控模块检测','温度传感器更换','加热电路维修','出水温度标定'], result:'热饮出水温度稳定在 82°C', remark:'更换温控传感器后，温度控制精度 ±1°C。' },
     ];
 
-    const 维保类型样式 = {
-      '预防性维保': { bg:'bg-blue-50',    text:'text-blue-600',    border:'border-blue-200'    },
-      '纠正性维保': { bg:'bg-orange-50',  text:'text-orange-600',  border:'border-orange-200'  },
-      '紧急维保':   { bg:'bg-red-50',     text:'text-red-600',     border:'border-red-200'     },
-    };
     const 维保计划状态样式 = {
       待执行: { bg:'bg-gray-50',    text:'text-gray-500',    border:'border-gray-200',    dot:'bg-gray-400'    },
       进行中: { bg:'bg-amber-50',   text:'text-amber-600',   border:'border-amber-200',   dot:'bg-amber-500'   },
@@ -4464,6 +5646,127 @@
       </div>
     );
 
+    /* 完成维保弹窗 */
+    const CompleteMaintModal = ({ plan, onClose, onDraft, onComplete }) => {
+      const draft = plan.execDraft || {};
+      const [checked, setChecked] = useState(() => new Set(draft.checkedItems || []));
+      const [result, setResult] = useState(draft.result || '');
+      const [remark, setRemark] = useState(draft.remark || '');
+      const [photos, setPhotos] = useState(draft.photos || []);
+      const photoInputRef = useRef(null);
+
+      const toggleItem = (item) => {
+        setChecked(prev => {
+          const next = new Set(prev);
+          if (next.has(item)) next.delete(item); else next.add(item);
+          return next;
+        });
+      };
+
+      const formData = () => ({
+        checkedItems: [...checked],
+        result: result.trim(),
+        remark: remark.trim(),
+        photos,
+      });
+
+      const canSubmit = checked.size > 0 && result.trim().length > 0;
+
+      const handleAddPhotos = (e) => {
+        const files = Array.from(e.target.files || []);
+        const remain = 3 - photos.length;
+        if (remain <= 0) return;
+        const added = files.slice(0, remain).map(file => ({
+          id: `${Date.now()}-${Math.random()}`,
+          url: URL.createObjectURL(file),
+        }));
+        setPhotos(prev => [...prev, ...added]);
+        e.target.value = '';
+      };
+
+      const handleRemovePhoto = (id) => {
+        setPhotos(prev => {
+          const target = prev.find(p => p.id === id);
+          if (target?.url?.startsWith('blob:')) URL.revokeObjectURL(target.url);
+          return prev.filter(p => p.id !== id);
+        });
+      };
+
+      const fieldCls = 'w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-blue-400';
+
+      return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-6 py-8" onClick={onClose}>
+          <div className="w-[88%] max-w-[320px] max-h-[calc(100vh-4rem)] overflow-y-auto bg-white rounded-2xl shadow-xl px-4 pt-5 pb-5" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-base font-semibold text-gray-800">完成维保</h3>
+              <button onClick={onClose} className="text-gray-400 text-sm">取消</button>
+            </div>
+            <div className="bg-gray-50 rounded-xl p-3 mb-4">
+              <p className="text-sm font-medium text-gray-800">{plan.title}</p>
+              <p className="text-xs text-gray-500 mt-0.5">{plan.community} · {plan.device}</p>
+            </div>
+
+            <p className="text-xs text-gray-500 font-medium mb-2">维保内容 <span className="text-red-400">*</span></p>
+            <div className="flex flex-col gap-2 mb-4">
+              {plan.content.map(item => (
+                <label key={item} className="flex items-center gap-2.5 py-2 px-3 rounded-xl border border-gray-100 bg-gray-50 cursor-pointer active:bg-blue-50">
+                  <input type="checkbox" checked={checked.has(item)} onChange={() => toggleItem(item)} className="accent-blue-600 w-4 h-4" />
+                  <span className="text-xs text-gray-700">{item}</span>
+                </label>
+              ))}
+            </div>
+
+            <label className="text-xs text-gray-500 font-medium mb-1.5 block">维保结果 <span className="text-red-400">*</span></label>
+            <textarea className={fieldCls + ' resize-none mb-3'} rows={2}
+              placeholder="如：设备恢复正常运行"
+              value={result} onChange={e => setResult(e.target.value)} />
+
+            <label className="text-xs text-gray-500 font-medium mb-1.5 block">现场备注</label>
+            <textarea className={fieldCls + ' resize-none mb-3'} rows={2}
+              placeholder="选填，补充说明"
+              value={remark} onChange={e => setRemark(e.target.value)} />
+
+            <div className="mb-4">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs text-gray-400">现场照片（最多 3 张）</span>
+                <span className="text-xs text-gray-400">{photos.length}/3</span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {photos.map(photo => (
+                  <div key={photo.id} className="relative w-16 h-16 rounded-xl overflow-hidden border border-gray-200">
+                    <img src={photo.url} alt="现场照片" className="w-full h-full object-cover" />
+                    <button type="button" onClick={() => handleRemovePhoto(photo.id)}
+                      className="absolute top-0.5 right-0.5 w-5 h-5 bg-black/50 rounded-full flex items-center justify-center">
+                      <X size={10} color="white" />
+                    </button>
+                  </div>
+                ))}
+                {photos.length < 3 && (
+                  <button type="button" onClick={() => photoInputRef.current?.click()}
+                    className="w-16 h-16 rounded-xl border border-dashed border-gray-300 bg-gray-50 flex flex-col items-center justify-center gap-0.5 active:bg-gray-100">
+                    <Plus size={16} color="#9ca3af" />
+                    <span className="text-[10px] text-gray-400">添加</span>
+                  </button>
+                )}
+              </div>
+              <input ref={photoInputRef} type="file" accept="image/*" multiple className="hidden" onChange={handleAddPhotos} />
+            </div>
+
+            <div className="flex gap-2">
+              <button type="button" onClick={() => onDraft(formData())}
+                className="flex-1 py-2.5 rounded-xl border border-gray-200 text-xs text-gray-600 font-medium active:bg-gray-50">
+                暂存
+              </button>
+              <button type="button" disabled={!canSubmit} onClick={() => onComplete(formData())}
+                className={`flex-1 py-2.5 rounded-xl text-xs font-semibold ${canSubmit ? 'bg-emerald-500 text-white active:bg-emerald-600' : 'bg-gray-100 text-gray-400'}`}>
+                提交完成
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    };
+
     /* 维保计划卡片 */
     const MaintPlanCard = ({ plan, onExpand, expanded }) => {
       const ss = 维保计划状态样式[plan.status];
@@ -4514,13 +5817,11 @@
 
     /* 维保记录卡片 */
     const MaintRecordCard = ({ rec, onExpand, expanded }) => {
-      const ts = 维保类型样式[rec.type];
       return (
         <div className="bg-white rounded-2xl overflow-hidden">
           <button onClick={onExpand} className="w-full p-4 text-left active:bg-gray-50">
             <div className="flex items-start justify-between gap-2 mb-2">
               <span className="text-sm font-semibold text-gray-800 flex-1 leading-snug">{rec.title}</span>
-              <span className={`flex-shrink-0 text-xs font-medium px-2 py-0.5 rounded-full border ${ts.bg} ${ts.text} ${ts.border}`}>{rec.type}</span>
             </div>
             <div className="flex flex-wrap gap-x-3 gap-y-1 mb-2">
               <span className="flex items-center gap-1 text-xs text-gray-400"><Building2 size={11} color="#9ca3af" />{rec.community}</span>
@@ -4528,10 +5829,7 @@
               <span className="flex items-center gap-1 text-xs text-gray-400"><User size={11} color="#9ca3af" />{rec.assignee}</span>
               <span className="flex items-center gap-1 text-xs text-gray-400"><CalendarDays size={11} color="#9ca3af" />{rec.date}</span>
             </div>
-            <div className="flex items-center justify-between">
-              <span className="flex items-center gap-1 text-xs text-gray-400">
-                <Clock size={11} color="#9ca3af" />耗时 {rec.duration} · 费用 <span className="font-medium text-gray-600">¥{rec.cost}</span>
-              </span>
+            <div className="flex justify-end">
               <ChevronDown size={14} color="#9ca3af" style={{ transform: expanded ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
             </div>
           </button>
@@ -4566,14 +5864,19 @@
     };
 
     /* 维保管理主页面 */
-    const MaintManagePage = ({ onBack }) => {
+    const MaintManagePage = ({ onBack, setConsumables }) => {
       const [plans, setPlans]           = useState(初始维保计划数据);
+      const [records, setRecords]       = useState(维保记录数据);
       const [tab, setTab]               = useState('维保计划');
       const [expandedId, setExpanded]   = useState(null);
       const [filterComm, setComm]       = useState('全部');
       const [filterType, setType]       = useState('全部');
       const [planStatus, setPlanStatus] = useState('全部');
       const [showCreate, setShowCreate] = useState(false);
+      const [completePlan, setCompletePlan] = useState(null);
+      const [transferPlan, setTransferPlan] = useState(null);
+      const [transferTarget, setTransferTarget] = useState('');
+      const [transferReason, setTransferReason] = useState('');
 
       const communities = ['全部','锦绣花园','翡翠湾小区','阳光丽景','华悦府','紫荆花园'];
       const deviceTypes = ['全部','净水机','直饮机','软水机','管线机'];
@@ -4585,10 +5888,10 @@
         ), [plans, filterComm, filterType]);
 
       const filteredRecords = useMemo(() =>
-        维保记录数据.filter(r =>
+        records.filter(r =>
           (filterComm === '全部' || r.community === filterComm) &&
           (filterType === '全部' || r.deviceType === filterType)
-        ), [filterComm, filterType]);
+        ), [records, filterComm, filterType]);
 
       /* 按状态二次过滤计划列表 */
       const displayPlans = useMemo(() =>
@@ -4604,6 +5907,85 @@
       }), [filteredPlans]);
 
       const toggle = id => setExpanded(prev => prev === id ? null : id);
+
+      const nowTs = () => {
+        const t = new Date();
+        const pad = n => String(n).padStart(2, '0');
+        return `${t.getFullYear()}-${pad(t.getMonth() + 1)}-${pad(t.getDate())} ${pad(t.getHours())}:${pad(t.getMinutes())}`;
+      };
+
+      const todayDate = () => {
+        const t = new Date();
+        const pad = n => String(n).padStart(2, '0');
+        return `${t.getFullYear()}-${pad(t.getMonth() + 1)}-${pad(t.getDate())}`;
+      };
+
+      const handleStartMaint = (plan) => {
+        const ts = nowTs();
+        setPlans(prev => prev.map(p => p.id === plan.id && p.status === '待执行'
+          ? { ...p, status: '进行中', startTime: ts }
+          : p));
+        setCompletePlan({ ...plan, status: '进行中', startTime: plan.startTime || ts });
+      };
+
+      const handleOpenComplete = (plan) => {
+        const latest = plans.find(p => p.id === plan.id) || plan;
+        setCompletePlan(latest);
+      };
+
+      const handleDraftComplete = (formData) => {
+        if (!completePlan) return;
+        const ts = nowTs();
+        setPlans(prev => prev.map(p => p.id === completePlan.id ? {
+          ...p,
+          status: '进行中',
+          startTime: p.startTime || ts,
+          execDraft: formData,
+        } : p));
+        setCompletePlan(null);
+      };
+
+      const handleSubmitComplete = (formData) => {
+        if (!completePlan) return;
+        const endTs = nowTs();
+        const dateStr = todayDate();
+        setPlans(prev => prev.map(p => p.id === completePlan.id ? {
+          ...p,
+          status: '已完成',
+          endTime: endTs,
+          execDraft: null,
+        } : p));
+        setRecords(prev => [{
+          id: 'MR' + Date.now(),
+          title: completePlan.title,
+          community: completePlan.community,
+          deviceType: completePlan.deviceType,
+          device: completePlan.device,
+          assignee: completePlan.assignee,
+          date: dateStr,
+          content: formData.checkedItems,
+          result: formData.result,
+          remark: formData.remark,
+          photos: formData.photos,
+        }, ...prev]);
+        if (setConsumables) {
+          setConsumables(prev => 从维保同步耗材(prev, completePlan, formData.checkedItems, dateStr));
+        }
+        setCompletePlan(null);
+        setPlanStatus('全部');
+      };
+
+      const closeTransfer = () => {
+        setTransferPlan(null);
+        setTransferTarget('');
+        setTransferReason('');
+      };
+
+      const handleTransfer = () => {
+        if (!transferPlan || !transferTarget || !transferReason.trim()) return;
+        setPlans(prev => prev.map(p => p.id === transferPlan.id ? { ...p, assignee: transferTarget } : p));
+        closeTransfer();
+      };
 
       const 状态卡片列表 = [
         { label:'全部',   count: filteredPlans.length,   color:'text-blue-600',    activeBg:'bg-blue-600',    inactiveBg:'bg-blue-50',    border:'border-blue-200'    },
@@ -4647,6 +6029,12 @@
                   }`}>{t}</button>
               ))}
             </div>
+          </div>
+
+          <div className="mx-4 mt-3 bg-amber-50 border border-amber-100 rounded-xl px-3 py-2.5">
+            <p className="text-xs text-amber-800 leading-relaxed">
+              <span className="font-semibold">维保管理</span>：任务计划与执行记录。耗材超期更换工单在此执行；完成后同步更新耗材台账。
+            </p>
           </div>
 
           {/* 筛选栏：下拉框并排 */}
@@ -4693,11 +6081,63 @@
             {tab === '维保计划' ? (
               displayPlans.length === 0
                 ? <div className="bg-white rounded-2xl p-8 flex flex-col items-center gap-3 text-gray-400"><Wrench size={40} color="#d1d5db" /><p className="text-sm">暂无匹配的维保计划</p></div>
-                : displayPlans.map(plan => (
-                    <MaintPlanCard key={plan.id} plan={plan}
-                      expanded={expandedId === plan.id}
-                      onExpand={() => toggle(plan.id)} />
-                  ))
+                : displayPlans.map(plan => {
+                    const ss = 维保计划状态样式[plan.status];
+                    const actionable = plan.status === '待执行' || plan.status === '进行中';
+
+                    if (actionable) {
+                      return (
+                        <div key={plan.id} className="bg-white rounded-2xl p-4 w-full">
+                          <div className="flex items-start justify-between gap-2 mb-2">
+                            <span className="text-sm font-semibold text-gray-800 flex-1 leading-snug">{plan.title}</span>
+                            <span className={`flex-shrink-0 text-xs font-medium px-2 py-0.5 rounded-full border flex items-center gap-1 ${ss.bg} ${ss.text} ${ss.border}`}>
+                              <span className={`w-1.5 h-1.5 rounded-full ${ss.dot}`}></span>{plan.status}
+                            </span>
+                          </div>
+                          <div className="flex flex-wrap gap-x-3 gap-y-1 mb-2">
+                            <span className="flex items-center gap-1 text-xs text-gray-400"><Building2 size={11} color="#9ca3af" />{plan.community}</span>
+                            <span className="flex items-center gap-1 text-xs text-gray-400"><Droplets size={11} color="#9ca3af" />{plan.deviceType}</span>
+                            <span className="flex items-center gap-1 text-xs text-gray-400"><User size={11} color="#9ca3af" />{plan.assignee}</span>
+                            <span className="flex items-center gap-1 text-xs text-gray-400"><CalendarDays size={11} color="#9ca3af" />{plan.planDate}</span>
+                          </div>
+                          <div className="flex flex-wrap gap-1.5">
+                            {plan.content.slice(0, 4).map((c, i) => (
+                              <span key={i} className="text-xs px-2 py-0.5 bg-blue-50 text-blue-500 rounded-full">{c}</span>
+                            ))}
+                            {plan.content.length > 4 && (
+                              <span className="text-xs px-2 py-0.5 bg-gray-50 text-gray-400 rounded-full">+{plan.content.length - 4}</span>
+                            )}
+                          </div>
+                          {plan.execDraft && plan.status === '进行中' && (
+                            <p className="mt-2 text-xs text-amber-600 bg-amber-50 rounded-lg px-2.5 py-1.5">已暂存填写内容，点击继续维保可恢复</p>
+                          )}
+                          {plan.status === '待执行' ? (
+                            <div className="mt-3 flex gap-2">
+                              <button type="button" onClick={() => handleStartMaint(plan)}
+                                className="flex-1 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold active:bg-blue-700">
+                                开始维保
+                              </button>
+                              <button type="button" onClick={() => { setTransferPlan(plan); setTransferTarget(''); setTransferReason(''); }}
+                                className="flex-1 py-2.5 rounded-xl border border-blue-200 text-blue-600 text-sm font-semibold active:bg-blue-50">
+                                转单
+                              </button>
+                            </div>
+                          ) : (
+                            <button type="button" onClick={() => handleOpenComplete(plan)}
+                              className="mt-3 w-full py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold active:bg-blue-700">
+                              继续维保
+                            </button>
+                          )}
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <MaintPlanCard key={plan.id} plan={plan}
+                        expanded={expandedId === plan.id}
+                        onExpand={() => toggle(plan.id)} />
+                    );
+                  })
             ) : (
               filteredRecords.length === 0
                 ? <div className="bg-white rounded-2xl p-8 flex flex-col items-center gap-3 text-gray-400"><ClipboardList size={40} color="#d1d5db" /><p className="text-sm">暂无匹配的维保记录</p></div>
@@ -4714,6 +6154,28 @@
               onClose={() => setShowCreate(false)}
               onPublish={handleAddPlan}
               onDraft={handleAddPlan}
+            />
+          )}
+
+          {completePlan && (
+            <CompleteMaintModal
+              key={completePlan.id + (completePlan.execDraft ? '-draft' : '-new')}
+              plan={completePlan}
+              onClose={() => setCompletePlan(null)}
+              onDraft={handleDraftComplete}
+              onComplete={handleSubmitComplete}
+            />
+          )}
+
+          {transferPlan && (
+            <InspectTransferModal
+              plan={transferPlan}
+              target={transferTarget}
+              reason={transferReason}
+              onTargetChange={setTransferTarget}
+              onReasonChange={setTransferReason}
+              onClose={closeTransfer}
+              onSubmit={handleTransfer}
             />
           )}
         </div>
@@ -4837,6 +6299,8 @@
       const [route, setRoute] = useState({ page: 'home' });
       const [alarmEvents, setAlarmEvents] = useState(初始报警数据);
       const [plans, setPlans] = useState(初始巡检计划);
+      const [feedbacks, setFeedbacks] = useState(初始用户反馈数据);
+      const [consumables, setConsumables] = useState(初始耗材数据);
 
       const nav = (page) => setRoute({ page });
       const showNav = 主页面集合.has(route.page);
@@ -4942,9 +6406,13 @@
             return <PlaceholderPage title="未找到巡检计划" onBack={() => nav('巡检管理')} />;
           }
           return <InspectExecutionPage plan={execPlan} onBack={() => nav('巡检管理')}
-            onComplete={(planId, ts, data) => setPlans(prev => prev.map(p =>
-              p.id === planId ? { ...p, status: '已完成', endTime: ts, inspectData: data } : p
-            ))} />;
+            onComplete={(planId, ts, data) => {
+              setPlans(prev => prev.map(p =>
+                p.id === planId ? { ...p, status: '已完成', endTime: ts, inspectData: data } : p
+              ));
+              const plan = plans.find(p => p.id === planId);
+              if (plan) setConsumables(prev => 从巡检同步耗材(prev, plan, data));
+            }} />;
         }
         if (route.page === 'inspectSummary') {
           const summaryPlan = plans.find(p => p.id === route.planId);
@@ -4954,11 +6422,12 @@
           return <InspectPlanSummaryPage plan={summaryPlan} onBack={() => nav('巡检管理')} />;
         }
         if (route.page === '维保管理') {
-          return <MaintManagePage onBack={() => nav('home')} />;
+          return <MaintManagePage onBack={() => nav('home')} setConsumables={setConsumables} />;
         }
         if (route.page === '耗材管理') {
           return (
             <ConsumableManagePage
+              consumables={consumables}
               onBack={() => nav('home')}
               onCommunityClick={community => setRoute({ page: 'communityConsumables', community })}
             />
@@ -4968,7 +6437,31 @@
           return (
             <CommunityConsumablePage
               community={route.community}
+              consumables={consumables}
+              setConsumables={setConsumables}
               onBack={() => nav('耗材管理')}
+            />
+          );
+        }
+        if (route.page === '用户反馈') {
+          return (
+            <FeedbackManagePage
+              feedbacks={feedbacks}
+              onBack={() => nav('home')}
+              onDetail={id => setRoute({ page: 'feedbackDetail', id })}
+            />
+          );
+        }
+        if (route.page === 'feedbackDetail') {
+          const fb = feedbacks.find(f => f.id === route.id);
+          if (!fb) {
+            return <PlaceholderPage title="未找到反馈记录" onBack={() => nav('用户反馈')} />;
+          }
+          return (
+            <FeedbackDetailPage
+              feedback={fb}
+              setFeedbacks={setFeedbacks}
+              onBack={() => nav('用户反馈')}
             />
           );
         }
